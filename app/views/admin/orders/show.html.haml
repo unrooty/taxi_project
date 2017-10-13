@@ -1,0 +1,54 @@
+.row.justify-content-md-center.text-center
+  .col-sm-4
+    %h2
+      #{t('order_number')}:
+      = @order.id
+    %ul.list-group
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.order.name')}:
+        = @order.client_name
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.order.phone')}:
+        +375-#{@order.client_phone}
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.order.start_point')}:
+        = @order.start_point
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.order.end_point')}:
+        = @order.end_point
+      %li.list-group-item
+        %b
+          #{t('activerecord.models.tax')}:
+        = @order.tax.name
+      -unless @order.car.nil?
+        %li.list-group-item
+          %b
+            #{t('car')}:
+          #{@order.car.brand} #{@order.car.model}, #{@order.car.reg_number}
+      -else 
+        %li.list-group-item
+          = link_to t('assign_car'), new_admin_order_assigned_car_path(@order.id), class: 'btn btn-primary btn-sm'
+      -unless @order.order_status.nil?
+        %li.list-group-item
+          %b
+            #{t('status')}:
+          = t("order_status.#{@status}")
+      -unless @order.invoice.nil?
+        %li.list-group-item
+          %b
+            #{t('activerecord.models.invoice')}:
+          #{@order.invoice.total_price} (#{t('indebtedness')}: #{@order.invoice.indebtedness})
+          %div/
+          (#{t("invoice_status.#{@order.invoice.invoice_status}")})
+      -else
+        - if @order.car_id
+          - if can? :edit, Invoice
+            = link_to t('add_invoice'), new_admin_order_billing_path(@order.id), class: 'btn btn-outline-primary btn-sm'
+      - if can? :destroy, Order
+        = link_to t('edit'), edit_admin_order_path(@order.id), style: 'float: right', class: 'btn btn-outline-success btn-sm'
+      - if can? :edit, Order
+        = link_to t('delete'), admin_order_path(@order), method: :delete, data: { confirm: t('confirmation') }, style: 'float: right', class: 'btn btn-outline-danger btn-sm'

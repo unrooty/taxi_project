@@ -1,0 +1,36 @@
+%h1.text-center #{@affiliate.name}
+%h3.text-center #{t('affiliate_personal_list')}
+%table.table
+  %thead.thead-inverse
+    %tr
+      %th #
+      %th
+        = t('activerecord.attributes.user.first_name')
+      %th
+        = t('activerecord.attributes.user.last_name')
+      %th
+        = t('activerecord.attributes.user.phone')
+      %th Email
+      %th
+        = t('activerecord.attributes.user.role')
+      %th
+  %tbody
+    - for worker in @workers
+      %tr
+        %th
+          = worker.id
+        %th
+          = worker.first_name
+        %th
+          = worker.last_name
+        %th
+          +375-#{worker.phone}
+        %th
+          = worker.email
+        %th
+          #{t("role.#{worker.role}")}
+        %th
+          - if can? :edit, User
+            = link_to t('edit'), edit_admin_user_path(worker.id), class: 'btn btn-outline-info btn-sm'
+          - if can? :destroy, User
+            = link_to t('delete'), admin_user_path(worker), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

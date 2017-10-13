@@ -1,0 +1,21 @@
+%section.client_order.sessions-new
+  .text-center
+    .container
+      %h2.order-pad-top
+        = t('new_order')
+      = render 'form', order: @order
+%footer.text-center.footer-order
+  .footer-top
+    .container
+      .row
+        .footer-col.col-md-6
+          %h6
+            = link_to t('affiliates'), affiliates_path
+        .footer-col.col-md-6
+          %h6
+            = link_to t('about_us'),about_path
+  .footer-below
+    .container
+      .row
+        .col-md-12
+          = t('rights')

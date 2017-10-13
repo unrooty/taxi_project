@@ -1,0 +1,45 @@
+!!!
+%html
+  %head
+    %meta{content: 'text/html; charset=UTF-8', 'http-equiv': 'Content-Type'}/
+    %title
+      = t('title')
+    = csrf_meta_tags
+    = stylesheet_link_tag    'admin/dashboard', media: 'all' , 'data-turbolinks-track': true
+    = javascript_include_tag 'admin/admin', media: 'all', 'data-turbolinks-track': true
+  %body.fixed-nav.sticky-footer
+    %nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+      %a.navbar-brand{href: admin_dashboard_index_path}
+        = t('title')
+      %button.navbar-toggler.navbar-toggler-right{'aria-controls': 'navbarResponsive', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation', 'data-target': '#navbarResponsive', 'data-toggle': 'collapse', type: 'button'}
+        %span.navbar-toggler-icon
+      #navbarResponsive.collapse.navbar-collapse
+        %ul.navbar-nav.ml-auto
+          %li.nav-item.nav-link{class: 'active'}
+            #{current_user.first_name}  #{current_user.last_name} :
+          %li.nav-item
+            = link_to t('edit'),edit_admin_user_path(current_user.id), class: 'nav-link'
+          %li.nav-item
+            = link_to destroy_user_session_path, method: :delete, data: { confirm: t('confirmation') }, class: 'nav-link' do
+              %i.fa.fa-fw.fa-sign-out
+              = t('sign_out')
+    .sidenav
+      %ul.navbar-nav.navbar-sidenav
+        %li.sidenav-item
+          - if can? :create, Order
+            = link_to t('orders'), admin_orders_path
+          - if can? :read, User
+            = link_to t('users'), admin_users_path
+        %li.sidenav-item
+          - if can? :create, Car
+            = link_to t('cars'), admin_cars_path
+        %li.sidenav-item
+          - if can? :create, Tax
+            = link_to t('taxes'), admin_taxes_path
+        %li.sidenav-item
+          - if can? :create, Affiliate
+            = link_to t('affiliates'), admin_affiliates_path
+
+    .content-wrapper
+      .container-fluid
+        = yield

@@ -1,0 +1,231 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  role:
+    admin: 'Admin'
+    client: 'Client'
+    manager: 'Manager'
+    driver: 'Driver'
+    accountant: 'Accountant'
+    dispatcher: 'Dispatcher'
+  order_status:
+    fresh: 'New'
+    in_progress: 'In progress'
+    completed: 'Completed'
+  invoice_status:
+    paid: 'Paid'
+    unpaid: 'Unpaid'
+    partially_paid: 'Partially paid'
+  car_status:
+    free: 'Free'
+    ordered: 'Ordered'
+  activerecord:
+    attributes:
+      car:
+        reg_number: 'Registration number'
+        style: 'Body style'
+        brand: "Brand"
+        model: "Model"
+        color: "Color"
+        affiliate: "affiliate"
+        status: "Status"
+      billing:
+        payed_amount: "Payed amount"
+        distance: "Distance"
+      order:
+        start_point: 'Departure point'
+        end_point: 'Destination'
+        phone: "Phone"
+        name: "Name"
+        client_name: "Client name"
+        client_phone: "Client phone"
+      tax:
+        name: "Name"
+        cost_per_km: "Cost per km"
+        basic_cost: "Basic cost"
+      user:
+        first_name: "First name"
+        last_name: "Last name"
+        phone: "Phone"
+        role: "Role"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+      order:
+        name: "Name"
+        phone: "Phone"
+        route: "Route"
+    models:
+      tax: "Tax"
+      invoice: "Invoice"
+      affiliate: "Affiliate"
+      invoice_status: "Invoice status"
+      order: "Order"
+      invoice: "Invoice"
+      order_status: "Order status"
+  new_car: "New car"
+  tittle: "Taxi Station"
+  edit: "Edit"
+  submit: 'Save'
+  delete: "Delete"
+  create: "Create new"
+  search_order: "Search order by phone"
+  search: "Search"
+  add_invoice: "Add invoice"
+  status: "Status"
+  new_invoice: "Создание счёта"
+  new_tax: "New tax"
+  sign_in: "Sign in"
+  sign_up: "Sign up"
+  sign_out: "Sign out"
+  signed_in: "Signed in as"
+  edit_profile: "Edit profile"
+  confirm_changes: "(we need your current password to confirm your changes)"
+  password_change: "(leave blank if you don't want to change it)"
+  cancel_account: "Cancel account"
+  characters_minimum: "characters minimum"
+  log_in: "Log in"
+  forgot_password: "Forgot your password?"
+  change_password: "Change password"
+  send_instuctions: "Send instructions"
+  confirmation_instructions: "Didn't receive confirmation instructions"
+  unlock_instructions: "Didn't receive unlock instructions?"
+  send: "Send orders report by email"
+  greeting: "Dear %{user_first_name} %{user_last_name}, this report contains information about all of your orders. Thank you for being with us!"
+  get_pdf: "Get orders report in pdf format"
+  send_instructions: "Send instructions"
+  new_password: "New password"
+  confirm_new_password: "Confirm new password"
+  new_user: "New user"
+  users: "Users"
+  back: "Back"
+  new_order: "New order"
+  car: "Car"
+  cars: "Cars"
+  edit_car: "Edit car"
+  edit_affiliate: "Edit affiliate"
+  affiliates: "Affiliates"
+  address: "Address"
+  edit_order: "Edit order"
+  orders: "Orders"
+  taxes: "Taxes"
+  edit_user: "Edit user"
+  rights: "All rights reserved"
+  about_us: "About us"
+  no_cars: "This affiliate has no cars"
+  title: "Taxi station"
+  error_order: "Order hasn't been created:"
+  name: "Name"
+  send_orders: "Send orders report by email"
+  orders_report: "Orders report"
+  rights: "All rights reserved, 2017"
+  address: "Address"
+  error_order: "Can't create order:"
+  send_instructions: "Send instructions"
+  new_password: "New password"
+  confirm_new_password: "Confirm new password"
+  edit_affiliate: "Edit affiliate"
+  affiliate_updated: "Affiliate was successfully updated."
+  affiliate_created: "Affiliate %{affiliate_name} was successfully created."
+  order_now: "ORDER NOW!"
+  sent_feedback: "sent feedback."
+  orders_report_intro: "Dear %{user_first_name} %{user_last_name}, Taxi station sends you a report of your orders.  Thank you for being with us!"
+  assign_car: "Assign car"
+  start_point_new: "Where are we going from?"
+  end_point_new: "where we go?"
+  invalid_phone: "Input phone in correct format."
+  error_user_new: "Error"
+  language: "Language"
+  welcome_email: "Welcome to Taxistation!"
+  welcome_email_intro1: "Welcome to Taxistation, %{user_first_name} %{user_last_name}!"
+  welcome_email_intro2: "You have successfully signed up!"
+  welcome_email_intro3: "To visit the site, just follow this link:"
+  welcome_email_intro4: "Thanks for being with us!"
+  confirm_account: "You can confirm your account email through the link below:"
+  confirm_link: "Confirm my account"
+  welcome: "Welcome,"
+  hello: "Hello,"
+  change_email: "We're contacting you to notify you that your email is being changed to"
+  password_change_notify: "We're contacting you to notify you that your password has been changed."
+  reset_password_intro: "Someone has requested a link to change your password. You can do this through the link below."
+  reset_password_info: "If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one."
+  lock_account: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+  click_unlock: "Click the link below to unlock your account:"
+  unlock_link: "Unlock my account"
+  car_create: "Car %{car_model} %{car_brand} was successfully created."
+  car_update: "Car was successfully updated."
+  invoice_created: "Invoice was successfully created."
+  invoice_updated: "Invoice was successfully updated."
+  order_created: "Order was successfully created."
+  order_updated: "Order was successfully updated."
+  tax_create: "Tax %{full_tax} was successfully created."
+  tax_update: "Tax was successfully updated."
+  user_created: "User was successfully created."
+  user_updated: "User was successfully updated."
+  send_feedback: "Message has been sent."
+  error_affiliate: "Can't create affiliate:"
+  new_affiliate: "New affiliate"
+  order_number: "Order number:"
+  welcome_home: "Welcome to taxi site!"
+  skills: "Comfort. Speed. Safety."
+  make_order: "MAKE ORDER NOW!"
+  register_home: "REGISTER AND GET EXTRA OPPORTUNITIES AND BONUSES!"
+  free_ride: "Every 5th trip is free!"
+  discount: "Get 10% discount if trip for 15 km or more!"
+  feedback: "Feedback"
+  message: "Message"
+  orders_report_home: "Receiving an order report by mail or in PDF format!"
+  send_feedback_button: "Send message"
+  order_sent: "Orders report was successfully sent."
+  access_denied: "You are not authorized to access this page."
+  record_not_found: "Record not found."
+  must_choose_car: "You must choose car."
+  order_info: "Order details"
+  affiliate: "Affiliate"
+  user_id: "User id"
+  back_to_cars: "Back to cars list"
+  indebtedness: "Indebtedness"
+  total_price: 'Total price'
+  edit_invoice: "Edit invoice"
+  surcharge: "Surcharge"
+  affiliate_personal: "Amount of workers"
+  affiliate_personal_list: "List of employees"
+  invoice_deleted: "Invoice deleted"
+  check_correct: "Enter the correct data!"
+  invoice_update_error: "Error: indebtedness can't be negative."
+  error: "Save error:"
+  car_assigned: "Car was assigned."
+  car_assigned_error: "Car already on order. Please, select another car."
+  confirmation: "Are you sure?"
+  order_accepted: "Order is accepted!"
+  directed: "Directed car"
+  expect_arrival: "Expect arrival."
+  car_already_assigned: "A car has already been assigned to order."
+  invoice_info: "Invoice info"
+  invoice_warning: "Please pay off the debt in order to avoid administrative liability."
+  feedback_from: "Feedback mail from"
+  to_users_list: "Go to list of users"
+  order_destroyed: "Order deleted."
+  car_deleted: "Car deleted."
+  affiliate_deleted: "Affiliate deleted."
+  tax_deleted: "Tax deleted."
+  user_deleted: "User deleted."
+  no_driver: "No driver."

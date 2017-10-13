@@ -1,0 +1,27 @@
+%h1
+  = t('taxes')
+  - if can? :create, Tax
+    = link_to t('new_tax'), new_admin_tax_path, class: 'btn btn-outline-success pull-right'
+%p#notice
+  =notice
+
+%section.tax
+  .row
+    - @taxes.each do |tax|
+      .col-md-4
+        %ul.list-group
+          %li.list-group-item
+            %b
+              #{t('activerecord.attributes.tax.name')}:
+            #{tax.name}
+          %li.list-group-item
+            %b
+              #{t('activerecord.attributes.tax.cost_per_km')}:
+            #{tax.cost_per_km}
+          %li.list-group-item.tax-border-bottom
+            %b
+              #{t('activerecord.attributes.tax.basic_cost')}:
+            #{tax.basic_cost}
+          %li.list-group
+            = link_to t('edit'), edit_admin_tax_path(tax), class: 'btn btn-outline-info btn-sm'
+            = link_to t('delete'), admin_tax_path(tax), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

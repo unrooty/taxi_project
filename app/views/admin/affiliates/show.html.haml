@@ -1,0 +1,55 @@
+.row.justify-content-md-center.text-center
+  .col-sm-4.car-item
+    %h2 #{@affiliate.name}
+    %h4 #{t('address')}: #{@affiliate.address}
+    %h4 #{t('affiliate_personal')}: #{@affiliate.users.where.not(role: :client).count} (#{link_to t('order_info'), admin_affiliate_workers_path(@affiliate)})
+    - if can? :edit, Affiliate
+      = link_to t('edit'), edit_admin_affiliate_path(@affiliate), class: 'btn btn-outline-info btn-sm'
+    - if can? :destroy, Affiliate
+      = link_to t('delete'), admin_affiliate_path(@affiliate), method: :delete, data: { confirm: 'You are sure?' }, class: 'btn btn-outline-danger btn-sm'
+    = link_to t('back'), admin_affiliates_path, class: 'btn btn-secondary btn-sm'
+%section.car
+  - unless @cars.empty?
+    %h2
+      = t('cars')
+      - if can? :create, Car
+        = link_to t('new_car'), new_admin_car_path, class: 'btn btn-outline-success pull-right'
+    %p#notice= notice
+    .row.car-item
+      - @cars.each do |car|
+        - cache car do
+          .col-sm-4.car-item
+            %ul.list-group
+              %li.list-group-item
+                %b
+                  #{t('activerecord.attributes.car.brand')}:
+                = car.brand
+              %li.list-group-item
+                %b
+                  #{t('activerecord.attributes.car.model')}:
+                = car.model
+              %li.list-group-item
+                %b
+                  #{t('activerecord.attributes.car.reg_number')}:
+                = car.reg_number
+              %li.list-group-item
+                %b
+                  #{t('activerecord.attributes.car.color')}:
+                = car.color
+              %li.list-group-item
+                %b
+                  #{t('activerecord.attributes.car.style')}:
+                = car.style
+              %li.list-group-item
+                %b
+                  #{t('activerecord.attributes.car.affiliate')}:
+                = car.affiliate.name
+              %li.list-group-item
+                %b
+                  #{t('activerecord.attributes.car.status')}:
+                = t("car_status.#{car.car_status}")
+            - if can? :edit, Car
+              = link_to t('edit'), edit_admin_car_path(car), class: 'btn btn-outline-info btn-sm'
+            - if can? :destroy, Car
+              = link_to t('delete'), admin_car_path(car), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+

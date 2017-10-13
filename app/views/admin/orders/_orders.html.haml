@@ -1,0 +1,50 @@
+%table.table
+  %thead.thead-inverse
+    %tr
+      %th #
+      %th
+        = t('activerecord.attributes.order.name')
+      %th
+        = t('activerecord.attributes.order.phone')
+      %th
+        = t('activerecord.models.order_status')
+      %th
+        = t('car')
+      %th
+        = t('activerecord.models.invoice')
+      %th
+  %tbody
+    - for order in @orders
+      %tr{id: "order-#{order.id}"}
+        %th
+          = order.id
+        %th
+          = order.client_name
+        %th
+          +375-#{order.client_phone}
+        %th
+          = t("order_status.#{order.order_status}")
+        %th
+          - if order.car.nil?
+            = link_to t('assign_car'), new_admin_order_assigned_car_path(order.id), class: 'btn btn-primary btn-sm'
+            %th
+          -else
+            #{order.car.brand} #{order.car.model}, #{order.car.reg_number}
+            - unless order.invoice.nil?
+              - if order.invoice.invoice_status == 'paid'
+                %th
+                  #{order.invoice.total_price}
+                  %div/
+                  (#{t("invoice_status.#{order.invoice.invoice_status}")})
+              - else
+                %th
+                  #{link_to order.invoice.total_price, edit_admin_order_invoice_path(order, order.invoice)}
+                  %div/
+                  (#{t("invoice_status.#{order.invoice.invoice_status}")})
+            - else
+              %th
+                - if can? :create, Invoice
+                  = link_to t('add_invoice'), new_admin_order_billing_path(order.id), class: 'btn btn-primary btn-sm'
+        %th
+          = link_to t('order_info'), admin_order_path(order.id), class: 'btn btn-outline-primary btn-sm'
+          = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

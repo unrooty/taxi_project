@@ -1,0 +1,16 @@
+%h1.text-center
+  = t('orders')
+  %h5.text-center#notice= notice
+  %h5.text-center.error#alert= alert
+- if can? :create, Order
+  = link_to t('new_order'), new_admin_order_path, class: 'btn btn-outline-success pull-right'
+.row
+  .col-sm-4
+    = form_tag(admin_orders_path, method: :get, id: 'orders_search') do
+      .input-group
+        = text_field_tag :desired_phone, params[:desired_phone], {class: 'form-control', placeholder: t('search_order')}
+        %span.input-group-btn
+          = submit_tag t('search'), name: nil, class: 'btn btn-secondary'
+.row
+  .col-sm-12
+    #orders= render 'orders'

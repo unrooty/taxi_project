@@ -1,0 +1,64 @@
+%header.masterhead.pad-bottom
+  %p.notice= notice
+  .container.pad-top
+    %img.img-fluid.img-main{src: asset_path('main.jpg'), alt: 'HELLO!'}/
+    .intro-text
+      %p.name
+        = t('welcome_home')
+      %hr.tax-line-primal
+      %p.skills
+        = t('skills')
+%section.service.pad-bottom
+  .container
+    %p.name
+      = t('make_order')
+    %hr.tax-line
+      %a.service-link{href: new_order_path, title: t('order_now')}
+        %img.img-fluid.img-service.blinking{src: asset_path('phone.png'), alt: 'Call me maybe!'}/
+%section.promo.pad-bottom
+  .container
+    %p.name
+      = t('register_home')
+    %hr.tax-line-primal
+    .row.justify-content-md-center
+      .col-md-9
+        %p.promo-info
+          &#9899;
+          = t('free_ride')
+        %p.promo-info
+          &#9899;
+          = t('discount')
+        %p.promo-info
+          &#9899;
+          = t('orders_report_home')
+%section.feedback
+  .container
+    %p.name
+      = t('feedback')
+    %hr.tax-line
+    .row.justify-content-md-center
+      .col-md-6
+        .form-area
+          = form_for feedback_path do |f|
+            .form-group
+              = f.text_field :name, placeholder: t('name'), class: 'form-control'
+            .form-group
+              = f.email_field :email, placeholder: 'Email', class: 'form-control'
+            .form-group
+              = f.text_area :message, placeholder: t('message'), class: 'form-control', rows: '8'
+            = f.submit t('send_feedback_button'), class: 'btn btn-primary', style: 'background-color: black;border: black'
+%footer.text-center
+  .footer-top
+    .container
+      .row
+        .footer-col.col-md-6
+          %h6
+            = link_to t('affiliates'), affiliates_path
+        .footer-col.col-md-6
+          %h6
+            = link_to t('about_us'),about_path
+  .footer-below
+    .container
+      .row
+        .col-md-12
+          = t('rights')

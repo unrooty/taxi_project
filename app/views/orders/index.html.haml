@@ -1,0 +1,30 @@
+%section.orders_table
+  .col-md-12
+    .container
+      %h1.text-center
+        = t('orders')
+        %h5.text-center#notice= notice
+        %h5.text-center#alert= alert
+        %h5
+          = link_to t('send_orders'), send_orders_mail_path, style: 'float: right'
+          %br/
+          = link_to t('get_pdf'), pdf_orders_path(format: :pdf), style: 'float: right', target: '_blank'
+      #{ link_to t('new_order'), new_order_path, class: 'btn btn-outline-info'}
+    .row
+      .col-md-12
+        #orders= render 'orders'
+%footer.text-center.footer-order
+  .footer-top
+    .container
+      .row
+        .footer-col.col-md-6
+          %h6
+            = link_to t('affiliates'), affiliates_path
+        .footer-col.col-md-6
+          %h6
+            = link_to t('about_us'),about_path
+  .footer-below
+    .container
+      .row
+        .col-md-12
+          = t('rights')

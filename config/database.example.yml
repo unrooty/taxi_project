@@ -1,0 +1,15 @@
+defaults: &defaults
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  min_message: warning
+  username: user
+  password: password
+
+development:
+  <<: *defaults
+  database: db_dev
+
+test:
+  <<: *defaults
+  database: db_test

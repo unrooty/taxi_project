@@ -1,0 +1,9 @@
+development:
+  url: 'http://localhost:3000'
+  from_email: 'Taxi station'
+production:
+  url: 'http://taxistation.herokuapp.com'
+  from_email: 'Taxi station'
+test:
+  url: 'http://localhost:3000'
+  from_email: 'Taxi station'

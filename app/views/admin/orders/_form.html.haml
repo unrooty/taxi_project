@@ -1,0 +1,33 @@
+- if @order.errors.any?
+  .error
+    %h5.text-center
+      = t('error')
+      - @order.errors.full_messages.each do |message|
+        %h6.text-center
+          &#9899; #{message}
+
+
+= form_for [:admin, @order] do |form|
+  .row.justify-content-md-center.text-center
+    .col-md-4
+      .order_form_area
+        .form-group
+          = form.label :name
+          = form.text_field :client_name, class: 'form-control'
+        .form-group
+          = form.label :phone
+          .input-group
+            %span.input-group-addon +375
+            = form.text_field :client_phone, placeholder: '25-123-45-67', class: 'form-control'
+        .form-group
+          = form.label :start_point
+          = form.text_field :start_point, class: 'form-control'
+        .form-group
+          = form.label :end_point
+          = form.text_field :end_point, class: 'form-control'
+        .form-group
+          = form.label t('activerecord.models.tax')
+          = form.collection_select :tax_id, Tax.all, :id, :name, {prompt: false}, class: 'form-control'
+        .actions
+          = form.submit t('submit'), class: 'btn btn-primary'
+          = link_to t('back'), admin_orders_path, class: 'btn btn-secondary'

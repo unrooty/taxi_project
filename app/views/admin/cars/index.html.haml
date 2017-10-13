@@ -1,0 +1,52 @@
+%h1
+  = t('cars')
+  - if can? :create, Car
+    = link_to t('new_car'), new_admin_car_path, class: 'btn btn-outline-success pull-right'
+%p#notice= notice
+%section.car
+  .row.car-item 
+    - @cars.each do |car|
+      - cache car do
+        .col-sm-4.car-item
+          %ul.list-group
+            %li.list-group-item
+              %b
+                #{t('activerecord.attributes.car.brand')}:
+              = car.brand
+            %li.list-group-item
+              %b
+                #{t('activerecord.attributes.car.model')}:
+              = car.model
+            %li.list-group-item
+              %b
+                #{t('activerecord.attributes.car.reg_number')}:
+              = car.reg_number
+            %li.list-group-item
+              %b
+                #{t('activerecord.attributes.car.color')}:
+              = car.color
+            %li.list-group-item
+              %b
+                #{t('activerecord.attributes.car.style')}:
+              = car.style
+            %li.list-group-item
+              %b
+                #{t('activerecord.attributes.car.affiliate')}:
+              = car.affiliate.name
+            %li.list-group-item
+              - if car.user
+                %b
+                  #{t('role.driver')}:
+                #{car.user.first_name} #{car.user.last_name}
+              - else
+                %b
+                  #{t('no_driver')}
+            %li.list-group-item
+              %b
+                #{t('activerecord.attributes.car.status')}:
+              = t("car_status.#{car.car_status}")
+          - if can? :edit, Car
+            = link_to t('edit'), edit_admin_car_path(car), class: 'btn btn-outline-info btn-sm'
+          - if can? :destroy, Car
+            = link_to t('delete'), admin_car_path(car), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+

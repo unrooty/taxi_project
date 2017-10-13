@@ -1,0 +1,25 @@
+- if @tax.errors.any?
+  .error
+    %h5.text-center
+      = t('error')
+      - @tax.errors.full_messages.each do |message|
+        %h6.text-center
+          &#9899; #{message}
+
+= form_for [:admin, @tax] do |form|
+  .row.justify-content-md-center.text-center
+    .col-md-3
+      .order_form_area
+        .form-group
+          = form.label :name
+          = form.text_field :name, class: 'form-control'
+        .form-group
+          = form.label :cost_per_km
+          = form.number_field :cost_per_km, class: 'form-control'
+        .form-group
+          = form.label :basic_cost
+          = form.number_field :basic_cost, class: 'form-control'
+        .actions
+          = form.submit t('submit'), class: 'btn btn-primary'
+          = link_to t('back'), admin_taxes_path, class: 'btn btn-secondary'
+

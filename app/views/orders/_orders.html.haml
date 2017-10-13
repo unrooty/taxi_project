@@ -1,0 +1,34 @@
+%section
+  .container
+    %table.table.orders_table
+      %thead.thead-inverse
+        %tr
+          %th #
+          %th
+            = t('activerecord.attributes.order.name')
+          %th
+            = t('activerecord.attributes.order.phone')
+          %th
+            = t('activerecord.attributes.order.start_point')
+          %th
+            = t('activerecord.attributes.order.end_point')
+          %th
+      %tbody
+        - for order in @orders
+          - cache order do
+            %tr{id: "order-#{order.id}"}
+              %th
+                = link_to order.id, order_path(order.id)
+              %th
+                = order.client_name
+              %th
+                +375-#{order.client_phone}
+              %th
+                = order.start_point
+              %th
+                = order.end_point
+              %th
+                - if can? :destroy, Order
+                  = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm floating'
+                - if can? :edit, Order
+                  = link_to t('edit'), edit_order_path(order.id), class: 'btn btn-outline-success btn-sm floating'

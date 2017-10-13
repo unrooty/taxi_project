@@ -1,0 +1,64 @@
+%section.orders_table.text-center.order-show
+  .row.justify-content-md-center
+    .col-md-4
+      .container
+        %h4
+          =t('activerecord.models.order')
+        %ul.list-group
+          %li.list-group-item
+            %b
+              #{t('name')}:
+            = @order.client_name
+          %li.list-group-item
+            %b
+              #{t('activerecord.attributes.user.phone')}:
+            +375-#{@order.client_phone}
+          %li.list-group-item
+            %b
+              #{t('activerecord.attributes.order.start_point')}:
+            = @order.start_point
+          %li.list-group-item
+            %b
+              #{t('activerecord.attributes.order.end_point')}:
+            = @order.end_point
+
+        -unless @order.invoice.nil?
+          %li.list-group-item
+            %b
+              #{t('activerecord.models.invoice')}:
+            #{@order.invoice.distance},
+            =@order.invoice.invoice_status.title
+      = link_to t('edit_order'), order_path(@order), class: 'btn btn-outline-success'
+      %div/
+      = link_to t('back'), orders_path
+%footer.text-center.footer-order
+  .footer-top
+    .container
+      .row
+        .footer-col.col-md-6
+          %h6
+            = link_to t('affiliates'), affiliates_path
+        .footer-col.col-md-6
+          %h6
+            = link_to t('about_us'),about_path
+  .footer-below
+    .container
+      .row
+        .col-md-12
+          = t('rights')
+
+    %footer.text-center.footer-order
+      .footer-top
+        .container
+          .row
+            .footer-col.col-md-6
+              %h6
+                = link_to t('affiliates'), affiliates_path, style: 'color: #ffc107'
+            .footer-col.col-md-6
+              %h6
+                = link_to t('about_us'),about_path, style: 'color: #ffc107'
+      .footer-below
+        .container
+          .row
+            .col-md-12
+              = t('rights')

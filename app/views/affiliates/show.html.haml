@@ -1,0 +1,58 @@
+%section.orders_table.text-center
+  .col-md-12
+    .container
+      %h2= @affiliate.name
+      %h4= @affiliate.address
+
+      %h2
+        = t('cars')
+      %hr.tax-line
+      -unless @cars.nil?
+        -@cars.each do |car|
+          .car-item
+            %ul.list-group
+              %li.list-group-item
+                %b
+                  = t('activerecord.attributes.car.brand')
+                = car.brand
+              %li.list-group-item
+                %b
+                  = t('activerecord.attributes.car.model')
+                = car.model
+              %li.list-group-item
+                %b
+                  = t('activerecord.attributes.car.reg_number')
+                = car.reg_number
+              %li.list-group-item
+                %b
+                  = t('activerecord.attributes.car.color')
+                = car.color
+              %li.list-group-item
+                %b
+                  = t('activerecord.attributes.car.style')
+                = car.style
+            %hr.tax-line
+      -else
+        %h3
+          = t('no_cars')
+      %div{style: 'padding-bottom: 100px'}/
+      - if can? :edit, Affiliate
+        = link_to 'Edit', edit_admin_affiliate_path(@affiliate), class: 'btn btn-outline-info btn-sm'
+      - if can? :destroy, Affiliate
+        = link_to 'Delete', admin_affiliate_path(@affiliate), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+%footer.text-center.footer-order
+  .footer-top
+    .container
+      .row
+        .footer-col.col-md-6
+          %h6
+            = link_to t('affiliates'), affiliates_path
+        .footer-col.col-md-6
+          %h6
+            = link_to t('about_us'),about_path
+  .footer-below
+    .container
+      .row
+        .col-md-12
+          = t('rights')
+

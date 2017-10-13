@@ -1,0 +1,52 @@
+// Place all the styles related to the admin/dashboard controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap"
+@import "cars"
+@import "orders"
+@import "font-awesome"
+@import "users"
+
+body.sticky-footer .content-wrapper 
+  overflow-x: hidden
+  background: #fff
+
+.sidenav
+  padding: 0 
+  height: 100vh
+  position: fixed
+  min-width: 230px
+  margin-top: 56px
+  top: 0
+  left: 0 
+  background-color:  #495057
+  ul
+    height: 100%
+    li
+      a
+        padding: 15px
+        color: white
+        display: block
+        &:hover
+          text-decoration: none
+          background-color: #495057
+
+.content-wrapper
+  margin-top: 56px
+  margin-left: 230px
+  padding: 40px 50px
+  
+.list-group
+  margin-bottom: 10px
+  margin-bottom: 10px
+
+.table 
+  margin-top: 10px
+span.span-margin
+  margin-left: 95px
+th
+  text-align: center
+form input[type='number']::-webkit-outer-spin-button,
+form input[type='number']::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0

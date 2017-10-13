@@ -1,0 +1,73 @@
+%section.text-center.client_new
+  .container
+    .row.justify-content-md-center
+      .col-md-5
+        .order_form_area
+          %h2.order-pad-top
+            = t('edit_profile')
+          = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+            = devise_error_messages!
+            .form-group
+              - if current_user.avatar.url.present?
+                = image_tag(current_user.avatar.url)
+                = f.label :remove_avatar do
+                  = f.check_box :remove_avatar
+              = f.label :avatar
+              = f.file_field :avatar, class: 'form-control'
+              = f.hidden_field :avatar_cache, class: 'form-control'
+            .form-group
+              = f.text_field :first_name, placeholder: t('activerecord.attributes.user.first_name'),
+                             autofocus: true, class: 'form-control'
+            .form-group
+              = f.text_field :last_name, placeholder: t('activerecord.attributes.user.last_name'), class: 'form-control'
+            .form-group
+              .input-group
+                %span.input-group-addon +375
+                = f.text_field :phone, placeholder: '25-123-45-67', class: 'form-control'
+            .form-group
+              .input-group.language
+                %span.input-group-addon.span-margin #{t('language')}
+                = f.select :language, User.languages.keys.map {|lang| [lang, lang]}
+            .form-group
+              = f.email_field :email, placeholder: 'Email', autofocus: true, class: 'form-control'
+            - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+              %div
+                Currently waiting confirmation for: #{resource.unconfirmed_email}
+            .form-group
+              = f.label :password
+              %i
+                = t('password_change')
+              = f.password_field :password, autocomplete: 'off', class: 'form-control'
+              - if @minimum_password_length
+                %em
+                  = @minimum_password_length
+                  = t('characters_minimum')
+            .form-group
+              = f.label :password_confirmation
+              = f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control'
+            .form-group
+              = f.label :current_password
+              %i
+                = t('confirm_changes')
+              = f.password_field :current_password, autocomplete: 'off', class: 'form-control'
+            .form-group
+              = f.submit t('submit'), class: 'btn btn-primary'
+              = link_to t('back'), root_path, class: 'btn btn-secondary'
+          %h3
+            = t('cancel_account')
+          #{button_to t('cancel_account'), registration_path(resource_name), data: { confirm: 'Are you sure?' }, method: :delete}
+%footer.text-center
+  .footer-top
+    .container
+      .row
+        .footer-col.col-md-6
+          %h6
+            = link_to t('affiliates'), affiliates_path
+        .footer-col.col-md-6
+          %h6
+            = link_to t('about_us'),about_path
+  .footer-below
+    .container
+      .row
+        .col-md-12
+          = t('rights')

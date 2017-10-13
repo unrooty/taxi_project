@@ -1,0 +1,10 @@
+%h1
+  = t('users')
+  - if can? :create, User
+    = link_to t('new_user'), new_admin_user_path, class: 'btn btn-outline-success pull-right'
+%p#notice
+  =notice
+
+.row
+  .col-sm-12
+    #users= render 'users'

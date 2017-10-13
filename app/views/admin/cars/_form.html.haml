@@ -1,0 +1,37 @@
+- if @car.errors.any?
+  .error
+    %h5.text-center
+      = t('error')
+      - @car.errors.full_messages.each do |message|
+        %h6.text-center
+          &#9899; #{message}
+
+
+= form_for [:admin, @car] do |form|
+  .row.justify-content-md-center.text-center
+    .col-md-3
+      .order_form_area
+        .form-group
+          = form.label :brand
+          = form.text_field :brand, class: 'form-control'
+        .form-group
+          = form.label :model
+          = form.text_field :model, class: 'form-control'
+        .form-group
+          = form.label :reg_number
+          = form.text_field :reg_number, placeholder: 'AA-0000-0', class: 'form-control'
+        .form-group
+          = form.label :color
+          = form.text_field :color, class: 'form-control'
+        .form-group
+          = form.label :style
+          = form.text_field :style, class: 'form-control'
+        .form-group
+          = form.label :affiliate
+          = form.collection_select :affiliate_id, Affiliate.all, :id, :name, {prompt: false}, {class: 'form-control'}
+        .form-group
+          = form.label :driver
+          = form.collection_select :user_id, User.where(role: 'driver'), :id, :full_name, {prompt: false}, {class: 'form-control'}
+        .actions
+          = form.submit t('submit'), class: 'btn btn-primary'
+          = link_to t('back'), admin_cars_path, class: 'btn btn-secondary'

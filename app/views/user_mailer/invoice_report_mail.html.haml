@@ -1,0 +1,20 @@
+%h1 #{t('invoice_info')}
+%h3
+  %ul.invoice-report
+    %li
+      #{t('activerecord.attributes.user.first_name')}: #{@user.first_name}
+    %li
+      #{t('activerecord.attributes.order.phone')}: +375-#{@user.orders.find(@invoice.order_id).client_phone}
+    %li
+      #{t('activerecord.attributes.order.start_point')}: #{@invoice.order.start_point}
+    %li
+      #{t('activerecord.attributes.order.end_point')}: #{@invoice.order.end_point}
+    %li
+      #{t('total_price')}: #{@invoice.total_price}
+    %li
+      #{t('activerecord.attributes.billing.payed_amount')}: #{@invoice.payed_amount}
+    %li
+      #{t('indebtedness')}: #{@invoice.indebtedness}
+- if @invoice.indebtedness > 0
+  %h3.invoice-report #{t('invoice_warning')}
+%h2.invoice-report #{t('welcome_email_intro4')}

@@ -1,0 +1,38 @@
+- if @order.errors.any?
+  .error
+    %h5
+      = t('error_order')
+      - @order.errors.full_messages.each do |message|
+        %h6
+          &#9899; #{message}
+.row.justify-content-md-center
+  .col-md-4
+    .order_form_area
+    = form_for [@order] do |form|
+      -if user_signed_in?
+        .form-group
+          = form.text_field :client_name, placeholder: t('name'),
+                            class: 'form-control', value: current_user.first_name
+      -else
+        .form-group
+          = form.text_field :client_name, placeholder: t('name'), class: 'form-control'
+      -if user_signed_in?
+        .form-group
+          .input-group
+            %span.input-group-addon +375
+            = form.text_field :client_phone, placeholder: '25-123-45-67',
+                              class: 'input-group form-control', value: current_user.phone
+      -else
+        .form-group
+          .input-group
+            %span.input-group-addon +375
+            = form.text_field :client_phone, placeholder: '25-123-45-67',
+                              class: 'input-group form-control'
+      .form-group
+        = form.text_field :start_point, placeholder: "#{t('start_point_new')}", class: 'form-control'
+      .form-group
+        = form.text_field :end_point, placeholder: "#{t('end_point_new')}", class: 'form-control'
+      .actions
+        = form.hidden_field :tax_id, value: @tax
+        = form.submit t('submit'), class: 'btn btn-primary'
+        = link_to t('back'), root_path, class: 'btn btn-secondary'

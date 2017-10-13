@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %meta{content: 'text/html; charset=UTF-8', 'http-equiv': 'Content-Type'}/
+    = wicked_pdf_stylesheet_link_tag 'pdf'
+  %body
+    %h1
+      = t('orders_report')
+    %h3.color-text
+      = t('greeting', user_first_name: @user.first_name, user_last_name: @user.last_name)
+    %table
+      %thead
+        %tr.head
+          %th #
+          %th
+            = t('activerecord.attributes.order.name')
+          %th
+            = t('activerecord.attributes.order.phone')
+          %th
+            = t('activerecord.attributes.order.start_point')
+          %th
+            = t('activerecord.attributes.order.end_point')
+      %tbody
+        - for order in @orders
+          %tr.body
+            %th
+              = order.id
+            %th
+              = order.client_name
+            %th
+              +375-#{order.client_phone}
+            %th
+              = order.start_point
+            %th
+              = order.end_point

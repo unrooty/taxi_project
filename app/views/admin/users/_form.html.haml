@@ -1,0 +1,45 @@
+- if @user.errors.any?
+  .error
+    %h5.text-center
+      = t('error')
+      - @user.errors.full_messages.each do |message|
+        %h6.text-center
+          &#9899; #{message}
+
+.row.justify-content-md-center.text-center
+  .col-md-3
+    .order_form_area
+      = form_for [:admin, @user] do |f|
+        .form-group
+          = f.label :first_name
+          %br/
+          = f.text_field :first_name, autofocus: true, class: 'form-control'
+        .form-group
+          = f.label :last_name
+          %br/
+          = f.text_field :last_name, class: 'form-control'
+        .form-group
+          = f.label :phone
+          %br/
+          .input-group
+            %span.input-group-addon +375
+            = f.text_field :phone, placeholder: '25-123-45-67', class: 'form-control'
+        .form-group
+          = f.label :email
+          %br/
+          = f.email_field :email, class: 'form-control'
+        .form-group
+          .input-group
+            %span.input-group-addon.span-margin= t('language')
+            = f.select :language, User.languages.keys.map {|lang| [lang, lang]}, class: 'form-control'
+        .form-group
+          = f.label :affiliate
+          %br/
+          = f.collection_select :affiliate_id, Affiliate.all, :id, :name, {:prompt=>true}, {:class=>'form-control'}
+        .form-group
+          .input-group.language
+            %span.input-group-addon.span-margin= t('activerecord.attributes.user.role')
+            = f.select(:role, User.roles.keys.map {|role| [t("role.#{role}"),role]})
+        .form-group
+          = f.submit t('submit'), class: 'btn btn-primary'
+          = link_to t('back'), admin_users_path, class: 'btn btn-secondary'

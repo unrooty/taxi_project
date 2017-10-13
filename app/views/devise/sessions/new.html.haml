@@ -1,0 +1,35 @@
+%section.text-center.sessions-new
+  .container
+    .row.justify-content-md-center
+      .col-md-4
+        .order_form_area
+          %h2
+            = t('log_in')
+            %h5.alert{style: 'color: red'}= alert
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            .form-group
+              = f.email_field :email, placeholder: 'Email', autofocus: true, class: 'form-control'
+            .form-group
+              = f.password_field :password,placeholder: t('activerecord.attributes.user.password') ,autocomplete: 'off', class: 'form-control'
+            - if devise_mapping.rememberable?
+              .form-group
+                = f.check_box :remember_me
+                = f.label :remember_me
+            .form-group
+              = f.submit t('log_in'), class: 'btn btn-success'
+    = link_to t('forgot_password'), new_password_path(resource_name), style: 'color: white'
+%footer.text-center.footer-order
+  .footer-top
+    .container
+      .row
+        .footer-col.col-md-6
+          %h6
+            = link_to t('affiliates'), affiliates_path
+        .footer-col.col-md-6
+          %h6
+            = link_to t('about_us'),about_path
+  .footer-below
+    .container
+      .row
+        .col-md-12
+          = t('rights')

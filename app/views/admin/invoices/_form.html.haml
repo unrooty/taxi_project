@@ -1,0 +1,30 @@
+.row.justify-content-md-center.text-center
+  .col-md-3
+    .order_form_area
+      %p
+        %b
+          #{t('activerecord.attributes.billing.distance')}:
+        #{@order.invoice.distance}
+      %div/
+      %p
+        %b
+          #{t('total_price')}:
+        #{@order.invoice.total_price}
+      %div/
+      %p
+        %b
+          #{t('activerecord.attributes.billing.payed_amount')}:
+        #{@order.invoice.payed_amount.round(2)}
+      %div/
+      %p
+        %b
+          #{t('indebtedness')}:
+        #{@order.invoice.indebtedness.round(2)}
+      = form_for [:admin, @order, @invoice] do |form|
+        .form-group
+          .input-group
+            %span.input-group-addon #{form.label t('surcharge')}
+            = form.number_field :payed_amount, value: @order.invoice.indebtedness, class: 'form-control', step: :any, onfocus: "this.value = ''"
+        .form-group
+          %p
+            = form.submit t('submit'), class: 'btn btn-primary'

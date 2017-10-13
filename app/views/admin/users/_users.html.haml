@@ -1,0 +1,34 @@
+%table.table
+  %thead.thead-inverse
+    %tr
+      %th #
+      %th
+        = t('activerecord.attributes.user.first_name')
+      %th
+        = t('activerecord.attributes.user.last_name')
+      %th
+        = t('activerecord.attributes.user.phone')
+      %th Email
+      %th
+        = t('activerecord.attributes.user.role')
+      %th 
+  %tbody
+    - for user in @users
+      %tr
+        %th 
+          = user.id
+        %th 
+          = user.first_name
+        %th 
+          = user.last_name
+        %th 
+          +375-#{user.phone}
+        %th
+          = user.email
+        %th
+          #{t("role.#{user.role}")}
+        %th 
+          - if can? :edit, User
+            = link_to t('edit'), edit_admin_user_path(user.id), class: 'btn btn-outline-info btn-sm'
+          - if can? :destroy, User
+            = link_to t('delete'), admin_user_path(user), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

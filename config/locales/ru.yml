@@ -1,0 +1,480 @@
+---
+ru:
+  role:
+    admin: 'Админ'
+    client: 'Клиент'
+    manager: 'Менеджер'
+    driver: 'Водитель'
+    accountant: 'Бухгалтер'
+    dispatcher: 'Диспетчер'
+  order_status:
+    fresh: 'Новый'
+    in_progress: 'В процессе'
+    completed: 'Выполнен'
+  invoice_status:
+    paid: 'Оплачен'
+    unpaid: 'Не оплачен'
+    partially_paid: 'Частично оплачен'
+  car_status:
+    free: 'Свободен'
+    ordered: 'Заказан'
+  activerecord:
+    models:
+      affiliate: 'Филиал'
+      car: 'Машина'
+      invoice: 'Счёт'
+      invoice_status: 'Статус счёта'
+      order: 'Заказ'
+      order_status: 'Статус заказа'
+      tax: 'Тариф'
+      user: 'Пользователь'
+      billing: 'Биллинг'
+    attributes:
+      user:
+        avatar: 'Аватар'
+        first_name: 'Имя'
+        last_name: 'Фамилия'
+        phone: 'Номер телефона'
+        password: 'Пароль'
+        password_confirmation: 'Подтверждение пароля'
+        affiliate: 'Филиал'
+        current_password: 'Текущий пароль'
+        role: 'Роль'
+        remember_me: 'Запомнить меня'
+      affiliate:
+        name: 'Название'
+        address: 'Адрес'
+      billing:
+        distance: 'Расстояние'
+        payed_amount: 'Уплачено'
+      invoice:
+        distance: 'Расстояние'
+      assign_car:
+        car: 'Машина'
+      car:
+        brand: 'Марка'
+        model: 'Модель'
+        color: 'Цвет'
+        reg_number: 'Регистрационный номер'
+        affiliate: 'Филиал'
+        driver: 'Водитель'
+        style: 'Тип кузова'
+        tax: 'Тариф'
+        status: 'Статус'
+      order:
+        client_name: 'Имя'
+        client_phone: 'Номер телефона'
+        start_point: 'Место отпраления'
+        end_point: 'Пункт назначения'
+        name: "Имя"
+        phone: "Номер телефона"
+      tax:
+        cost_per_km: 'Стоимость за км'
+        basic_cost: 'Начальная стоимость'
+        name: "Название"
+    errors:
+      models:
+        order:
+          attributes:
+            client_phone:
+              format: 'Invalid'
+      messages:
+        record_invalid: 'Возникли ошибки: %{errors}'
+        restrict_dependent_destroy:
+          has_one: 'Невозможно удалить запись, так как существует зависимость: %{record}'
+          has_many: 'Невозможно удалить запись, так как существуют зависимости: %{record}'
+  date:
+    abbr_day_names:
+    - Вс
+    - Пн
+    - Вт
+    - Ср
+    - Чт
+    - Пт
+    - Сб
+    abbr_month_names:
+    -
+    - янв.
+    - февр.
+    - марта
+    - апр.
+    - мая
+    - июня
+    - июля
+    - авг.
+    - сент.
+    - окт.
+    - нояб.
+    - дек.
+    day_names:
+    - воскресенье
+    - понедельник
+    - вторник
+    - среда
+    - четверг
+    - пятница
+    - суббота
+    formats:
+      default: "%d.%m.%Y"
+      long: "%-d %B %Y"
+      short: "%-d %b"
+    month_names:
+    -
+    - января
+    - февраля
+    - марта
+    - апреля
+    - мая
+    - июня
+    - июля
+    - августа
+    - сентября
+    - октября
+    - ноября
+    - декабря
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        few: около %{count} часов
+        many: около %{count} часов
+        one: около %{count} часа
+        other: около %{count} часа
+      about_x_months:
+        few: около %{count} месяцев
+        many: около %{count} месяцев
+        one: около %{count} месяца
+        other: около %{count} месяца
+      about_x_years:
+        few: около %{count} лет
+        many: около %{count} лет
+        one: около %{count} года
+        other: около %{count} лет
+      almost_x_years:
+        one: почти 1 год
+        few: почти %{count} года
+        many: почти %{count} лет
+        other: почти %{count} лет
+      half_a_minute: меньше минуты
+      less_than_x_minutes:
+        few: меньше %{count} минут
+        many: меньше %{count} минут
+        one: меньше %{count} минуты
+        other: меньше %{count} минуты
+      less_than_x_seconds:
+        few: меньше %{count} секунд
+        many: меньше %{count} секунд
+        one: меньше %{count} секунды
+        other: меньше %{count} секунды
+      over_x_years:
+        few: больше %{count} лет
+        many: больше %{count} лет
+        one: больше %{count} года
+        other: больше %{count} лет
+      x_days:
+        few: "%{count} дня"
+        many: "%{count} дней"
+        one: "%{count} день"
+        other: "%{count} дня"
+      x_minutes:
+        few: "%{count} минуты"
+        many: "%{count} минут"
+        one: "%{count} минуту"
+        other: "%{count} минуты"
+      x_months:
+        few: "%{count} месяца"
+        many: "%{count} месяцев"
+        one: "%{count} месяц"
+        other: "%{count} месяца"
+      x_years:
+        few: "%{count} года"
+        many: "%{count} лет"
+        one: "%{count} год"
+        other: "%{count} года"
+      x_seconds:
+        few: "%{count} секунды"
+        many: "%{count} секунд"
+        one: "%{count} секунду"
+        other: "%{count} секунды"
+    prompts:
+      day: День
+      hour: Часов
+      minute: Минут
+      month: Месяц
+      second: Секунд
+      year: Год
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: нужно подтвердить
+      blank: не может отсутсвовать
+      present: нужно оставить пустым
+      confirmation: не совпадает со значением поля %{attribute}
+      empty: не может отсутствовать
+      equal_to: может иметь лишь значение, равное %{count}
+      even: может иметь лишь нечетное значение
+      exclusion: имеет зарезервированное значение
+      greater_than: может иметь значение большее %{count}
+      greater_than_or_equal_to: может иметь значение большее или равное %{count}
+      inclusion: имеет непредусмотренное значение
+      invalid: имеет неверный формат
+      less_than: может иметь значение меньшее чем %{count}
+      less_than_or_equal_to: может иметь значение меньшее или равное %{count}
+      model_invalid: 'Возникли ошибки: %{errors}'
+      not_a_number: не является числом
+      not_an_integer: не является целым числом
+      odd: может иметь лишь четное значение
+      required: не может отсутствовать
+      taken: уже существует
+      too_long:
+        few: слишком большой длины (не может быть больше чем %{count} символа)
+        many: слишком большой длины (не может быть больше чем %{count} символов)
+        one: слишком большой длины (не может быть больше чем %{count} символ)
+        other: слишком большой длины (не может быть больше чем %{count} символа)
+      too_short:
+        few: недостаточной длины (не может быть меньше %{count} символов)
+        many: недостаточной длины (не может быть меньше %{count} символов)
+        one: недостаточной длины (не может быть меньше %{count} символа)
+        other: недостаточной длины (не может быть меньше %{count} символа)
+      wrong_length:
+        few: неверной длины (может быть длиной ровно %{count} символа)
+        many: неверной длины (может быть длиной ровно %{count} символов)
+        one: неверной длины (может быть длиной ровно %{count} символ)
+        other: неверной длины (может быть длиной ровно %{count} символа)
+      other_than: должно отличаться от %{count}
+    template:
+      body: 'Проблемы возникли со следующими полями:'
+      header:
+        few: "%{model}: сохранение не удалось из-за %{count} ошибок"
+        many: "%{model}: сохранение не удалось из-за %{count} ошибок"
+        one: "%{model}: сохранение не удалось из-за %{count} ошибки"
+        other: "%{model}: сохранение не удалось из-за %{count} ошибки"
+  helpers:
+    submit:
+      create: "Создать"
+      submit: 'Сохранить'
+      update: 'Сохранить'
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: руб.
+    format:
+      delimiter: " "
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion:
+            few: миллиардов
+            many: миллиардов
+            one: миллиард
+            other: миллиардов
+          million:
+            few: миллионов
+            many: миллионов
+            one: миллион
+            other: миллионов
+          quadrillion:
+            few: квадриллионов
+            many: квадриллионов
+            one: квадриллион
+            other: квадриллионов
+          thousand:
+            few: тысяч
+            many: тысяч
+            one: тысяча
+            other: тысяч
+          trillion:
+            few: триллионов
+            many: триллионов
+            one: триллион
+            other: триллионов
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: false
+        strip_insignificant_zeros: false
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            few: байта
+            many: байт
+            one: байт
+            other: байта
+          gb: ГБ
+          kb: КБ
+          mb: МБ
+          tb: ТБ
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " и "
+      two_words_connector: " и "
+      words_connector: ", "
+  time:
+    am: утра
+    formats:
+      default: "%a, %d %b %Y, %H:%M:%S %z"
+      long: "%d %B %Y, %H:%M"
+      short: "%d %b, %H:%M"
+    pm: вечера
+  cars: "Машины"
+  new_car: "Добавить машину"
+  title: "Таксопарк"
+  edit: "Редактировать"
+  delete: "Удалить"
+  address: "Адрес"
+  affiliates: "Филиалы"
+  create: "Добавить"
+  new_affiliate: "Новый филиал"
+  back: "Назад"
+  submit: "Сохранить"
+  edit_affiliate: "Редактирование филиала"
+  users: "Пользователи"
+  orders: "Список заказов"
+  taxes: "Тарифы"
+  edit_car: "Редактировать машину"
+  edit_user: "Редактировать пользователя"
+  new_order: "Новый заказ"
+  edit_order: "Редактировать заказ"
+  car: "Машина"
+  status: "Статус"
+  search: "Поиск"
+  search_order: "Поиск заказа по номеру телефона"
+  add_invoice: "Добавить счёт"
+  new_tax: "Новый тариф"
+  sign_in: "Войти"
+  sign_up: "Регистрация"
+  sign_out: "Выход"
+  signed_in: "Пользователь"
+  edit_profile: "Редактирование профиля"
+  confirm_changes: "(введите текущий пароль для подтверждения изменений)"
+  password_change: "(оставьте это поле пустым, если не хотите менять пароль)"
+  cancel_account: "Удалить аккаунт"
+  characters_minimum: "символов минимум"
+  log_in: "Вход"
+  forgot_password: "Забыли пароль?"
+  change_password: "Изменение пароля"
+  send_instructions: "Отправить инструкции"
+  confirmation_instructions: "Не получили письмо для подтверждения почты?"
+  unlock_instructions: "Не получили инструкции по разблокировке?"
+  send_orders: "Отправить отчёт о заказах на email"
+  orders_report: "Отчёт о заказах"
+  greeting: "Уважаемый %{user_first_name} %{user_last_name}! Этот отчёт содержит информацию о всех Ваших заказах. Спасибо что Вы с нами!"
+  get_pdf: "Получить отчёт в формате pdf"
+  name: "Имя"
+  about_us: "О нас"
+  send: "Отправить"
+  send_feedback: "Сообщение отправлено."
+  no_cars: "В этом филиале нет машин."
+  skills: "Комфорт. Скорость. Безопасноть."
+  welcome_home: "Добро пожаловать на сайт такси!"
+  make_order: "сделайте заказ прямо сейчас!"
+  register_home: "Регистрируйтесь и получайте дополнительные возможности и бонусы!"
+  free_ride: "Каждая 5-ая поездка бесплатно!"
+  discount: "При поездке на 15 км и более, скидка 10%!"
+  orders_report_home: "Получение отчёта о заказах по почте или в формате PDF!"
+  feedback: "Обратная связь"
+  message: "Сообщение"
+  rights: "Все права защищены, 2017"
+  error_order: "Не удалось отправить заказ:"
+  new_password: "Новый пароль"
+  confirm_new_password: "Подтвердите новый парол"
+  affiliate_updated: "Информация о филиале успешно обновлена."
+  affiliate_created: "Филиал %{affiliate_name} успешно добавлен."
+  order_now: "ЗАКАЗАТЬ СЕЙЧАС!"
+  sent_feedback: "отправи сообщение."
+  orders_report_intro: "Уважаемый %{user_first_name} %{user_last_name}, Таксопарк направляет Вам отчёт о заказах. Спасибо, что Вы с нами!"
+  tax_update: "Тариф успешно обновлён."
+  tax_create: "Тариф %{full_tax} успешно добавлен."
+  order_sent: "Отчёт о заказах успешно отправлен."
+  car_update: "Информация о машине успешно обновлена."
+  car_create: "Машина %{car_brand} %{car_model} успешно добавлена."
+  new_user: "Новый пользователь"
+  new_invoice: "New order"
+  assign_car: "Назначить машину"
+  start_point_new: "Откуда едем?"
+  end_point_new: "Куда едем?"
+  invalid_phone: "Введите телефон в корректном формате"
+  error_user_new: "Ошибка:"
+  language: "Язык"
+  welcome_email: "Добро пожаловать на сайт Таксопарка!"
+  welcome_email_intro1: "Добро пожаловать на сайт Таксопарка, %{user_first_name} %{user_last_name}!"
+  welcome_email_intro2: "Вы успешно зарегестрировались!"
+  welcome_email_intro3: "Чтобы посетить сайт, нажмите на ссылку:"
+  welcome_email_intro4: "Спасибо, что Вы с нами!"
+  confirm_account: "Перейдите по ссылке, чтобы подтвердить свой аккаунт:"
+  confirm_link: "Подтвердить аккаунт"
+  welcome: "Добро пожаловать,"
+  hello: "Здравствуйте,"
+  change_email: "Уведомляем Вас о том, что Ваш адрес электронной почты изменён на"
+  password_change_notify: "Уведомляем Вас о там, что Ваш пароль изменён."
+  reset_password_intro: "Выполнен запрос на изменение Вашего пароля. Пароль может быть изменён по ссылке ниже."
+  reset_password_info: "Если Вы не делали запрос на изменение пароля, проигнорируйте это сообщение. Ваш пароль не будет изменён, пока Вы не перейдёте по ссылке."
+  lock_account: "Ваш аккаунт был заблокирован после нескольких неудачных попыток входа в систему."
+  click_unlock: "Нажмите на ссылку ниже, чтобы разблокировать аккаунт:"
+  unlock_link: "Разблокировать мой аккаунт"
+  invoice_created: "Счёт успешно добавлен."
+  invoice_updated: "Счёт успешно обновлён."
+  order_created: "Заказ успешно создан."
+  order_updated: "Заказ успешно обновлён."
+  user_created: "Пользователь успешно создан."
+  user_updated: "Информация о пользователе успешно обновлена."
+  error_affiliate: "Невозможно добавить филиал:"
+  order_number: "Номер заказа"
+  send_feedback_button: "Отправить сообщение"
+  access_denied: "У Вас нет прав для доступа к этой странице."
+  record_not_found: "Запись не найдена."
+  must_choose_car: "Вы должны выбрать машину."
+  order_info: "Подробнее"
+  affiliate: "Филиал"
+  user_id: "Id пользователя"
+  back_to_cars: "Вернуться к списку машин"
+  indebtedness: "Задолженность"
+  total_price: 'Полная стоимость'
+  edit_invoice: "Редактировать счёт"
+  surcharge: "Доплата"
+  affiliate_personal: "Количество работников"
+  affiliate_personal_list: "Список работников"
+  invoice_deleted: "Заказ удалён"
+  check_correct: "Введите корректные данные!"
+  invoice_update_error: "Ошибка: доплата не может быть отрицательной."
+  error: "Ошибка сохранения:"
+  car_assigned: "Машина назначена."
+  car_assigned_error: "Машина уже заказана, выберите другую."
+  confirmation: "Вы уверены?"
+  order_accepted: "Заказ принят!"
+  directed: "Направлена машина"
+  expect_arrival: "Ожидайте прибытие."
+  car_already_assigned: "На заказ уже назначена машина."
+  invoice_info: "Информация о счёте"
+  invoice_warning: "Пожалуйста, погасите задолженность во избежание административной ответственности."
+  feedback_from: "Сообщение от"
+  to_users_list: "Перейти к списку пользователей"
+  order_destroyed: "Заказ удалён."
+  car_deleted: "Машина удалена."
+  affiliate_deleted: "Филиал удалён."
+  tax_deleted: "Тариф удалён."
+  user_deleted: "Пользователь удалён."
+  no_driver: "Нет водителя."

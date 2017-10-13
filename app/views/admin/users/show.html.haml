@@ -1,0 +1,43 @@
+.row.justify-content-md-center.text-center
+  .col-sm-4
+    %h2
+      #{t('user_id')}: #{@user.id}
+    %ul.list-group
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.user.first_name')}:
+        = @user.first_name
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.user.last_name')}:
+        = @user.last_name
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.user.phone')}:
+        = @user.phone
+      %li.list-group-item
+        %b Email:
+        = @user.email
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.user.role')}:
+        = t("role.#{@user.role}")
+      -unless @user.affiliate.nil?
+        %li.list-group-item
+          %b
+            #{t('affiliate')}:
+          = @user.affiliate.name
+
+    - if can? :edit, User
+      = link_to t('edit'), edit_admin_user_path(@user.id), class: 'btn btn-outline-info btn-sm'
+    - if can? :destroy, User
+      = link_to t('delete'), admin_user_path(@user), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+    %div/
+    = link_to t('to_users_list'), admin_users_path
+
+
+
+
+            
+
+

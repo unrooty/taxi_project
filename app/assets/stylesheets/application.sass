@@ -1,0 +1,81 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= #require_tree .
+ *= #require_self
+ */
+@import "bootstrap"
+@import "affiliates"
+@import "font-awesome"
+@import "home"
+@import "orders"
+@import "admin/dashboard"
+
+#mainNav
+  transition: .3s
+  font-family: Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif
+  font-size: 18px
+  text-transform: uppercase
+  border: none
+  background-color: black
+  padding: 25px 7% 25px 7%
+.btn-size
+  color: black
+  transition: .3s
+.btn-size:hover
+  color: #ffc107
+#mainNav.nav-shrink
+  transition: .3s
+  padding: 10px 4% 10px 4%
+  font-size: 12px
+.form-inline 
+  button 
+    margin-left: 10px
+.local
+    position: fixed
+    bottom: 0
+.pad-top
+  padding-top: 5px
+#main-link
+  color: #ffc107
+  font-size: 2em
+.extra-link
+  margin: 5px
+  padding-top: 25px
+.user-signed
+  padding-top: 20px
+  margin-right: 10px
+.floating
+  float: right
+.white-links
+  color: white
+.client_new
+  padding-top: 100px
+  background: #ffc107
+  padding-bottom: 150px
+  color: black
+.sessions-new
+  padding-top: 275px
+  padding-bottom: 325px
+  background-color: #ffc107
+li.list-group-item
+  border-bottom: 1px solid #17a2b8
+.error-color
+  color: red
+  li
+    list-style-type: decimal
+    text-align: left
+.language
+  text-align: left
+span.span-margin
+  margin-left: 150px
+

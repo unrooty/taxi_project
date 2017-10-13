@@ -1,0 +1,39 @@
+%h1.text-center
+  = t('car')
+.row.justify-content-md-center.text-center
+  .col-sm-4
+    %ul.list-group
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.car.brand')}:
+        = @car.brand
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.car.model')}:
+        = @car.model
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.car.reg_number')}:
+        = @car.reg_number
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.car.color')}:
+        = @car.color
+      %li.list-group-item
+        %b
+          #{t('status')}:
+        = t("car_status.#{@car.car_status}")
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.car.style')}:
+        = @car.style
+      %li.list-group-item
+        %b
+          #{t('activerecord.attributes.car.affiliate')}:
+        = @car.affiliate.name
+    - if can? :edit, Car
+      = link_to t('edit'), edit_admin_car_path(@car), class: 'btn btn-outline-info btn-sm'
+    - if can? :destroy, Car
+      = link_to t('delete'), admin_car_path(@car), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+    %div/
+    = link_to t('back_to_cars'), admin_cars_path
