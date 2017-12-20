@@ -1,6 +1,7 @@
 defaults: &defaults
   adapter: postgresql
   encoding: unicode
+  host: localhost
   pool: 5
   min_message: warning
   username: user

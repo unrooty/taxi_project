@@ -18,7 +18,6 @@ gem 'coffee-rails', '~> 4.2'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -37,15 +36,13 @@ gem 'font-awesome-rails'
 gem 'font-awesome-sass'
 gem 'haml'
 gem 'haml-rails'
-gem 'pronto'
-gem 'pronto-flay', require: false
-gem 'pronto-rubocop', require: false
 gem 'rails-i18n'
 gem 'redis'
 gem 'redis-namespace'
 gem 'redis-rack-cache'
 gem 'redis-rails'
 gem 'redis-store'
+gem 'rubocop', require: false
 # gem 'simplecov', :require => false, :group => :test
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
@@ -53,7 +50,7 @@ gem 'wkhtmltopdf-binary'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot'
   gem 'rspec-rails', '~> 3.6'
   # Call 'byebug' anywhere in the code to stop execution
   # and get a debugger console

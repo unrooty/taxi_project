@@ -5,8 +5,8 @@
     %title
       = t('title')
     = csrf_meta_tags
-    = stylesheet_link_tag    'admin/dashboard', media: 'all' , 'data-turbolinks-track': true
-    = javascript_include_tag 'admin/admin', media: 'all', 'data-turbolinks-track': true
+    = stylesheet_link_tag    'admin/dashboard', media: 'all'
+    = javascript_include_tag 'admin/admin', media: 'all'
   %body.fixed-nav.sticky-footer
     %nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
       %a.navbar-brand{href: admin_dashboard_index_path}
