@@ -23,7 +23,7 @@
       %li.list-group-item
         %b
           #{t('activerecord.models.tax')}:
-        = @order.tax.name
+        = @order.tax.nil? ? 'Укажите тариф.' : @order.tax.name
       -unless @order.car.nil?
         %li.list-group-item
           %b

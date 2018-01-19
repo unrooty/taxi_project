@@ -5,7 +5,7 @@
 %p#notice= notice
 %section.car
   .row.car-item 
-    - @cars.each do |car|
+    - @model.each do |car|
       - cache car do
         .col-sm-4.car-item
           %ul.list-group
@@ -16,7 +16,7 @@
             %li.list-group-item
               %b
                 #{t('activerecord.attributes.car.model')}:
-              = car.model
+              = car.car_model
             %li.list-group-item
               %b
                 #{t('activerecord.attributes.car.reg_number')}:

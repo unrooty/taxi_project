@@ -1,4 +1,4 @@
-%h1.text-center #{@affiliate.name}
+%h1.text-center #{@model.name}
 %h3.text-center #{t('affiliate_personal_list')}
 %table.table
   %thead.thead-inverse
@@ -15,7 +15,7 @@
         = t('activerecord.attributes.user.role')
       %th
   %tbody
-    - for worker in @workers
+    - for worker in @_result['workers']
       %tr
         %th
           = worker.id

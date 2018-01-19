@@ -4,39 +4,36 @@ class OrdersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @orders = current_user.orders.all
+    run Order::Index, params, current_user: current_user
   end
 
   def new
-    @order = Order.new
-    @tax = Tax.find_by(name: 'Basic').id
+    run Order::Create::Present
+    # @tax = Tax.find_by(name: 'Basic').id
   end
 
   def show
-    @status = @order.order_status
+    run Order::Show
   end
 
-  def edit; end
+  def edit
+    run Order::Update::Present
+  end
 
   def create
-    @order = Order.new(order_params)
-    @order.tax_id = Tax.find_by_name('Basic').id
-    if @order.save && user_signed_in?
-      @order.update(user_id: current_user.id)
-      redirect_to order_path(@order.id), notice: t('order_created')
-    elsif @order.save && !user_signed_in?
-      redirect_to order_path(@order)
-    else
-      render 'new'
+    run Order::Create, params, current_user: current_user do
+      return redirect_to root_path, notice: t('order_created')
     end
+
+    render :new
   end
 
   def update
-    if @order.update(order_params)
-      redirect_to order_path(@order.id), notice: t('order_updated')
-    else
-      render :edit
+    run Order::Update do
+      return redirect_to root_path, notice: t('order_updated')
     end
+
+    render :edit
   end
 
   def destroy

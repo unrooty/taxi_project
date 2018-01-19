@@ -1,14 +1,14 @@
 %section.orders_table.text-center
   .col-md-12
     .container
-      %h2= @affiliate.name
-      %h4= @affiliate.address
+      %h2= @model.name
+      %h4= @model.address
 
       %h2
         = t('cars')
       %hr.tax-line
-      -unless @cars.nil?
-        -@cars.each do |car|
+      -unless @model.cars.nil?
+        -@model.cars.each do |car|
           .car-item
             %ul.list-group
               %li.list-group-item
@@ -37,9 +37,9 @@
           = t('no_cars')
       %div{style: 'padding-bottom: 100px'}/
       - if can? :edit, Affiliate
-        = link_to 'Edit', edit_admin_affiliate_path(@affiliate), class: 'btn btn-outline-info btn-sm'
+        = link_to 'Edit', edit_admin_affiliate_path(@model), class: 'btn btn-outline-info btn-sm'
       - if can? :destroy, Affiliate
-        = link_to 'Delete', admin_affiliate_path(@affiliate), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+        = link_to 'Delete', admin_affiliate_path(@model), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
 %footer.text-center.footer-order
   .footer-top
     .container

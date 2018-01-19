@@ -4,7 +4,7 @@ module Admin
     before_action :set_user, only: %i[edit update destroy show]
 
     def index
-      @users = User.all
+      run User::Index
     end
 
     def new

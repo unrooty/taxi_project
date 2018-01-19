@@ -17,9 +17,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
-    get 'affiliate/:id/affiliate_workers',
-        to: 'affiliates#affiliate_workers',
-        as: :affiliate_workers
+    get 'affiliate/:id/show_affiliate_workers',
+        to: 'affiliates#show_affiliate_workers',
+        as: :show_affiliate_workers
     resources :users
     resources :affiliates
     resources :taxes

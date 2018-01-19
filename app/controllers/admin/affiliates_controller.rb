@@ -1,59 +1,53 @@
 module Admin
   #
   class AffiliatesController < AdminController
-    before_action :set_affiliate, only: %i[show edit update
-                                           destroy affiliate_workers]
 
     def index
-      @affiliates = Affiliate.all
-    end
-
-    def show
-      @cars = @affiliate.cars
+      run Affiliate::Index
     end
 
     def new
-      @affiliate = Affiliate.new
+      run Affiliate::Create::Present
     end
 
-    def edit; end
-
     def create
-      @affiliate = Affiliate.new(affiliate_params)
-      if @affiliate.save
-        redirect_to admin_affiliates_path,
-                    notice: t('affiliate_created',
-                              affiliate_name: @affiliate.name)
-      else
-        render :new
+      run Affiliate::Create do
+        return redirect_to admin_affiliates_path,
+                           notice: t('affiliate_created',
+                                     affiliate_name: @model.name)
       end
+
+      render :new
+    end
+
+    def show
+      run Affiliate::Show
+    end
+
+    def edit
+      run Affiliate::Update::Present
     end
 
     def update
-      if @affiliate.update(affiliate_params)
-        redirect_to admin_affiliates_path, notice: t('affiliate_updated')
-      else
-        render :edit
+      run Affiliate::Update do
+        return redirect_to admin_affiliates_path,
+                           notice: t('affiliate_updated')
       end
+
+      render :edit
     end
 
     def destroy
-      @affiliate.destroy
-
-      redirect_to admin_affiliates_path, notice: t('affiliate_deleted')
+      run Affiliate::Delete do
+        redirect_to admin_affiliates_path, notice: t('affiliate_deleted')
+      end
     end
 
-    def affiliate_workers
-      @workers = @affiliate.users.where.not(role: :client)
+    def show_affiliate_workers
+      run Affiliate::ShowAffiliateWorkers
     end
 
     private
-
-    def set_affiliate
-      @affiliate = Affiliate.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_affiliates_path, notice: t('record_not_found')
-    end
 
     def affiliate_params
       params.require(:affiliate).permit(:name, :address)

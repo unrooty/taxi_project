@@ -6,34 +6,34 @@
       %li.list-group-item
         %b
           #{t('activerecord.attributes.car.brand')}:
-        = @car.brand
+        = @model.brand
       %li.list-group-item
         %b
           #{t('activerecord.attributes.car.model')}:
-        = @car.model
+        = @model.car_model
       %li.list-group-item
         %b
           #{t('activerecord.attributes.car.reg_number')}:
-        = @car.reg_number
+        = @model.reg_number
       %li.list-group-item
         %b
           #{t('activerecord.attributes.car.color')}:
-        = @car.color
+        = @model.color
       %li.list-group-item
         %b
           #{t('status')}:
-        = t("car_status.#{@car.car_status}")
+        = t("car_status.#{@model.car_status}")
       %li.list-group-item
         %b
           #{t('activerecord.attributes.car.style')}:
-        = @car.style
+        = @model.style
       %li.list-group-item
         %b
           #{t('activerecord.attributes.car.affiliate')}:
-        = @car.affiliate.name
+        = @model.affiliate.name
     - if can? :edit, Car
-      = link_to t('edit'), edit_admin_car_path(@car), class: 'btn btn-outline-info btn-sm'
+      = link_to t('edit'), edit_admin_car_path(@model), class: 'btn btn-outline-info btn-sm'
     - if can? :destroy, Car
-      = link_to t('delete'), admin_car_path(@car), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+      = link_to t('delete'), admin_car_path(@model), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
     %div/
     = link_to t('back_to_cars'), admin_cars_path

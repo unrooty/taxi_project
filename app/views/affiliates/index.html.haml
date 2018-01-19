@@ -8,7 +8,7 @@
         =notice
 
 
-      - @affiliates.each do |affiliate|
+      - @model.each do |affiliate|
         %section.affiliate
           - cache affiliate do
             %h2.affiliate-name= link_to affiliate.name, affiliate

@@ -6,9 +6,6 @@ class Order < ApplicationRecord
   has_one :invoice
   before_create :default_order_status
 
-  validates :start_point, :end_point, :client_name, presence: true
-  validates :client_phone, presence: true, format: /\A\d{2}-\d{3}-\d{2}-\d{2}\z/
-
   enum order_status: %i[fresh in_progress completed]
 
   private
