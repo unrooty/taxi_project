@@ -1,42 +1,31 @@
 module Admin
   #
   class InvoicesController < AdminController
-    before_action :set_order, only: %i[edit update destroy show]
 
-    def edit; end
+    def new
+      run Admin::Invoice::Create::Present
+    end
+
+    def create
+      p params
+      run Admin::Invoice::Create do
+        return redirect_to admin_orders_path, notice: t('invoice_created')
+      end
+
+      render :new
+    end
+
+    def edit
+      run Admin::Invoice::Update::Present
+    end
 
     def update
-      @invoice = InvoiceUpdateService.new(invoice: Invoice.find(params[:id]),
-                                          external_amount:
-                                              invoice_params[:payed_amount])
-      if @invoice.update_invoice
-        redirect_to admin_orders_path, notice: t('invoice_updated')
-      else
-        redirect_to edit_admin_order_invoice_path,
-                    notice: t('invoice_update_error')
+      run Admin::Invoice::Update do
+        return redirect_to admin_orders_path, notice: t('invoice_updated')
       end
+
+      render :edit
     end
-
-    def destroy
-      @invoice = @order.invoices.find(params[:id])
-      @invoice.destroy
-
-      redirect_to admin_order_path(@order)
-    end
-
-    private
-
-    def set_order
-      @order = Order.find(params[:order_id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_orders_path, notice: t('record_not_found')
-    end
-
-    def invoice_params
-      params.require(:invoice).permit(:invoice_status,
-                                      :order_id,
-                                      :payed_amount,
-                                      :distance)
-    end
+    
   end
 end

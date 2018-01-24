@@ -1,6 +1,6 @@
 # Car model class
 class Car < ApplicationRecord
-  belongs_to :affiliate, touch: true
+  belongs_to :affiliate
   belongs_to :user, -> { where role: 'driver' }
   has_many :orders
 

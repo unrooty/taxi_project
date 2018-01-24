@@ -1,10 +1,13 @@
+module Admin::Affiliate
+  class Index < Trailblazer::Operation
 
-class Affiliate::Index < Trailblazer::Operation
+    step :model!
 
-  step :model!
+    private
 
-  def model!(options, *)
-    options['model'] = Affiliate.all
+    def model!(options, *)
+      options['model'] = Affiliate.all
+    end
+
   end
-
 end

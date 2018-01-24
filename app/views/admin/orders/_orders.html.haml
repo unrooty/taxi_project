@@ -14,7 +14,7 @@
         = t('activerecord.models.invoice')
       %th
   %tbody
-    - for order in @orders
+    - for order in @model
       %tr{id: "order-#{order.id}"}
         %th
           = order.id
@@ -26,10 +26,10 @@
           = t("order_status.#{order.order_status}")
         %th
           - if order.car.nil?
-            = link_to t('assign_car'), new_admin_order_assigned_car_path(order.id), class: 'btn btn-primary btn-sm'
+            = link_to t('assign_car'), new_admin_order_car_assignment_path(order.id), class: 'btn btn-primary btn-sm'
             %th
           -else
-            #{order.car.brand} #{order.car.model}, #{order.car.reg_number}
+            #{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}
             - unless order.invoice.nil?
               - if order.invoice.invoice_status == 'paid'
                 %th
@@ -44,7 +44,7 @@
             - else
               %th
                 - if can? :create, Invoice
-                  = link_to t('add_invoice'), new_admin_order_billing_path(order.id), class: 'btn btn-primary btn-sm'
+                  = link_to t('add_invoice'), new_admin_order_invoice_path(order.id), class: 'btn btn-primary btn-sm'
         %th
           = link_to t('order_info'), admin_order_path(order.id), class: 'btn btn-outline-primary btn-sm'
           = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

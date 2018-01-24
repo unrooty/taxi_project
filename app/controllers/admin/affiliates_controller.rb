@@ -3,15 +3,15 @@ module Admin
   class AffiliatesController < AdminController
 
     def index
-      run Affiliate::Index
+      run Admin::Affiliate::Index
     end
 
     def new
-      run Affiliate::Create::Present
+      run Admin::Affiliate::Create::Present
     end
 
     def create
-      run Affiliate::Create do
+      run Admin::Affiliate::Create do
         return redirect_to admin_affiliates_path,
                            notice: t('affiliate_created',
                                      affiliate_name: @model.name)
@@ -21,15 +21,15 @@ module Admin
     end
 
     def show
-      run Affiliate::Show
+      run Admin::Affiliate::Show
     end
 
     def edit
-      run Affiliate::Update::Present
+      run Admin::Affiliate::Update::Present
     end
 
     def update
-      run Affiliate::Update do
+      run Admin::Affiliate::Update do
         return redirect_to admin_affiliates_path,
                            notice: t('affiliate_updated')
       end
@@ -38,19 +38,14 @@ module Admin
     end
 
     def destroy
-      run Affiliate::Delete do
+      run Admin::Affiliate::Delete do
         redirect_to admin_affiliates_path, notice: t('affiliate_deleted')
       end
     end
 
     def show_affiliate_workers
-      run Affiliate::ShowAffiliateWorkers
+      run Admin::Affiliate::ShowAffiliateWorkers
     end
 
-    private
-
-    def affiliate_params
-      params.require(:affiliate).permit(:name, :address)
-    end
   end
 end

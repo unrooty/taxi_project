@@ -404,7 +404,7 @@ ru:
   affiliate_updated: "Информация о филиале успешно обновлена."
   affiliate_created: "Филиал %{affiliate_name} успешно добавлен."
   order_now: "ЗАКАЗАТЬ СЕЙЧАС!"
-  sent_feedback: "отправи сообщение."
+  sent_feedback: "отправил(а) сообщение."
   orders_report_intro: "Уважаемый %{user_first_name} %{user_last_name}, Таксопарк направляет Вам отчёт о заказах. Спасибо, что Вы с нами!"
   tax_update: "Тариф успешно обновлён."
   tax_create: "Тариф %{full_tax} успешно добавлен."

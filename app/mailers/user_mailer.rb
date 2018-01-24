@@ -28,7 +28,7 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: t('order_info'))
   end
 
-  def assigned_car_mail(user, car)
+  def car_assignment_mail(user, car)
     @user = user
     @car = car
     mail(to: @user.email, subject: t('car'))

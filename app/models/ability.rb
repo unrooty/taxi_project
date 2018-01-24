@@ -35,7 +35,7 @@ class Ability
     elsif user.accountant?
       can :read, :all
     elsif user.client?
-      can :pdf_orders, Object
+      can :generate_orders_pdf, Object
       can :send_orders_mail, Order
       can :create, Order
       can :update, Order

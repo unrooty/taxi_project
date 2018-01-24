@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[edit update show]
+  respond_to :js
   before_action :authenticate_user!, except: %i[new create show]
   load_and_authorize_resource
 
@@ -9,7 +9,6 @@ class OrdersController < ApplicationController
 
   def new
     run Order::Create::Present
-    # @tax = Tax.find_by(name: 'Basic').id
   end
 
   def show
@@ -37,41 +36,30 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order.car.update(car_status: 0) unless @order.car.nil?
-    @order.destroy
-    respond_to do |format|
-      format.js do
-        flash.now[:notice] = t('invoice_deleted')
-      end
+    run Order::Delete do
+      flash[:notice] = t('order_destroyed')
     end
   end
 
   def send_orders_mail
-    @orders = current_user.orders.all
+    run Order::SendOrdersMail, params, current_user: current_user do
+      redirect_to orders_path, notice: t('order_sent')
+    end
 
-    UserMailer.send_orders_mail(current_user, @orders).deliver
-    flash[:notice] = t('order_sent')
-    redirect_to orders_path
   end
 
-  def pdf_orders
+  def generate_orders_pdf
     @user = current_user
     @orders = @user.orders.all
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: 'pdf_orders.pdf.haml'
+        render pdf: 'generate_orders_pdf.pdf.haml'
       end
     end
   end
 
   private
-
-  def set_order
-    @order = Order.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, notice: t('record_not_found')
-  end
 
   def order_params
     params.require(:order).permit(

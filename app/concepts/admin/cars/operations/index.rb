@@ -1,7 +1,11 @@
-class Car::Index < Trailblazer::Operation
-  step :model!
+module Admin::Car
+  class Index < Trailblazer::Operation
+    step :model!
 
-  def model!(options, *)
-    options['model'] = Car.all
+    private
+
+    def model!(options, *)
+      options['model'] = Car.all
+    end
   end
 end

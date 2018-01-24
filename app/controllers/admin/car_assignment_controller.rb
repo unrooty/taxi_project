@@ -1,22 +1,22 @@
 module Admin
   #
-  class AssignedCarController < AdminController
+  class CarAssignmentController < AdminController
     def new
-      @assigned_car = AssignedCar.new
+      @car_assignment = AssignedCar.new
     end
 
     def create
-      @assigned_car = AssignedCar.new(assigned_car_params.merge(order_id:
+      @car_assignment = AssignedCar.new(car_assignment_params.merge(order_id:
                                                                     params[
                                                                         :order_id
                                                                     ]))
-      if @assigned_car.save == 0
-        @assigned_car.send_letter
+      if @car_assignment.save == 0
+        @car_assignment.send_letter
         redirect_to admin_orders_path, notice: t('car_assigned')
-      elsif @assigned_car.save == 1
-        redirect_to new_admin_order_assigned_car_path,
+      elsif @car_assignment.save == 1
+        redirect_to new_admin_order_car_assignment_path,
                     alert: t('car_assigned_error')
-      elsif @assigned_car.save == 2
+      elsif @car_assignment.save == 2
         redirect_to admin_orders_path, alert: t('car_already_assigned')
       else
         redirect_to admin_orders_path, alert: t('car_already_assigned')
@@ -25,7 +25,7 @@ module Admin
 
     private
 
-    def assigned_car_params
+    def car_assignment_params
       params.require(:assigned_car).permit(:car_id)
     end
   end

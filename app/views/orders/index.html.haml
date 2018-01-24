@@ -8,7 +8,7 @@
         %h5
           = link_to t('send_orders'), send_orders_mail_path, style: 'float: right'
           %br/
-          = link_to t('get_pdf'), pdf_orders_path(format: :pdf), style: 'float: right', target: '_blank'
+          = link_to t('get_pdf'), generate_orders_pdf_path(format: :pdf), style: 'float: right', target: '_blank'
       #{ link_to t('new_order'), new_order_path, class: 'btn btn-outline-info'}
     .row
       .col-md-12

@@ -1,13 +1,13 @@
-- if @order.errors.any?
+- if @form.errors.any?
   .error
     %h5.text-center
       = t('error')
-      - @order.errors.full_messages.each do |message|
+      - @form.errors.full_messages.each do |message|
         %h6.text-center
           &#9899; #{message}
 
 
-= form_for [:admin, @order] do |form|
+= form_for [:admin, @model] do |form|
   .row.justify-content-md-center.text-center
     .col-md-4
       .order_form_area

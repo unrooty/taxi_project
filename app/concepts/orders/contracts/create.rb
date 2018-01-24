@@ -15,5 +15,6 @@ module Order::Contract
     validates :client_phone, presence: true,
                              format: /\A\d{2}-\d{3}-\d{2}-\d{2}\z/
     #:validation end
+
   end
 end

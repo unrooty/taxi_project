@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get 'orders/send_orders_mail',
       to: 'orders#send_orders_mail',
       as: :send_orders_mail
-  get 'orders/pdf_orders', to: 'orders#pdf_orders', as: :pdf_orders
+  get 'orders/generate_orders_pdf',
+      to: 'orders#generate_orders_pdf',
+      as: :generate_orders_pdf
   get 'feedback', to: 'home#feedback_mail', as: :feedback
   post '', to: 'home#feedback_mail', as: '/'
   root to: 'home#index'
@@ -25,12 +27,10 @@ Rails.application.routes.draw do
     resources :taxes
     resources :cars
     resources :user, controller: 'admin/users'
-    resources :invoice_statuses, only: [:index]
     resources :order_statuses, only: [:index]
     resources :orders do
       resources :invoices
-      resources :billing, only: %i[new create edit update]
-      resources :assigned_car, only: %i[new create]
+      resources :car_assignment, only: %i[new create]
     end
   end
   match '*path', to: 'home#routing_error', via: %i[get post put delete]

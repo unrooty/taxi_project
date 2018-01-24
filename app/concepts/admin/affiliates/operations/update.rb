@@ -1,11 +1,13 @@
-class Affiliate::Update < Trailblazer::Operation
-  extend Contract::DSL
-  class Present < Trailblazer::Operation
-    step Model(Affiliate, :find_by)
-    step Contract::Build(constant: Affiliate::Contract::Create)
-  end
+module Admin::Affiliate
+  class Update < Trailblazer::Operation
+    extend Update::Contract::DSL
+    class Present < Trailblazer::Operation
+      step Model(Affiliate, :find_by)
+      step self::Contract::Build(constant: Admin::Affiliate::Contract::Create)
+    end
 
-  step Nested(Present)
-  step Contract::Validate(key: :affiliate)
-  step Contract::Persist()
+    step Nested(Present)
+    step self::Contract::Validate(key: :affiliate)
+    step self::Contract::Persist()
+  end
 end

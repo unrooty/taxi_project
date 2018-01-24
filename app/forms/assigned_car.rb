@@ -37,7 +37,7 @@ class AssignedCar
     if order.user_id
       car = Car.find(car_id)
       user = User.find(order.user_id)
-      UserMailer.delay.assigned_car_mail(user, car)
+      UserMailer.delay.car_assignment_mail(user, car)
     else
       true
     end

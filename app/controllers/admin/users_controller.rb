@@ -1,59 +1,44 @@
 module Admin
   #
   class UsersController < AdminController
-    before_action :set_user, only: %i[edit update destroy show]
 
     def index
-      run User::Index
+      run Admin::User::Index
     end
 
     def new
-      @user = User.new
+      run Admin::User::Create::Present
     end
 
-    def show; end
+    def show
+      run Admin::User::Show
+    end
 
-    def edit; end
+    def edit
+      run Admin::User::Update::Present
+    end
 
     def create
-      @user = User.new(user_params)
-      if @user.save
-        redirect_to admin_user_path(@user.id), notice: t('user_created')
-      else
-        render :new
+      run Admin::User::Create do
+        return redirect_to admin_users_path, notice: t('user_created')
       end
+
+      render :new
     end
 
     def update
-      if @user.update(user_params)
-        redirect_to admin_user_path(@user.id), notice: t('user_updated')
-      else
-        render :edit
+      run Admin::User::Update do
+        return redirect_to admin_user_path(@model.id), notice: t('user_updated')
       end
+
+      render :edit
     end
 
     def destroy
-      @user.destroy
-
-      redirect_to admin_users_path, notice: t('user_deleted')
+      run Admin::User::Delete do
+        redirect_to admin_users_path, notice: t('user_deleted')
+      end
     end
 
-    private
-
-    def set_user
-      @user = User.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_users_path, notice: t('record_not_found')
-    end
-
-    def user_params
-      params.require(:user).permit(:first_name,
-                                   :last_name,
-                                   :phone,
-                                   :email,
-                                   :affiliate_id,
-                                   :role,
-                                   :language)
-    end
   end
 end
