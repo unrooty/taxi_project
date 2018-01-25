@@ -29,7 +29,7 @@
             = link_to t('assign_car'), new_admin_order_car_assignment_path(order.id), class: 'btn btn-primary btn-sm'
             %th
           -else
-            #{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}
+            =link_to "#{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}", edit_admin_order_car_assignment_path(order.id)
             - unless order.invoice.nil?
               - if order.invoice.invoice_status == 'paid'
                 %th

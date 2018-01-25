@@ -478,3 +478,5 @@ ru:
   tax_deleted: "Тариф удалён."
   user_deleted: "Пользователь удалён."
   no_driver: "Нет водителя."
+  reassign_car: "Переназначить машину"
+  car_reassigned: "Машина переназначена"

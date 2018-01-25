@@ -2,31 +2,27 @@ module Admin
   #
   class CarAssignmentController < AdminController
     def new
-      @car_assignment = AssignedCar.new
+      run Admin::CarAssignment::Create::Present
     end
 
     def create
-      @car_assignment = AssignedCar.new(car_assignment_params.merge(order_id:
-                                                                    params[
-                                                                        :order_id
-                                                                    ]))
-      if @car_assignment.save == 0
-        @car_assignment.send_letter
-        redirect_to admin_orders_path, notice: t('car_assigned')
-      elsif @car_assignment.save == 1
-        redirect_to new_admin_order_car_assignment_path,
-                    alert: t('car_assigned_error')
-      elsif @car_assignment.save == 2
-        redirect_to admin_orders_path, alert: t('car_already_assigned')
-      else
-        redirect_to admin_orders_path, alert: t('car_already_assigned')
+      run Admin::CarAssignment::Create do
+        return redirect_to admin_orders_path, notice: t('car_assigned')
       end
+      flash.now[:alert] = "Car can't be assigned."
+      render :new
     end
 
-    private
+    def edit
+      run Admin::CarAssignment::Update::Present
+    end
 
-    def car_assignment_params
-      params.require(:assigned_car).permit(:car_id)
+    def update
+      run Admin::CarAssignment::Update do
+        return redirect_to admin_orders_path, notice: t('car_reassigned')
+      end
+      flash.now[:alert] = "Car can't be assigned."
+      render :edit
     end
   end
 end

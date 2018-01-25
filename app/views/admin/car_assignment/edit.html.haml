@@ -1,6 +1,6 @@
-%h1.text-center #{t('assign_car')}
+%h1.text-center #{t('reassign_car')}
 %h5#alert.text-center.error= alert
-= form_for @model, as: 'car_assignment', url: {action: 'create'} do |form|
+= form_for @model, as: 'car_assignment', url: {action: 'update'} do |form|
   .row.justify-content-md-center.text-center
     .col-md-4
       .order_form_area
