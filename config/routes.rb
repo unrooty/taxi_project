@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get 'orders/send_orders_mail',
       to: 'orders#send_orders_mail',
       as: :send_orders_mail
-  get 'orders/pdf_orders', to: 'orders#pdf_orders', as: :pdf_orders
+  get 'orders/generate_orders_pdf',
+      to: 'orders#generate_orders_pdf',
+      as: :generate_orders_pdf
   get 'feedback', to: 'home#feedback_mail', as: :feedback
   post '', to: 'home#feedback_mail', as: '/'
   root to: 'home#index'
@@ -17,20 +19,31 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
-    get 'affiliate/:id/affiliate_workers',
-        to: 'affiliates#affiliate_workers',
-        as: :affiliate_workers
+    get 'affiliate/:id/show_affiliate_workers',
+        to: 'affiliates#show_affiliate_workers',
+        as: :show_affiliate_workers
     resources :users
     resources :affiliates
     resources :taxes
     resources :cars
     resources :user, controller: 'admin/users'
-    resources :invoice_statuses, only: [:index]
     resources :order_statuses, only: [:index]
     resources :orders do
       resources :invoices
-      resources :billing, only: %i[new create edit update]
-      resources :assigned_car, only: %i[new create]
+      resource :car_assignment, only: %i[new create] do
+      get 'edit',
+          to: 'car_assignment#edit',
+          as: :edit
+      post 'update',
+               to: 'car_assignment#update',
+               as: :update
+      end
+      #post '/update',
+      #    to: 'car_assignment#update',
+       #   as: :update_car_assignment
+      #patch'car_assignment/update',
+       #    to: 'car_assignment#update',
+       #    as: :update_car_assignment
     end
   end
   match '*path', to: 'home#routing_error', via: %i[get post put delete]

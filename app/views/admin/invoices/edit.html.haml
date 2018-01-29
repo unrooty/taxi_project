@@ -1,4 +1,33 @@
 %h2.text-center
   = t('edit_invoice')
   %h4#notice.text-center.error= notice
-= render 'form', invoice: @invoice
+.row.justify-content-md-center.text-center
+  .col-md-3
+    .order_form_area
+      %p
+        %b
+          #{t('activerecord.attributes.billing.distance')}:
+        #{@model.distance}
+      %div/
+      %p
+        %b
+          #{t('total_price')}:
+        #{@model.total_price}
+      %div/
+      %p
+        %b
+          #{t('activerecord.attributes.billing.payed_amount')}:
+        #{@model.payed_amount.round(2)}
+      %div/
+      %p
+        %b
+          #{t('indebtedness')}:
+        #{@model.indebtedness.round(2)}
+      = form_for @model, url: {action: 'update'} do |form|
+        .form-group
+          .input-group
+            %span.input-group-addon #{form.label t('surcharge')}
+            = form.number_field :additional_amount, value: @model.indebtedness, class: 'form-control', step: :any, onfocus: "this.value = ''"
+        .form-group
+          %p
+            = form.submit t('submit'), class: 'btn btn-primary'

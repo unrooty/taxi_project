@@ -8,27 +8,27 @@
           %li.list-group-item
             %b
               #{t('name')}:
-            = @order.client_name
+            = @model.client_name
           %li.list-group-item
             %b
               #{t('activerecord.attributes.user.phone')}:
-            +375-#{@order.client_phone}
+            +375-#{@model.client_phone}
           %li.list-group-item
             %b
               #{t('activerecord.attributes.order.start_point')}:
-            = @order.start_point
+            = @model.start_point
           %li.list-group-item
             %b
               #{t('activerecord.attributes.order.end_point')}:
-            = @order.end_point
+            = @model.end_point
 
-        -unless @order.invoice.nil?
+        -unless @model.invoice.nil?
           %li.list-group-item
             %b
               #{t('activerecord.models.invoice')}:
-            #{@order.invoice.distance},
-            =@order.invoice.invoice_status.title
-      = link_to t('edit_order'), order_path(@order), class: 'btn btn-outline-success'
+            #{@model.invoice.distance},
+            =@model.invoice.invoice_status.title
+      = link_to t('edit_order'), order_path(@model), class: 'btn btn-outline-success'
       %div/
       = link_to t('back'), orders_path
 %footer.text-center.footer-order

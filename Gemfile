@@ -44,6 +44,8 @@ gem 'redis-rails'
 gem 'redis-store'
 gem 'rubocop', require: false
 # gem 'simplecov', :require => false, :group => :test
+gem 'trailblazer-cells'
+gem 'trailblazer-rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 # Use Capistrano for deployment

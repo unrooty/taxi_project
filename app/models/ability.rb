@@ -11,12 +11,10 @@ class Ability
       can :manage, User
       can :manage, Car
       can :manage, Invoice
-      can %i[new create], Billing
       can %i[new create], AssignedCar
       can :read, :all
     elsif user.driver?
       can :create, Order
-      can %i[new create], Billing
       can %i[new create], AssignedCar
       can :update, Order
       can :create, Invoice
@@ -27,7 +25,6 @@ class Ability
       can :feedback_mail, HomeController
       can :read, :all
     elsif user.dispatcher?
-      can %i[new create], Billing
       can %i[new create], AssignedCar
       can %i[new create edit update], Invoice
       can :manage, Order
@@ -35,12 +32,11 @@ class Ability
     elsif user.accountant?
       can :read, :all
     elsif user.client?
-      can :pdf_orders, Object
+      can :generate_orders_pdf, Object
       can :send_orders_mail, Order
       can :create, Order
       can :update, Order
       can :destroy, Order
-      cannot %i[new create], Billing
       cannot %i[new create], AssignedCar
       can :read, Order
     else

@@ -14,7 +14,7 @@
             = t('activerecord.attributes.order.end_point')
           %th
       %tbody
-        - for order in @orders
+        - for order in @model
           - cache order do
             %tr{id: "order-#{order.id}"}
               %th

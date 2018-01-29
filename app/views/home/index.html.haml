@@ -39,7 +39,7 @@
     .row.justify-content-md-center
       .col-md-6
         .form-area
-          = form_for feedback_path do |f|
+          = form_for :feedback do |f|
             .form-group
               = f.text_field :name, placeholder: t('name'), class: 'form-control'
             .form-group

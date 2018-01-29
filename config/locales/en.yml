@@ -229,3 +229,5 @@ en:
   tax_deleted: "Tax deleted."
   user_deleted: "User deleted."
   no_driver: "No driver."
+  reassign_car: "Reassign car"
+  car_reassigned: "Car reassigned"

@@ -1,64 +1,45 @@
 module Admin
   #
   class CarsController < AdminController
-    before_action :set_car, only: %i[edit update destroy show]
 
     def index
-      @cars = Car.all
+      run Admin::Car::Index
     end
 
     def new
-      @car = Car.new
+      run Admin::Car::Create::Present
     end
 
-    def show; end
+    def show
+      run Admin::Car::Show
+    end
 
-    def edit; end
+    def edit
+      run Admin::Car::Update::Present
+    end
 
     def create
-      @car = Car.new(car_params)
-      if @car.save
-        redirect_to admin_car_path(@car.id),
-                    notice: t('car_create', car_model: @car.model,
-                                            car_brand: @car.brand)
-      else
-        render :new
+      run Admin::Car::Create do
+        return redirect_to admin_car_path(@model.id),
+                           notice: t('car_create', car_model: @model.car_model,
+                                                   car_brand: @model.brand)
       end
+      render :new
     end
 
     def update
-      if @car.update(car_params)
-        redirect_to admin_car_path(@car.id), notice: t('car_update')
-      else
-        render :edit
+      run Admin::Car::Update do
+        return redirect_to admin_car_path(@car.id), notice: t('car_update')
       end
+
+      render :edit
     end
 
     def destroy
-      @car.orders.update_all(car_id: nil) if @car.destroy
-
-      redirect_to admin_cars_path, notice: t('car_deleted')
+      run Admin::Car::Delete do
+        redirect_to admin_cars_path, notice: t('car_deleted')
+      end
     end
 
-    private
-
-    def set_car
-      @car = Car.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_cars_path, notice: t('record_not_found')
-    end
-
-    def car_params
-      params.require(:car).permit(
-        :brand,
-        :model,
-        :reg_number,
-        :color,
-        :style,
-        :affiliate_id,
-        :user_id,
-        :tax_id
-      )
-    end
   end
 end

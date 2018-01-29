@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006084633) do
+ActiveRecord::Schema.define(version: 20180119140247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20171006084633) do
 
   create_table "cars", force: :cascade do |t|
     t.string   "brand"
-    t.string   "model"
+    t.string   "car_model"
     t.string   "reg_number"
     t.string   "color"
     t.string   "style"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20171006084633) do
     t.string   "client_name"
     t.string   "client_phone"
     t.integer  "user_id"
-    t.integer  "tax_id",       default: 0, null: false
+    t.integer  "tax_id"
     t.string   "start_point"
     t.integer  "order_status", default: 0, null: false
   end

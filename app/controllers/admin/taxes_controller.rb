@@ -1,51 +1,39 @@
 module Admin
   #
   class TaxesController < AdminController
-    before_action :set_tax, only: %i[edit update destroy]
 
     def index
-      @taxes = Tax.all
+      run Admin::Tax::Index
     end
 
     def new
-      @tax = Tax.new
+      run Admin::Tax::Create::Present
     end
 
-    def edit; end
+    def edit
+      run Admin::Tax::Update::Present
+    end
 
     def create
-      @tax = Tax.new(tax_params)
-      if @tax.save
-        redirect_to admin_taxes_path, notice: t('tax_create', full_tax: @tax.name)
-      else
-        render :new
+      run Admin::Tax::Create do
+        return redirect_to admin_taxes_path, notice: t('tax_create',
+                                                full_tax: @model.name)
       end
+      render :new
     end
 
     def update
-      if @tax.update(tax_params)
-        redirect_to admin_taxes_path, notice: t('tax_update')
-      else
-        render :edit
+      run Admin::Tax::Update do
+        return redirect_to admin_taxes_path, notice: t('tax_update')
       end
+      render :edit
     end
 
     def destroy
-      @tax.destroy
-
-      redirect_to admin_taxes_path, notice: t('tax_deleted')
+      run Admin::Tax::Delete do
+        redirect_to admin_taxes_path, notice: t('tax_deleted')
+      end
     end
 
-    private
-
-    def set_tax
-      @tax = Tax.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_taxes_path, notice: t('record_not_found')
-    end
-
-    def tax_params
-      params.require(:tax).permit(:name, :cost_per_km, :basic_cost)
-    end
   end
 end

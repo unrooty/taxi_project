@@ -1,14 +1,14 @@
-- if @order.errors.any?
+- if @form.errors.any?
   .error
     %h5
       = t('error_order')
-      - @order.errors.full_messages.each do |message|
+      - @form.errors.full_messages.each do |message|
         %h6
           &#9899; #{message}
 .row.justify-content-md-center
   .col-md-4
     .order_form_area
-    = form_for [@order] do |form|
+    = form_for @model do |form|
       -if user_signed_in?
         .form-group
           = form.text_field :client_name, placeholder: t('name'),

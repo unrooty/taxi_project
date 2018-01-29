@@ -1,15 +1,15 @@
-- if @user.errors.any?
+- if @form.errors.any?
   .error
     %h5.text-center
       = t('error')
-      - @user.errors.full_messages.each do |message|
+      - @form.errors.full_messages.each do |message|
         %h6.text-center
           &#9899; #{message}
 
 .row.justify-content-md-center.text-center
   .col-md-3
     .order_form_area
-      = form_for [:admin, @user] do |f|
+      = form_for [:admin, @model] do |f|
         .form-group
           = f.label :first_name
           %br/
@@ -28,6 +28,14 @@
           = f.label :email
           %br/
           = f.email_field :email, class: 'form-control'
+        .form-group
+          = f.label :password
+          %br/
+          = f.password_field :password, class: 'form-control'
+        .form-group
+          = f.label :password_confirmation
+          %br/
+          = f.password_field :password_confirmation, class: 'form-control'
         .form-group
           .input-group
             %span.input-group-addon.span-margin= t('language')

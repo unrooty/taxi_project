@@ -15,5 +15,6 @@ module TaxiStation
     config.cache_store = :redis_store, ENV['REDIS_URL'],
                          { expires_in: 90.minutes }
     config.active_job.queue_adapter = :delayed_job
+    config.active_record.schema_format = :ruby
   end
 end
