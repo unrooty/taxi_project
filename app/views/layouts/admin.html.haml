@@ -26,18 +26,16 @@
     .sidenav
       %ul.navbar-nav.navbar-sidenav
         %li.sidenav-item
-          - if can? :create, Order
+          - if current_user.role.in?(%w[admin driver manager dispatcher])
             = link_to t('orders'), admin_orders_path
-          - if can? :read, User
+          - if current_user.role.in?(%w[admin manager])
             = link_to t('users'), admin_users_path
-        %li.sidenav-item
-          - if can? :create, Car
-            = link_to t('cars'), admin_cars_path
-        %li.sidenav-item
-          - if can? :create, Tax
             = link_to t('taxes'), admin_taxes_path
         %li.sidenav-item
-          - if can? :create, Affiliate
+          - if current_user.role.in?(%w[admin manager dispatcher])
+            = link_to t('cars'), admin_cars_path
+        %li.sidenav-item
+          - if current_user.role == 'admin'
             = link_to t('affiliates'), admin_affiliates_path
 
     .content-wrapper

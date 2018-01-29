@@ -8,8 +8,8 @@ class Order::Create < Trailblazer::Operation
 
   step Nested(Present)
   step Contract::Validate(key: :order)
-  step :set_orders_status
-  step :assign_user_id_to_order
+  step :set_order_status
+  step :assign_user_to_order
   step Contract::Persist()
 
   private
@@ -18,7 +18,7 @@ class Order::Create < Trailblazer::Operation
     options['model'].order_status = 0
   end
 
-  def assign_user_id_to_order(options, params, *)
+  def assign_user_to_order(options, params, *)
     options['model'].user_id = unless params[:current_user].nil?
                                  params[:current_user].id
                                end

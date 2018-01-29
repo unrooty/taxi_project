@@ -14,7 +14,7 @@ module Admin::User
       #:property end
 
       #:validation
-      #validates :phone, presence: true, format: /\A\d{2}-\d{3}-\d{2}-\d{2}/
+      validates :phone, presence: true, format: /\A\d{2}-\d{3}-\d{2}-\d{2}/
       #:validation end
     end
   end

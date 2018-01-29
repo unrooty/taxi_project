@@ -15,9 +15,6 @@
             %p.affiliate-address
               = affiliate.address
           \------------------------------------------------
-
-    - if can? :create, Affiliate
-      = link_to t('create'), new_admin_affiliate_path, class: 'btn btn-outline-info'
 %footer.text-center.footer-order
   .footer-top
     .container

@@ -16,5 +16,6 @@ module TaxiStation
                          { expires_in: 90.minutes }
     config.active_job.queue_adapter = :delayed_job
     config.active_record.schema_format = :ruby
+    config.autoload_paths += %W[#{config.root}/lib/matcher]
   end
 end

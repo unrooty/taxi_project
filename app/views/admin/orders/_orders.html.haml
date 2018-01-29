@@ -25,26 +25,47 @@
         %th
           = t("order_status.#{order.order_status}")
         %th
-          - if order.car.nil?
+          - if order.car.nil? && current_user.role == 'driver'
+            = link_to t('assign_car'), driver_admin_order_car_assignment_path(order.id), method: :post, class: 'btn btn-primary btn-sm'
+            %th
+          - elsif order.car.nil?
             = link_to t('assign_car'), new_admin_order_car_assignment_path(order.id), class: 'btn btn-primary btn-sm'
             %th
-          -else
-            =link_to "#{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}", edit_admin_order_car_assignment_path(order.id)
-            - unless order.invoice.nil?
-              - if order.invoice.invoice_status == 'paid'
-                %th
-                  #{order.invoice.total_price}
-                  %div/
-                  (#{t("invoice_status.#{order.invoice.invoice_status}")})
+          - else
+            - unless current_user.role == 'driver'
+              =link_to "#{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}", edit_admin_order_car_assignment_path(order.id)
+              - unless order.invoice.nil?
+                - if order.invoice.invoice_status == 'paid'
+                  %th
+                    #{order.invoice.total_price}
+                    %div/
+                    (#{t("invoice_status.#{order.invoice.invoice_status}")})
+                - else
+                  %th
+                    #{link_to order.invoice.total_price, edit_admin_order_invoice_path(order, order.invoice)}
+                    %div/
+                    (#{t("invoice_status.#{order.invoice.invoice_status}")})
               - else
                 %th
-                  #{link_to order.invoice.total_price, edit_admin_order_invoice_path(order, order.invoice)}
-                  %div/
-                  (#{t("invoice_status.#{order.invoice.invoice_status}")})
-            - else
-              %th
-                - if can? :create, Invoice
                   = link_to t('add_invoice'), new_admin_order_invoice_path(order.id), class: 'btn btn-primary btn-sm'
+            - else
+              #{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}
+              - unless order.invoice.nil?
+                - if order.invoice.invoice_status == 'paid'
+                  %th
+                    #{order.invoice.total_price}
+                    %div/
+                    (#{t("invoice_status.#{order.invoice.invoice_status}")})
+                - else
+                  %th
+                    #{link_to order.invoice.total_price, edit_admin_order_invoice_path(order, order.invoice)}
+                    %div/
+                    (#{t("invoice_status.#{order.invoice.invoice_status}")})
+              - else
+                %th
+                  = link_to t('add_invoice'), new_admin_order_invoice_path(order.id), class: 'btn btn-primary btn-sm'
+
         %th
           = link_to t('order_info'), admin_order_path(order.id), class: 'btn btn-outline-primary btn-sm'
-          = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+          - unless current_user.role == 'driver'
+            = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

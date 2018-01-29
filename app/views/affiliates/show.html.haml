@@ -3,7 +3,7 @@
     .container
       %h2= @model.name
       %h4= @model.address
-
+      
       %h2
         = t('cars')
       %hr.tax-line
@@ -35,11 +35,6 @@
       -else
         %h3
           = t('no_cars')
-      %div{style: 'padding-bottom: 100px'}/
-      - if can? :edit, Affiliate
-        = link_to 'Edit', edit_admin_affiliate_path(@model), class: 'btn btn-outline-info btn-sm'
-      - if can? :destroy, Affiliate
-        = link_to 'Delete', admin_affiliate_path(@model), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
 %footer.text-center.footer-order
   .footer-top
     .container

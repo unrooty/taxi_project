@@ -1,6 +1,7 @@
 module Admin::Affiliate
   class ShowAffiliateWorkers < Trailblazer::Operation
     step Model(Affiliate, :find_by)
+    step Policy::Pundit(Admin::AffiliatesPolicy, :user_admin?)
     step :find_workers!
 
     private

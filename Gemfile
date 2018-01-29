@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
-
-gem 'pg'
+gem 'rails'
+gem 'pg', '~> 0.21'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -14,7 +13,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
+gem 'dry-matcher'
+gem 'dry-monads'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
 gem 'bootstrap', '~> 4.0.0.beta'
-gem 'cancancan', '~> 2.0'
+gem 'pundit'
 gem 'carrierwave', '~> 1.0'
 gem 'daemons'
 gem 'delayed_job_active_record'
@@ -46,6 +46,7 @@ gem 'rubocop', require: false
 # gem 'simplecov', :require => false, :group => :test
 gem 'trailblazer-cells'
 gem 'trailblazer-rails'
+gem 'trailblazer-endpoint', git: 'https://github.com/trailblazer/trailblazer-endpoint.git'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 # Use Capistrano for deployment

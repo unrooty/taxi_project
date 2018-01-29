@@ -28,7 +28,5 @@
               %th
                 = order.end_point
               %th
-                - if can? :destroy, Order
-                  = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm floating'
-                - if can? :edit, Order
-                  = link_to t('edit'), edit_order_path(order.id), class: 'btn btn-outline-success btn-sm floating'
+                = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm floating'
+                = link_to t('edit'), edit_order_path(order.id), class: 'btn btn-outline-success btn-sm floating'

@@ -1,51 +1,104 @@
 module Admin
   #
   class AffiliatesController < AdminController
-
     def index
-      run Admin::Affiliate::Index
+      result = Admin::Affiliate::Index.call(params,
+                                            'current_user' => current_user)
+      match(%w[success unauthorized]).call(result) do |m|
+        m.success { @model = result['model'] }
+        m.unauthorized { redirect_to admin_orders_path }
+      end
     end
 
     def new
-      run Admin::Affiliate::Create::Present
+      result = Admin::Affiliate::Create::Present.call(params,
+                                                      'current_user' =>
+                                                          current_user)
+      match(%w[success unauthorized not_found]).call(result) do |m|
+        m.success do
+          @form = result['contract.default']
+          @model = result['model']
+        end
+        m.unauthorized { redirect_to admin_orders_path }
+        m.not_found { redirect_to admin_orders_path, notice: t('record_not_found') }
+      end
     end
 
     def create
-      run Admin::Affiliate::Create do
-        return redirect_to admin_affiliates_path,
-                           notice: t('affiliate_created',
-                                     affiliate_name: @model.name)
+      result = Admin::Affiliate::Create.call(params,
+                                             'current_user' => current_user)
+      match(%w[success invalid]).call(result) do |m|
+        m.success { redirect_to admin_affiliate_path(result['model'].id) }
+        m.invalid do
+          @form = result['contract.default']
+          @model = result['model']
+          render :new
+        end
       end
-
-      render :new
     end
 
     def show
-      run Admin::Affiliate::Show
+      result = Admin::Affiliate::Show.call(params,
+                                           'current_user' => current_user)
+      match(%w[success unauthorized not_found]).call(result) do |m|
+        m.success { @model = result['model'] }
+        m.unauthorized { redirect_to admin_orders_path }
+        m.not_found do
+          redirect_to admin_orders_path,
+                      notice: t('record_not_found') end
+      end
     end
 
     def edit
-      run Admin::Affiliate::Update::Present
+      result = Admin::Affiliate::Update::Present.call(params,
+                                                      'current_user' =>
+                                                          current_user)
+      match(%w[success unauthorized not_found]).call(result) do |m|
+        m.success do
+          @form = result['contract.default']
+          @model = result['model']
+        end
+        m.unauthorized { redirect_to admin_orders_path }
+        m.not_found { redirect_to admin_orders_path, notice: t('record_not_found') }
+      end
     end
 
     def update
-      run Admin::Affiliate::Update do
-        return redirect_to admin_affiliates_path,
-                           notice: t('affiliate_updated')
+      result = Admin::Affiliate::Update.call(params,
+                                             'current_user' => current_user)
+      match(%w[success invalid]).call(result) do |m|
+        m.success { redirect_to admin_affiliate_path(result['model'].id) }
+        m.invalid do
+          @form = result['contract.default']
+          @model = result['model']
+          render :new
+        end
       end
-
-      render :edit
     end
 
     def destroy
-      run Admin::Affiliate::Delete do
-        redirect_to admin_affiliates_path, notice: t('affiliate_deleted')
+      result = Admin::Affiliate::Delete.call(params,
+                                             'current_user' => current_user)
+      match(%w[success unauthorized not_found]).call(result) do |m|
+        m.success { redirect_to admin_affiliates_path }
+        m.unauthorized { redirect_to admin_orders_path }
+        m.not_found do
+          redirect_to admin_orders_path,
+                      notice: t('record_not_found') end
       end
     end
 
     def show_affiliate_workers
-      run Admin::Affiliate::ShowAffiliateWorkers
+      result = Admin::Affiliate::ShowAffiliateWorkers.call(params,
+                                                           'current_user' =>
+                                                               current_user)
+      match(%w[success unauthorized not_found]).call(result) do |m|
+        m.success { @model = result['model'] }
+        m.unauthorized { redirect_to admin_orders_path }
+        m.not_found do
+          redirect_to admin_orders_path,
+                      notice: t('record_not_found') end
+      end
     end
-
   end
 end

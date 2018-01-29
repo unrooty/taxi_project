@@ -1,7 +1,9 @@
+require 'trailblazer/endpoint/rails'
 class OrdersController < ApplicationController
+  include Trailblazer::Endpoint::Controller
+  include Matcher
   respond_to :js
   before_action :authenticate_user!, except: %i[new create show]
-  load_and_authorize_resource
 
   def index
     run Order::Index, params, current_user: current_user
@@ -12,15 +14,28 @@ class OrdersController < ApplicationController
   end
 
   def show
-    run Order::Show
+    result = Order::Show.call(params, 'current_user' => current_user)
+    match(%w[success unauthorized not_found]).call(result) do |m|
+      m.success { @model = result['model'] }
+      m.unauthorized { redirect_to orders_path, notice: t('access_denied') }
+      m.not_found { redirect_to orders_path, notice: t('record_not_found') }
+    end
   end
 
   def edit
-    run Order::Update::Present
+    result = Order::Update::Present.call(params, 'current_user' => current_user)
+    match(%w[success unauthorized not_found]).call(result) do |m|
+      m.success do
+        @form = result['contract.default']
+        @model = result['model']
+      end
+      m.unauthorized { redirect_to orders_path, notice: t('access_denied') }
+      m.not_found { redirect_to orders_path, notice: t('record_not_found') }
+    end
   end
 
   def create
-    run Order::Create, params, current_user: current_user do
+    run Order::Create, params, 'current_user' => current_user do
       return redirect_to root_path, notice: t('order_created')
     end
 
@@ -28,47 +43,46 @@ class OrdersController < ApplicationController
   end
 
   def update
-    run Order::Update do
-      return redirect_to root_path, notice: t('order_updated')
-    end
-
-    render :edit
-  end
-
-  def destroy
-    run Order::Delete do
-      flash[:notice] = t('order_destroyed')
-    end
-  end
-
-  def send_orders_mail
-    run Order::SendOrdersMail, params, current_user: current_user do
-      redirect_to orders_path, notice: t('order_sent')
-    end
-
-  end
-
-  def generate_orders_pdf
-    @user = current_user
-    @orders = @user.orders.all
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: 'generate_orders_pdf.pdf.haml'
+    result = Order::Update.call(params, 'current_user' => current_user)
+    match(%w[success invalid]).call(result) do |m|
+      m.success { redirect_to order_path(result['model'].id) }
+      m.invalid do
+        @form = result['contract.default']
+        @model = result['model']
+        render :edit
       end
     end
   end
 
-  private
+  def destroy
+    result = Order::Delete.call(params, 'current_user' => current_user)
+    match(%w[success unauthorized not_found]).call(result) do |m|
+      m.success do
+        @form = result['contract.default']
+        @model = result['model']
+      end
+      m.unauthorized { redirect_to orders_path, notice: t('access_denied') }
+      m.not_found { redirect_to orders_path, notice: t('record_not_found') }
+    end
+  end
 
-  def order_params
-    params.require(:order).permit(
-      :start_point,
-      :end_point,
-      :client_name,
-      :client_phone,
-      :order_status,
-      :tax_id
-    )
+  def send_email_with_orders
+    result = Order::SendEmailWithOrders.call(params, 'current_user' => current_user)
+    match(%w[success unauthorized]).call(result) do |m|
+      m.success { redirect_to orders_path, notice: t('order_sent') }
+      m.unauthorized { redirect_to orders_path, notice: t('access_denied') }
+    end
+  end
+
+  def generate_orders_pdf
+    result = Order::SendEmailWithOrders.call(params, 'current_user' => current_user)
+    match(%w[success unauthorized]).call(result) do |m|
+      m.success do
+        @user = current_user
+        @model = result['model']
+        render pdf: 'generate_orders_pdf.pdf.haml'
+      end
+      m.unauthorized { redirect_to orders_path, notice: t('access_denied') }
+    end
   end
 end

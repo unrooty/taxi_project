@@ -21,7 +21,7 @@
           %th
             = t('activerecord.attributes.order.end_point')
       %tbody
-        - for order in @orders
+        - for order in @model
           %tr.body
             %th
               = order.id

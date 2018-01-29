@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    get 'dashboard/index'
-  end
 
   devise_for :users
-  get 'orders/send_orders_mail',
-      to: 'orders#send_orders_mail',
+  get 'orders/send_email_with_orders',
+      to: 'orders#send_email_with_orders',
       as: :send_orders_mail
   get 'orders/generate_orders_pdf',
       to: 'orders#generate_orders_pdf',
@@ -18,6 +15,7 @@ Rails.application.routes.draw do
   resources :orders
 
   namespace :admin do
+    get 'dashboard/index'
     get '', to: 'dashboard#index', as: '/'
     get 'affiliate/:id/show_affiliate_workers',
         to: 'affiliates#show_affiliate_workers',
@@ -31,19 +29,16 @@ Rails.application.routes.draw do
     resources :orders do
       resources :invoices
       resource :car_assignment, only: %i[new create] do
-      get 'edit',
-          to: 'car_assignment#edit',
-          as: :edit
-      post 'update',
-               to: 'car_assignment#update',
-               as: :update
+        get 'edit',
+            to: 'car_assignments#edit',
+            as: :edit
+        post 'update',
+             to: 'car_assignments#update',
+             as: :update
+        post 'driver_car_assignment',
+             to: 'car_assignments#driver_car_assignment',
+             as: :driver
       end
-      #post '/update',
-      #    to: 'car_assignment#update',
-       #   as: :update_car_assignment
-      #patch'car_assignment/update',
-       #    to: 'car_assignment#update',
-       #    as: :update_car_assignment
     end
   end
   match '*path', to: 'home#routing_error', via: %i[get post put delete]

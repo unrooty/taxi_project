@@ -28,7 +28,7 @@
               #{t('activerecord.models.invoice')}:
             #{@model.invoice.distance},
             =@model.invoice.invoice_status.title
-      = link_to t('edit_order'), order_path(@model), class: 'btn btn-outline-success'
+      = link_to t('edit_order'), edit_order_path(@model.id), class: 'btn btn-outline-success'
       %div/
       = link_to t('back'), orders_path
 %footer.text-center.footer-order
