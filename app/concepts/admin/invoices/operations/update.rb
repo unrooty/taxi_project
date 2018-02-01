@@ -3,6 +3,7 @@ module Admin::Invoice
     extend Create::Contract::DSL
     class Present < Trailblazer::Operation
       step Model(Invoice, :find_by)
+      step Policy::Pundit(Admin::InvoicesPolicy, :can_work_with_invoice?)
       step self::Contract::Build(constant: Admin::Invoice::Contract::Update)
     end
 

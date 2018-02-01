@@ -1,7 +1,6 @@
 %h1
   = t('cars')
-  - if can? :create, Car
-    = link_to t('new_car'), new_admin_car_path, class: 'btn btn-outline-success pull-right'
+  = link_to t('new_car'), new_admin_car_path, class: 'btn btn-outline-success pull-right'
 %p#notice= notice
 %section.car
   .row.car-item 
@@ -45,8 +44,6 @@
               %b
                 #{t('activerecord.attributes.car.status')}:
               = t("car_status.#{car.car_status}")
-          - if can? :edit, Car
-            = link_to t('edit'), edit_admin_car_path(car), class: 'btn btn-outline-info btn-sm'
-          - if can? :destroy, Car
-            = link_to t('delete'), admin_car_path(car), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+          = link_to t('edit'), edit_admin_car_path(car), class: 'btn btn-outline-info btn-sm'
+          = link_to t('delete'), admin_car_path(car), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
 

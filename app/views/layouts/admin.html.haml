@@ -28,9 +28,9 @@
         %li.sidenav-item
           - if current_user.role.in?(%w[admin driver manager dispatcher])
             = link_to t('orders'), admin_orders_path
+            = link_to t('taxes'), admin_taxes_path
           - if current_user.role.in?(%w[admin manager])
             = link_to t('users'), admin_users_path
-            = link_to t('taxes'), admin_taxes_path
         %li.sidenav-item
           - if current_user.role.in?(%w[admin manager dispatcher])
             = link_to t('cars'), admin_cars_path

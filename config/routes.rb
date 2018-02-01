@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :user, controller: 'admin/users'
     resources :order_statuses, only: [:index]
     resources :orders do
-      resources :invoices
+      resources :invoices, only: %i[new create edit update]
       resource :car_assignment, only: %i[new create] do
         get 'edit',
             to: 'car_assignments#edit',

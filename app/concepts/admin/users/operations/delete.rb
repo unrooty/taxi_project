@@ -1,7 +1,7 @@
 module Admin::User
   class Delete < Trailblazer::Operation
     step Model(User, :find_by)
-    step Wrap ->(*, &block){ ActiveRecord::Base.transaction { block.call } } {
+    step Wrap ->(*, &block) { User.transaction { block.call } } {
       step :remove_from_orders!
       step :remove_from_cars!
       step :delete!

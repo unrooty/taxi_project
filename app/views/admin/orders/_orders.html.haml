@@ -68,4 +68,4 @@
         %th
           = link_to t('order_info'), admin_order_path(order.id), class: 'btn btn-outline-primary btn-sm'
           - unless current_user.role == 'driver'
-            = link_to t('delete'), order, method: :delete, remote: true, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+            = link_to t('delete'), admin_order_path(order), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

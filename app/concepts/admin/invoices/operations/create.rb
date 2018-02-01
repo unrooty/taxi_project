@@ -4,6 +4,7 @@ module Admin::Invoice
 
     class Present < Trailblazer::Operation
       step Model(Invoice, :new)
+      step Policy::Pundit(Admin::InvoicesPolicy, :can_work_with_invoice?)
       step self::Contract::Build(constant: Admin::Invoice::Contract::Create)
     end
 

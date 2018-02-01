@@ -3,6 +3,7 @@ module Admin::Tax
     extend Update::Contract::DSL
     class Present < Trailblazer::Operation
       step Model(Tax, :find_by)
+      step Policy::Pundit(Admin::TaxesPolicy, :can_manage?)
       step self::Contract::Build(constant: Admin::Tax::Contract::Create)
     end
 

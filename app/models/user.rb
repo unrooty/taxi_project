@@ -1,6 +1,5 @@
 # User model class
 class User < ApplicationRecord
-  mount_uploader :avatar, AvatarUploader
   belongs_to :affiliate, optional: true, touch: true
   has_many :orders, dependent: :destroy
   has_one :car

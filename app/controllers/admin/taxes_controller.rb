@@ -3,30 +3,43 @@ module Admin
   class TaxesController < AdminController
 
     def index
-      run Admin::Tax::Index
+      result = Admin::Tax::Index.call(params, 'current_user'=>current_user)
+      handle_successful(result)
     end
 
     def new
-      run Admin::Tax::Create::Present
-    end
-
-    def edit
-      run Admin::Tax::Update::Present
+      result = Admin::Tax::Create::Present.call(params,
+                                                'current_user' => current_user)
+      handle_successful(result)
     end
 
     def create
-      run Admin::Tax::Create do
-        return redirect_to admin_taxes_path, notice: t('tax_create',
-                                                full_tax: @model.name)
+      result = Admin::Order::Create.call(params,
+                                         'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_taxes_path, notice: t('tax_create')
       end
-      render :new
+
+      handle_invalid(result) do
+        render :new
+      end
+    end
+
+    def edit
+      result = Admin::Tax::Update::Present.call(params,
+                                                'current_user' => current_user)
+      handle_successful(result)
     end
 
     def update
-      run Admin::Tax::Update do
-        return redirect_to admin_taxes_path, notice: t('tax_update')
+      result = Admin::Order::Update.call(params, 'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_taxes_path, notice: t('tax_update')
       end
-      render :edit
+
+      handle_invalid(result) do
+        render :edit
+      end
     end
 
     def destroy

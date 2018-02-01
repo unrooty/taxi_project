@@ -42,3 +42,7 @@ module Admin
 
   end
 end
+
+def zhopaHuy
+
+end

@@ -1,7 +1,8 @@
 module Admin::Tax
   class Delete < Trailblazer::Operation
     step Model(Tax, :find_by)
-    step Wrap ->(*, &block) { ActiveRecord::Base.transaction { block.call } } {
+    step Policy::Pundit(Admin::TaxesPolicy, :can_manage?)
+    step Wrap ->(*, &block) { Tax.transaction { block.call } } {
       step :remove_from_orders!
       step :delete!
     }
@@ -13,7 +14,7 @@ module Admin::Tax
     end
 
     def delete!(_options, model:, **)
-      model.destroy
+      model.update(deleted: true)
     end
   end
 end

@@ -1,6 +1,5 @@
 require 'trailblazer/endpoint/rails'
 class OrdersController < ApplicationController
-  include Trailblazer::Endpoint::Controller
   include Matcher
   respond_to :js
   before_action :authenticate_user!, except: %i[new create show]
@@ -58,7 +57,6 @@ class OrdersController < ApplicationController
     result = Order::Delete.call(params, 'current_user' => current_user)
     match(%w[success unauthorized not_found]).call(result) do |m|
       m.success do
-        @form = result['contract.default']
         @model = result['model']
       end
       m.unauthorized { redirect_to orders_path, notice: t('access_denied') }

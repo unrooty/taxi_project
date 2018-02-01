@@ -1,6 +1,7 @@
 module Admin::Order
   class Delete < Trailblazer::Operation
     step Model(Order, :find_by)
+    step Policy::Pundit(Admin::OrdersPolicy, :can_work_with_order?)
     step Wrap ->(*, &block) { ActiveRecord::Base.transaction { block.call } } {
       step :update_car_status_to_free!
       step :delete!

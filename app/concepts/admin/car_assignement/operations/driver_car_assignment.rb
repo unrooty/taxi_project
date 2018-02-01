@@ -18,7 +18,7 @@ module Admin::CarAssignment
     end
 
     def update_car_status_if_car_not_ordered(*)
-      @car.update(car_status: 1) unless @car.car_status == ('ordered')
+      @car.update(car_status: 1) unless @car.car_status == 'ordered'
     end
 
     def update_order_status_if_order_has_no_car(*)

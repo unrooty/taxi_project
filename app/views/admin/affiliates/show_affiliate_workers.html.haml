@@ -15,7 +15,7 @@
         = t('activerecord.attributes.user.role')
       %th
   %tbody
-    - for worker in @_result['workers']
+    - for worker in @workers
       %tr
         %th
           = worker.id

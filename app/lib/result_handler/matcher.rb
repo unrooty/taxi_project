@@ -1,18 +1,16 @@
 require 'dry/matcher'
 module Matcher
   def match(cases)
-    check(cases)
+    check_cases(cases)
   end
 
-  private
-
-  def check(cases)
+  def check_cases(cases)
     @cases = {}
     @existing_cases = %w[success created unauthorized not_found invalid]
     @existing_cases.each do |c|
       if cases.include?(c)
         cases.delete(c)
-        @cases[c.to_sym] = method(c.to_sym).call
+        @cases[c.to_sym] = public_send(c.to_sym)
       end
     end
     unless cases.empty?

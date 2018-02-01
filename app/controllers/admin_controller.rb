@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  include Matcher
+  include ResultHandler
   layout 'admin'
   before_action :authenticate_user!
   before_action :redirect_client_to_root
