@@ -1,5 +1,5 @@
 class Order::SendEmailWithOrders < Trailblazer::Operation
-  step Policy::Pundit(OrdersPolicy, :access_to_report_allowed?)
+  step Policy::Pundit(OrdersPolicy, :access_to_report_granted?)
   step :find_all_orders
   step :send_mail
 

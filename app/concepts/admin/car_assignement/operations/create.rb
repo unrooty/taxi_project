@@ -9,14 +9,15 @@ module Admin::CarAssignment
     end
 
     step Nested(Present)
+    step :add_order_id_to_car_assignment_params
     step self::Contract::Validate(key: :car_assignment)
-    step Wrap ->(*, &block) { ActiveRecord::Base.transaction { block.call } } {
+    step Wrap ->(*, &block) { ActiveRecord::Base.transaction(&block) } {
       step :find_car
       step :find_order
-      step :update_car_status_if_car_not_ordered
       step :update_order_status_if_order_has_no_car
       step :assign_car_to_order
       step :send_car_assignment_email_to_user
+      step :update_car_status_if_car_not_ordered
     }
 
     private
@@ -29,22 +30,24 @@ module Admin::CarAssignment
       @order = Order.find(options['params']['order_id'])
     end
 
-    def update_car_status_if_car_not_ordered(*)
-      @car.update(car_status: 1) unless @car.car_status == ('ordered')
+    def add_order_id_to_car_assignment_params(_options, params:, **)
+      params[:car_assignment].merge!(order_id: params[:order_id])
     end
 
-    def update_order_status_if_order_has_no_car(*)
-      @order.update(order_status: 1) if @order.car_id.nil?
+    def update_order_status_if_order_has_no_car(_options, *)
+      @order.update(order_status: 1)
     end
 
     def assign_car_to_order(*)
       @order.update(car_id: @car.id)
     end
 
-    def send_car_assignment_email_to_user(*)
+    def send_car_assignment_email_to_user(_options, *)
       UserMailer.car_assignment_mail(@order.user, @car) if @order.user_id
+    end
 
-      true
+    def update_car_status_if_car_not_ordered(_options, *)
+      @car.update(car_status: 1)
     end
   end
 end

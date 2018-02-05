@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  include ResultHandler
   protect_from_forgery
   layout 'page'
   before_action :set_locale

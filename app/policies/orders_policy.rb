@@ -5,11 +5,11 @@ class OrdersPolicy
     @model = model
   end
 
-  def access_allowed?
-    !@user.nil? && @model.user_id == @user.id
+  def access_granted?
+    @user && @user.id == @model.user_id
   end
 
   def access_to_report_allowed?
-    !@user.nil?
+    @user
   end
 end

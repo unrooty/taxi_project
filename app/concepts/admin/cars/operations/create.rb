@@ -9,10 +9,12 @@ module Admin::Car
 
     step Nested(Present)
     step self::Contract::Validate(key: :car)
-    step Wrap ->(*, &block) { Car.transaction { block.call } } {
+    step Wrap ->(*, &block) { Car.transaction(&block) } {
       step self::Contract::Persist()
       step :bind_car_to_manager_affiliate
     }
+
+    private
 
     def bind_car_to_manager_affiliate(options, *)
       if options['current_user'].role == 'manager'

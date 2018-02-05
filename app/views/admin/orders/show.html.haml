@@ -46,7 +46,7 @@
           (#{t("invoice_status.#{@model.invoice.invoice_status}")})
       -else
         - if @model.car_id
-          - if can? :edit, Invoice
-            = link_to t('add_invoice'), new_admin_order_invoice_path(@model.id), class: 'btn btn-outline-primary btn-sm'
-      = link_to t('edit'), edit_admin_order_path(@model.id), style: 'float: right', class: 'btn btn-outline-success btn-sm'
-      = link_to t('delete'), admin_order_path(@model), method: :delete, data: { confirm: t('confirmation') }, style: 'float: right', class: 'btn btn-outline-danger btn-sm'
+          = link_to t('add_invoice'), new_admin_order_invoice_path(@model.id), class: 'btn btn-outline-success btn-sm'
+        = link_to t('edit'), edit_admin_order_path(@model.id), style: 'float: right', class: 'btn btn-outline-primary btn-sm'
+        - if current_user.role != 'driver'
+          = link_to t('delete'), admin_order_path(@model), method: :delete, data: { confirm: t('confirmation') }, style: 'float: right', class: 'btn btn-outline-danger btn-sm'

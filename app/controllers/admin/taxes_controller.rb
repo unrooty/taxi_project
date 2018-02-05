@@ -14,10 +14,11 @@ module Admin
     end
 
     def create
-      result = Admin::Order::Create.call(params,
+      result = Admin::Tax::Create.call(params,
                                          'current_user' => current_user)
       handle_successful(result) do
-        redirect_to admin_taxes_path, notice: t('tax_create')
+        redirect_to admin_taxes_path, notice: t('tax_create',
+                                                full_tax: @model.name)
       end
 
       handle_invalid(result) do
@@ -32,7 +33,7 @@ module Admin
     end
 
     def update
-      result = Admin::Order::Update.call(params, 'current_user' => current_user)
+      result = Admin::Tax::Update.call(params, 'current_user' => current_user)
       handle_successful(result) do
         redirect_to admin_taxes_path, notice: t('tax_update')
       end
@@ -43,7 +44,8 @@ module Admin
     end
 
     def destroy
-      run Admin::Tax::Delete do
+      result = Admin::Tax::Delete.call(params, 'current_user' => current_user)
+      handle_successful(result) do
         redirect_to admin_taxes_path, notice: t('tax_deleted')
       end
     end

@@ -1,5 +1,4 @@
 class AdminController < ApplicationController
-  include ResultHandler
   layout 'admin'
   before_action :authenticate_user!
   before_action :redirect_client_to_root

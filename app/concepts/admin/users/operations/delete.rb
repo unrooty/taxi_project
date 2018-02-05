@@ -1,7 +1,8 @@
 module Admin::User
   class Delete < Trailblazer::Operation
     step Model(User, :find_by)
-    step Wrap ->(*, &block) { User.transaction { block.call } } {
+    step Policy::Pundit(Admin::UsersPolicy, :can_manage?)
+    step Wrap ->(*, &block) { User.transaction(&block) } {
       step :remove_from_orders!
       step :remove_from_cars!
       step :delete!
@@ -10,11 +11,13 @@ module Admin::User
     private
 
     def remove_from_cars!(_options, model:, **)
-      model.cars.update_all(user_id: nil)
+      model.car.update_all(user_id: nil) unless model.car.nil?
+      true
     end
 
     def remove_from_orders!(_options, model:, **)
-      model.orders.update_all(user_id: nil)
+      model.orders.update_all(user_id: nil) unless model.orders.nil?
+      true
     end
 
     def delete!(_options, model:, **)

@@ -3,31 +3,44 @@ module Admin
   class UsersController < AdminController
 
     def index
-      run Admin::User::Index
+      result = Admin::User::Index.call(params,
+                                       'current_user'=>current_user)
+      handle_successful(result)
     end
 
     def new
-      run Admin::User::Create::Present
-    end
-
-    def show
-      run Admin::User::Show
-    end
-
-    def edit
-      run Admin::User::Update::Present
+      result = Admin::User::Create::Present.call(params,
+                                                 'current_user'=>current_user)
+      handle_successful(result)
     end
 
     def create
-      run Admin::User::Create do
-        return redirect_to admin_users_path, notice: t('user_created')
+      result = Admin::User::Create.call(params,
+                                        'current_user'=>current_user)
+      handle_successful(result) do
+        redirect_to admin_users_path, notice: t('user_created')
       end
+      handle_invalid(result) do
+        render :new
+      end
+    end
 
-      render :new
+    def show
+      result = Admin::User::Show.call(params,
+                                      'current_user'=>current_user)
+      handle_successful(result)
+    end
+
+    def edit
+      result = Admin::User::Update::Present.call(params,
+                                                 'current_user'=>current_user)
+      handle_successful(result)
     end
 
     def update
-      run Admin::User::Update do
+      result = Admin::User::Update.call(params,
+                                        'current_user'=>current_user)
+      handle_successful(result) do
         return redirect_to admin_user_path(@model.id), notice: t('user_updated')
       end
 
@@ -35,14 +48,15 @@ module Admin
     end
 
     def destroy
-      run Admin::User::Delete do
+      result = Admin::User::Delete.call(params,
+                                        'current_user'=>current_user)
+      handle_successful(result) do
         redirect_to admin_users_path, notice: t('user_deleted')
       end
     end
 
+    def not_found_redirect_path
+      admin_users_path
+    end
   end
-end
-
-def zhopaHuy
-
 end

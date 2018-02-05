@@ -7,7 +7,8 @@
     %h1
       = t('orders_report')
     %h3.color-text
-      = t('greeting', user_first_name: @user.first_name, user_last_name: @user.last_name)
+      = t('greeting', user_first_name: current_user.first_name,
+                      user_last_name: current_user.last_name)
     %table
       %thead
         %tr.head

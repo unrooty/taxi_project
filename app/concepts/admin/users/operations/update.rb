@@ -4,6 +4,7 @@ module Admin::User
 
     class Present < Trailblazer::Operation
       step Model(User, :find_by)
+      step Policy::Pundit(Admin::UsersPolicy, :can_manage?)
       step self::Contract::Build(constant: Admin::User::Contract::Create)
     end
 

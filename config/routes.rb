@@ -28,17 +28,7 @@ Rails.application.routes.draw do
     resources :order_statuses, only: [:index]
     resources :orders do
       resources :invoices, only: %i[new create edit update]
-      resource :car_assignment, only: %i[new create] do
-        get 'edit',
-            to: 'car_assignments#edit',
-            as: :edit
-        post 'update',
-             to: 'car_assignments#update',
-             as: :update
-        post 'driver_car_assignment',
-             to: 'car_assignments#driver_car_assignment',
-             as: :driver
-      end
+      resource :car_assignment, only: %i[new create edit update]
     end
   end
   match '*path', to: 'home#routing_error', via: %i[get post put delete]

@@ -1,7 +1,7 @@
 # User model class
 class User < ApplicationRecord
-  belongs_to :affiliate, optional: true, touch: true
-  has_many :orders, dependent: :destroy
+  belongs_to :affiliate, optional: true
+  has_many :orders
   has_one :car
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

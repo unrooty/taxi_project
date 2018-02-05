@@ -1,13 +1,7 @@
 class Feedback::Create < Trailblazer::Operation
   extend Contract::DSL
 
-  contract do
-    property :name
-    property :email
-    property :message
-  end
-
-  step Wrap ->(*, &block) { Feedback.transaction { block.call } } {
+  step Wrap ->(*, &block) { Feedback.transaction(&block) } {
     step Model(Feedback, :new)
     step Contract::Build()
     step Contract::Validate(key: :feedback)

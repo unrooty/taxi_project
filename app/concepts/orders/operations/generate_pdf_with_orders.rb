@@ -1,5 +1,5 @@
 class Order::GeneratePdfWithOrders < Trailblazer::Operation
-  step Policy::Pundit(OrdersPolicy, :access_allowed?)
+  step Policy::Pundit(OrdersPolicy, :access_granted?)
   step :find_all_orders
 
   private

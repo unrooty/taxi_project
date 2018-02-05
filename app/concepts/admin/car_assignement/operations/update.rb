@@ -4,12 +4,12 @@ module Admin::CarAssignment
     class Present < Trailblazer::Operation
       step Model(OpenStruct, :new)
       step self::Contract::Build(constant:
-                                     Admin::CarAssignment::Contract::Create)
+                                     Admin::CarAssignment::Contract::Update)
     end
 
     step Nested(Present)
     step self::Contract::Validate(key: :car_assignment)
-    step Wrap ->(*, &block) { ActiveRecord::Base.transaction { block.call } } {
+    step Wrap ->(*, &block) { ActiveRecord::Base.transaction(&block) } {
       step :find_car
       step :find_order
       step :remove_previous_car_from_order
@@ -29,13 +29,12 @@ module Admin::CarAssignment
     end
 
     def remove_previous_car_from_order(*)
-      p @order.car
       @order.car.update(car_status: 0)
       @order.update(car_id: @car.id)
     end
 
     def update_car_status_if_car_not_ordered(*)
-      @car.update(car_status: 1) unless @car.car_status == 'ordered'
+      @car.update(car_status: 1)
     end
 
     def assign_car_to_order(*)
