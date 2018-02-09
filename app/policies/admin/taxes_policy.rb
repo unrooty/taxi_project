@@ -4,10 +4,10 @@ class Admin::TaxesPolicy
   end
 
   def index?
-    @user.role.in?(%w[admin manager driver dispatcher])
+    @user.role.in?(%i[administrator manager driver dispatcher])
   end
 
   def can_manage?
-    @user.role.in?(%w[admin manager])
+    @user.role.in?(%i[administrator manager])
   end
 end

@@ -1,7 +1,6 @@
 class Order::Update < Trailblazer::Operation
-  extend Contract::DSL
   class Present < Trailblazer::Operation
-    step Model(Order, :find_by)
+    step Model(Order, :[])
     step Policy::Pundit(OrdersPolicy, :access_granted?)
     step Contract::Build(constant: Order::Contract::Create)
   end

@@ -18,7 +18,7 @@
         %ul.navbar-nav.mr-auto
           %li.nav-item
             - if user_signed_in?
-              - if current_user.try(:client?)
+              - if current_user.role == :client
                 %a.nav-link.extra-link{href: "#{new_order_path}"}
                   = t('new_order')
               -else
@@ -26,7 +26,7 @@
                   = t('new_order')
           - if user_signed_in?
             %li.nav-item
-              -if current_user.try(:client?)
+              -if current_user.role == :client
                 %a.nav-link.extra-link{href: "#{orders_path}"}
                   = t('orders')
               -else

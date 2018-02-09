@@ -1,6 +1,5 @@
 module Admin::Tax
   class Create < Trailblazer::Operation
-    extend Create::Contract::DSL
 
     class Present < Trailblazer::Operation
       step Model(Tax, :new)

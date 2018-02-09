@@ -1,4 +1,4 @@
-module Contract
+module Feedback::Contract
   class FeedbackMailSend < Reform::Form
     property :name
     property :email

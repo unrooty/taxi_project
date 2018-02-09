@@ -20,7 +20,7 @@
             .form-group
               .input-group.language
                 %span.input-group-addon.span-margin #{t('language')}
-                = f.select :language, User.languages.keys.map {|lang| [lang, lang]}
+                -#= f.select :language, User.languages.keys.map {|lang| [lang, lang]}
             .form-group
               = f.email_field :email, class: 'form-control', placeholder: 'Email'
             .form-group

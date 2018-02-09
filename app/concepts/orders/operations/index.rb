@@ -4,6 +4,6 @@ class Order::Index < Trailblazer::Operation
   private
 
   def model!(options, params, *)
-    options['model'] = params[:current_user].orders.all
+    options[:model] = params[:current_user].orders
   end
 end

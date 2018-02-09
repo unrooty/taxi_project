@@ -1,8 +1,8 @@
 module Admin::Car
   class Delete < Trailblazer::Operation
-    step Model(Car, :find_by)
+    step Model(Car, :[])
     step Policy::Pundit(Admin::CarsPolicy, :can_work_with_car?)
-    step Wrap ->(*, &block) { Car.transaction(&block) } {
+    step Wrap ->(*, &block) { Car.db.transaction { block.call } } {
       step :remove_from_orders!
       step :delete!
     }
@@ -10,7 +10,7 @@ module Admin::Car
     private
 
     def remove_from_orders!(options, *)
-      options['model'].orders.update_all(car_id: nil)
+      options[:model].orders.update_all(car_id: nil)
     end
 
     def delete!(_options, model:, **)

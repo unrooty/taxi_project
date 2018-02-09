@@ -1,6 +1,6 @@
 module Admin::Tax
   class Delete < Trailblazer::Operation
-    step Model(Tax, :find_by)
+    step Model(Tax, :[])
     step Policy::Pundit(Admin::TaxesPolicy, :can_manage?)
     step :delete!
 

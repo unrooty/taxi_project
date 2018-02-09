@@ -9,8 +9,7 @@ module Admin::CarAssignment
       private
 
       def car_not_assigned
-        car = Car.find(car_id)
-        if car.car_status == 'ordered'
+        if Car[car_id].car_status == :ordered
           errors.add(:car_id, " #{car.brand}
           #{car.car_model}(#{car.reg_number}) has already been assigned to order.")
         end

@@ -1,8 +1,7 @@
 module Admin::Affiliate
   class Update < Trailblazer::Operation
-    extend Update::Contract::DSL
     class Present < Trailblazer::Operation
-      step Model(Affiliate, :find_by)
+      step Model(Affiliate, :[])
       step Policy::Pundit(Admin::AffiliatesPolicy, :user_admin?)
       step self::Contract::Build(constant: Admin::Affiliate::Contract::Create)
     end

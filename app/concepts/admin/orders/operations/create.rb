@@ -1,6 +1,5 @@
 module Admin::Order
   class Create < Trailblazer::Operation
-    extend Create::Contract::DSL
 
     class Present < Trailblazer::Operation
       step Model(Order, :new)
@@ -10,26 +9,33 @@ module Admin::Order
 
     step Nested(Present)
     step self::Contract::Validate(key: :order)
-    step :assign_user_id_to_order
-    step :set_order_status_to_new
-    step :set_default_tax
-    step self::Contract::Persist()
+    step Wrap ->(*, &block) { Order.db.transaction { block.call } } {
+      step :assign_user_id_to_order
+      step :set_order_status_to_new
+      step :set_default_tax
+      step :debug
+      step self::Contract::Persist()
+    }
 
     private
 
     def set_order_status_to_new(options, *)
-      options['model'].order_status = 0
+      options[:model].order_status = :fresh
     end
 
     def assign_user_id_to_order(options, params, *)
-      options['model'].user_id = unless params[:current_user].nil?
-                                   params[:current_user].id
+      options[:model].user_id = unless params[:current_user].nil?
+                                  params[:current_user].id
                                  end
       true
     end
 
     def set_default_tax(options, *)
-      options['model'].tax_id = 1
+      options[:model].tax_id = 1
+    end
+
+    def debug(options, *)
+      p options
     end
   end
 end

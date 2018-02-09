@@ -1,8 +1,8 @@
 module Admin::Affiliate
   class Delete < Trailblazer::Operation
-    step Model(Affiliate, :find_by)
+    step Model(Affiliate, :[])
     step Policy::Pundit(Admin::AffiliatesPolicy, :user_admin?)
-    step Wrap ->(*, &block) { Affiliate.transaction(&block) } {
+    step Wrap ->(*, &block) { Affiliate.db.transaction { block.call } } {
       step :remove_from_cars!
       step :delete!
     }
@@ -10,7 +10,10 @@ module Admin::Affiliate
     private
 
     def remove_from_cars!(options, *)
-      options['model'].cars.update_all(affiliate_id: nil)
+      unless options[:model].cars == []
+        options[:model].cars.update_all(affiliate_id: nil)
+      end
+      true
     end
 
     def delete!(_options, model:, **)

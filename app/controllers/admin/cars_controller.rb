@@ -2,18 +2,20 @@ module Admin
   #
   class CarsController < AdminController
     def index
-      result = Admin::Car::Index.call(params, 'current_user' => current_user)
+      result = Admin::Car::Index.call(params: params,
+                                      current_user: current_user)
       handle_successful(result)
     end
 
     def new
-      result = Admin::Car::Create::Present.call(params,
-                                                'current_user' => current_user)
+      result = Admin::Car::Create::Present.call(params: params,
+                                                current_user: current_user)
       handle_successful(result)
     end
 
     def create
-      result = Admin::Car::Create.call(params, 'current_user' => current_user)
+      result = Admin::Car::Create.call(params: params,
+                                       current_user: current_user)
       handle_successful(result) do
         redirect_to admin_car_path(@model.id),
                     notice: t('car_create',
@@ -26,18 +28,20 @@ module Admin
     end
 
     def show
-      result = Admin::Car::Show.call(params,
-                                     'current_user' => current_user)
+      result = Admin::Car::Show.call(params: params,
+                                     current_user: current_user)
       handle_successful(result)
     end
 
     def edit
-      result = Admin::Car::Update::Present.call(params, 'current_user' => current_user)
+      result = Admin::Car::Update::Present.call(params: params,
+                                                current_user: current_user)
       handle_successful(result)
     end
 
     def update
-      result = Admin::Car::Update.call(params, 'current_user' => current_user)
+      result = Admin::Car::Update.call(params: params,
+                                       current_user: current_user)
       handle_successful(result) do
         redirect_to admin_car_path(@model.id),
                     notice: t('car_update')
@@ -48,8 +52,8 @@ module Admin
     end
 
     def destroy
-      result = Admin::Car::Delete.call(params,
-                                             'current_user' => current_user)
+      result = Admin::Car::Delete.call(params: params,
+                                       current_user: current_user)
       handle_successful(result) do
         redirect_to admin_cars_path,
                     notice: t('car_deleted')

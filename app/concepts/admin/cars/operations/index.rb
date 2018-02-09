@@ -7,13 +7,13 @@ module Admin::Car
     private
 
     def admin_model!(options, *)
-      options['model'] = Car.all if options['current_user'].role == 'admin'
+      options[:model] = Car.all if options[:current_user].role == :administrator
       true
     end
 
     def manager_model!(options, *)
-      options['model'] = Car.where(affiliate_id:
-                                       options['current_user'].affiliate_id)
+      options[:model] = Car.where(affiliate_id:
+                                       options[:current_user].affiliate_id)
     end
   end
 end

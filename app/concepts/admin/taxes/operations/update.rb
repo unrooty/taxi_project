@@ -1,8 +1,7 @@
 module Admin::Tax
   class Update < Trailblazer::Operation
-    extend Update::Contract::DSL
     class Present < Trailblazer::Operation
-      step Model(Tax, :find_by)
+      step Model(Tax, :[])
       step Policy::Pundit(Admin::TaxesPolicy, :can_manage?)
       step self::Contract::Build(constant: Admin::Tax::Contract::Create)
     end

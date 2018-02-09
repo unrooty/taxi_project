@@ -5,6 +5,6 @@ class Order::GeneratePdfWithOrders < Trailblazer::Operation
   private
 
   def find_all_orders(options, params, *)
-    options['model'] = params[:current_user].orders.all
+    options[:model] = params[:current_user].orders
   end
 end

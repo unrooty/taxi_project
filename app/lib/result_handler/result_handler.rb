@@ -32,7 +32,7 @@ module ResultHandler
   end
 
   def form_and_model_return(result)
-    @model = result['model']
+    @model = result[:model]
     @form = result['contract.default']
   end
 end

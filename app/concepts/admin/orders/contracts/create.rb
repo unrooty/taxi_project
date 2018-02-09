@@ -2,12 +2,10 @@ module Admin::Order
   module Contract
     class Create < Reform::Form
       #:property
-      property :tax_id
       property :start_point
       property :end_point
       property :client_name
       property :client_phone
-      property :order_status
       #:property end
 
       #:validation

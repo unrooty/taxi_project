@@ -1,6 +1,8 @@
 # Invoice model class.
-class Invoice < ApplicationRecord
-  belongs_to :order, optional: true
+class Invoice < Sequel::Model
 
-  enum invoice_status: %w[paid unpaid partially_paid]
+  one_to_one :order
+
+  plugin :enum
+  enum :invoice_status, %i[paid unpaid partially_paid]
 end

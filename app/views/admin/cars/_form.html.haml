@@ -32,7 +32,7 @@
             = form.collection_select :affiliate_id, Affiliate.all, :id, :name, {prompt: false}, {class: 'form-control'}
         .form-group
           = form.label :driver
-          = form.collection_select :user_id, User.where(role: 'driver'), :id, :full_name, {prompt: false}, {class: 'form-control'}
+          = form.collection_select :user_id, User.where(role: 4), :id, :full_name, {prompt: false}, {class: 'form-control'}
         .actions
           = form.submit t('submit'), class: 'btn btn-primary'
           = link_to t('back'), admin_cars_path, class: 'btn btn-secondary'

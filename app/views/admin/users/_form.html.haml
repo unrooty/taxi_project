@@ -39,7 +39,7 @@
         .form-group
           .input-group
             %span.input-group-addon.span-margin= t('language')
-            = f.select :language, User.languages.keys.map {|lang| [lang, lang]}, class: 'form-control'
+            = f.input :language, as: :select, collection: User.languages.keys, class: 'form-control'
         .form-group
           = f.label :affiliate
           %br/

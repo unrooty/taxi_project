@@ -1,20 +1,19 @@
 module Admin::CarAssignment
   class DriverCarAssignment < Trailblazer::Operation
-    extend DriverCarAssignment::Contract::DSL
     step Model(OpenStruct, :new)
     step :find_car
     step :find_order
     step :create_car_assignment_params
     step self::Contract::Build()
     step self::Contract::Validate(key: :car_assignment)
-    step Wrap ->(*, &block) { ActiveRecord::Base.transaction(&block) } {
+    step Wrap ->(*, &block) { Sequel::Model.db.transaction { block.call } } {
       step :update_car_status_if_car_not_ordered
       step :update_order_status_if_order_has_no_car
       step :assign_car_to_order
       step :send_car_assignment_email_to_user
     }
     def find_car(options, *)
-      @car = options['current_user'].car
+      @car = options[:current_user].car
     end
 
     def find_order(options, *)

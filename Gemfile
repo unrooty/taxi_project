@@ -46,7 +46,10 @@ gem 'rubocop', require: false
 # gem 'simplecov', :require => false, :group => :test
 gem 'trailblazer-cells'
 gem 'trailblazer-rails'
-#gem 'trailblazer-endpoint', git: 'https://github.com/trailblazer/trailblazer-endpoint.git'
+gem 'sequel-rails'
+gem 'sequel-devise'
+gem 'sequel_enum'
+# gem 'trailblazer-endpoint', git: 'https://github.com/trailblazer/trailblazer-endpoint.git'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 # Use Capistrano for deployment

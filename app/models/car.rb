@@ -1,10 +1,12 @@
 # Car model class
-class Car < ApplicationRecord
-  belongs_to :affiliate
-  belongs_to :user, -> { where role: 'driver' }
-  has_many :orders
+class Car < Sequel::Model
 
-  enum car_status: %w[free ordered]
+  many_to_one :affiliate
+  one_to_one :user, key: :id
+  one_to_many :orders
+
+  plugin :enum
+  enum :car_status, %i[free ordered]
 
   def car_info
     "#{brand} #{car_model}, #{I18n.t('activerecord.attributes.car.reg_number')}:
