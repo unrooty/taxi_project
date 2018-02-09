@@ -4,12 +4,13 @@ module Admin::Invoice
 
     class Present < Trailblazer::Operation
       step Model(Invoice, :new)
+      step Policy::Pundit(Admin::InvoicesPolicy, :can_work_with_invoice?)
       step self::Contract::Build(constant: Admin::Invoice::Contract::Create)
     end
 
     step Nested(Present)
     step self::Contract::Validate(key: :invoice)
-    step Wrap ->(*, &block) { Invoice.transaction { block.call } } {
+    step Wrap ->(*, &block) { Invoice.transaction(&block) } {
       step self::Contract::Persist()
       step :set_order_id_to_invoice
       step :count_total_price

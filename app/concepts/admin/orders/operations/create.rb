@@ -4,6 +4,7 @@ module Admin::Order
 
     class Present < Trailblazer::Operation
       step Model(Order, :new)
+      step Policy::Pundit(Admin::OrdersPolicy, :can_work_with_order?)
       step self::Contract::Build(constant: Admin::Order::Contract::Create)
     end
 

@@ -2,7 +2,6 @@
   = t('orders')
   %h5.text-center#notice= notice
   %h5.text-center.error#alert= alert
-- if can? :create, Order
   = link_to t('new_order'), new_admin_order_path, class: 'btn btn-outline-success pull-right'
 .row
   .col-sm-4

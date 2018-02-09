@@ -13,6 +13,17 @@ module Admin::Car
       validates :brand, :car_model, :reg_number, :color, :style, presence: true
       validates :reg_number, format: /\A[A-Z]{2}-\d{4}-\d/, unique: true
       validates :brand, :car_model, :color, :style, length: { maximum: 15 }
+      validate :user_has_no_car
+
+      private
+
+      def user_has_no_car
+        user = User.find(user_id)
+        unless user.car.nil?
+          errors.add('Водитель', "#{user.first_name}
+          #{user.last_name} уже назначен на машину.")
+        end
+      end
     end
   end
 end

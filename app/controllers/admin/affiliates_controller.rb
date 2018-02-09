@@ -1,51 +1,77 @@
 module Admin
   #
   class AffiliatesController < AdminController
-
     def index
-      run Admin::Affiliate::Index
+      result = Admin::Affiliate::Index.call(params,
+                                            'current_user' => current_user)
+      handle_successful(result)
     end
 
     def new
-      run Admin::Affiliate::Create::Present
+      result = Admin::Affiliate::Create::Present.call(params,
+                                                      'current_user' =>
+                                                          current_user)
+      handle_successful(result)
     end
 
     def create
-      run Admin::Affiliate::Create do
-        return redirect_to admin_affiliates_path,
-                           notice: t('affiliate_created',
-                                     affiliate_name: @model.name)
+      result = Admin::Affiliate::Create.call(params, 'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_affiliates_path,
+                    notice: t('affiliate_created', affiliate_name: @model.name)
       end
-
-      render :new
+      handle_invalid(result) do
+        render :new
+      end
     end
 
     def show
-      run Admin::Affiliate::Show
+      result = Admin::Affiliate::Show.call(params,
+                                           'current_user' => current_user)
+      handle_successful(result)
     end
 
     def edit
-      run Admin::Affiliate::Update::Present
+      result = Admin::Affiliate::Update::Present.call(params,
+                                                      'current_user' =>
+                                                          current_user)
+      handle_successful(result)
     end
 
     def update
-      run Admin::Affiliate::Update do
-        return redirect_to admin_affiliates_path,
-                           notice: t('affiliate_updated')
+      result = Admin::Affiliate::Update.call(params,
+                                             'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_affiliates_path,
+                    notice: t('affiliate_created', affiliate_name: @model.name)
       end
-
-      render :edit
+      handle_invalid(result) do
+        render :edit
+      end
     end
 
     def destroy
-      run Admin::Affiliate::Delete do
-        redirect_to admin_affiliates_path, notice: t('affiliate_deleted')
+      result = Admin::Affiliate::Delete.call(params,
+                                             'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_affiliates_path,
+                    notice: t('affiliate_created', affiliate_name: @model.name)
       end
     end
 
     def show_affiliate_workers
-      run Admin::Affiliate::ShowAffiliateWorkers
+      result = Admin::Affiliate::ShowAffiliateWorkers.call(params,
+                                                           'current_user' =>
+                                                               current_user)
+      handle_successful(result) do
+        @workers = result['workers']
+      end
     end
 
+    protected
+
+    def not_found_redirect_path
+      admin_affiliates_path
+    end
   end
 end

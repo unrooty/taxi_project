@@ -1,9 +1,8 @@
 # User model class
 class User < ApplicationRecord
-  mount_uploader :avatar, AvatarUploader
-  belongs_to :affiliate, optional: true, touch: true
-  has_many :orders, dependent: :destroy
-  has_many :cars
+  belongs_to :affiliate, optional: true
+  has_many :orders
+  has_one :car
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

@@ -2,48 +2,58 @@ module Admin
   #
   class OrdersController < AdminController
     respond_to :js
-    before_action do
-      redirect_to root_path, notice: t('access_denied') if current_user.client?
-    end
-
     def index
-      run Admin::Order::Index, params,
-          desired_phone: params[:desired_phone], namespace: [:admin]
+      result = Admin::Order::Index.call(params,
+                                        'current_user' => current_user)
+      handle_successful(result)
     end
 
     def new
-      run Admin::Order::Create::Present
-    end
-
-    def show
-      run Admin::Order::Show
-    end
-
-    def edit
-      run Admin::Order::Update::Present
+      result = Admin::Order::Create::Present.call(params,
+                                                    'current_user' => current_user)
+      handle_successful(result)
     end
 
     def create
-      run Admin::Order::Create do
-        return redirect_to admin_orders_path, notice: t('order_created')
+      result = Admin::Order::Create.call(params,
+                                         'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_orders_path, notice: t('order_created')
       end
 
-      render :new
+      handle_invalid(result) do
+        render :new
+      end
+    end
+
+    def show
+      result = Admin::Order::Show.call(params,
+                                     'current_user' => current_user)
+      handle_successful(result)
+    end
+
+    def edit
+      result = Admin::Order::Update::Present.call(params,
+                                                'current_user' => current_user)
+      handle_successful(result)
     end
 
     def update
-      run Admin::Order::Update do
-        return redirect_to admin_orders_path, notice: t('order_updated')
+      result = Admin::Order::Update.call(params, 'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_orders_path, notice: t('order_updated')
       end
 
-      render :edit
+      handle_invalid(result) do
+        render :edit
+      end
     end
 
     def destroy
-      run Admin::Order::Delete do
-        return redirect_to admin_orders_path, notice: t('order_destroyed')
+      result = Admin::Order::Delete.call(params, 'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_orders_path, notice: t('order_destroyed')
       end
     end
-
   end
 end

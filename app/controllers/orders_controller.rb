@@ -1,74 +1,65 @@
 class OrdersController < ApplicationController
+  include Matcher
   respond_to :js
-  before_action :authenticate_user!, except: %i[new create show]
-  load_and_authorize_resource
+  before_action :authenticate_user!, except: %i[new create]
 
   def index
     run Order::Index, params, current_user: current_user
   end
 
   def new
-    run Order::Create::Present
-  end
-
-  def show
-    run Order::Show
-  end
-
-  def edit
-    run Order::Update::Present
+    result = Order::Create::Present.call(params)
+    handle_successful(result)
   end
 
   def create
-    run Order::Create, params, current_user: current_user do
-      return redirect_to root_path, notice: t('order_created')
+    result = Order::Create.call(params, 'current_user' => current_user)
+    handle_successful(result) do
+      redirect_to root_path, notice: t('order_created')
     end
+    handle_invalid(result) do
+      render :new
+    end
+  end
 
-    render :new
+  def show
+    result = Order::Show.call(params, 'current_user' => current_user)
+    handle_successful(result)
+  end
+
+  def edit
+    result = Order::Update::Present.call(params, 'current_user' => current_user)
+    handle_successful(result)
   end
 
   def update
-    run Order::Update do
-      return redirect_to root_path, notice: t('order_updated')
+    result = Order::Update.call(params, 'current_user' => current_user)
+    handle_successful(result) do
+      redirect_to orders_path(@model.id), notice: t('order_updated')
     end
-
-    render :edit
+    handle_invalid(result) do
+      render :edit
+    end
   end
 
   def destroy
-    run Order::Delete do
+    result = Order::Delete.call(params, 'current_user' => current_user)
+    handle_successful(result) do
       flash[:notice] = t('order_destroyed')
     end
   end
 
-  def send_orders_mail
-    run Order::SendOrdersMail, params, current_user: current_user do
+  def send_email_with_orders
+    result = Order::SendEmailWithOrders.call(params, 'current_user' => current_user)
+    handle_successful(result) do
       redirect_to orders_path, notice: t('order_sent')
     end
-
   end
 
   def generate_orders_pdf
-    @user = current_user
-    @orders = @user.orders.all
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: 'generate_orders_pdf.pdf.haml'
-      end
+    result = Order::SendEmailWithOrders.call(params, 'current_user' => current_user)
+    handle_successful(result) do
+      render pdf: 'generate_orders_pdf.pdf.haml'
     end
-  end
-
-  private
-
-  def order_params
-    params.require(:order).permit(
-      :start_point,
-      :end_point,
-      :client_name,
-      :client_phone,
-      :order_status,
-      :tax_id
-    )
   end
 end

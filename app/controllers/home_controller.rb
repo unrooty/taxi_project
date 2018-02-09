@@ -4,7 +4,8 @@ class HomeController < ApplicationController
   def about; end
 
   def feedback_mail
-    run Feedback::Create, params do
+    result = Feedback::Create.call(params)
+    handle_successful(result) do
       redirect_to root_path, notice: t('send_feedback')
     end
   end

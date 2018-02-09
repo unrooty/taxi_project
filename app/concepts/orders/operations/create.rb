@@ -8,17 +8,19 @@ class Order::Create < Trailblazer::Operation
 
   step Nested(Present)
   step Contract::Validate(key: :order)
-  step :set_orders_status
-  step :assign_user_id_to_order
-  step Contract::Persist()
+  step Wrap ->(*, &block) { Order.transaction(&block) } {
+    step :assign_user_to_order
+    step Contract::Persist()
+    step :set_default_tax_to_order
+  }
 
   private
 
-  def set_order_status(options, *)
-    options['model'].order_status = 0
+  def set_default_tax_to_order(options, *)
+    options['model'].update(tax_id: Tax.where(by_default: true).last.id)
   end
 
-  def assign_user_id_to_order(options, params, *)
+  def assign_user_to_order(options, params, *)
     options['model'].user_id = unless params[:current_user].nil?
                                  params[:current_user].id
                                end

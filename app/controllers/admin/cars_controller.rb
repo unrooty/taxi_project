@@ -1,45 +1,65 @@
 module Admin
   #
   class CarsController < AdminController
-
     def index
-      run Admin::Car::Index
+      result = Admin::Car::Index.call(params, 'current_user' => current_user)
+      handle_successful(result)
     end
 
     def new
-      run Admin::Car::Create::Present
-    end
-
-    def show
-      run Admin::Car::Show
-    end
-
-    def edit
-      run Admin::Car::Update::Present
+      result = Admin::Car::Create::Present.call(params,
+                                                'current_user' => current_user)
+      handle_successful(result)
     end
 
     def create
-      run Admin::Car::Create do
-        return redirect_to admin_car_path(@model.id),
-                           notice: t('car_create', car_model: @model.car_model,
-                                                   car_brand: @model.brand)
+      result = Admin::Car::Create.call(params, 'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_car_path(@model.id),
+                    notice: t('car_create',
+                              car_brand: @model.brand,
+                              car_model: @model.car_model)
       end
-      render :new
+      handle_invalid(result) do
+        render :new
+      end
+    end
+
+    def show
+      result = Admin::Car::Show.call(params,
+                                     'current_user' => current_user)
+      handle_successful(result)
+    end
+
+    def edit
+      result = Admin::Car::Update::Present.call(params, 'current_user' => current_user)
+      handle_successful(result)
     end
 
     def update
-      run Admin::Car::Update do
-        return redirect_to admin_car_path(@car.id), notice: t('car_update')
+      result = Admin::Car::Update.call(params, 'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_car_path(@model.id),
+                    notice: t('car_update')
       end
-
-      render :edit
+      handle_invalid(result) do
+        render :edit
+      end
     end
 
     def destroy
-      run Admin::Car::Delete do
-        redirect_to admin_cars_path, notice: t('car_deleted')
+      result = Admin::Car::Delete.call(params,
+                                             'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_cars_path,
+                    notice: t('car_deleted')
       end
     end
 
+    protected
+
+    def not_found_redirect_path
+      admin_cars_path
+    end
   end
 end

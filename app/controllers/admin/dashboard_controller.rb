@@ -1,6 +1,5 @@
 module Admin
   #
-  class DashboardController < ApplicationController
-  layout 'admin'
+  class DashboardController < AdminController
   end
 end

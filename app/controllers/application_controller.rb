@@ -1,12 +1,10 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+  include ResultHandler
+  protect_from_forgery
   layout 'page'
   before_action :set_locale
-  protect_from_forgery prepend: true, with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-
-  rescue_from CanCan::AccessDenied do
-    redirect_to root_path, notice: 'Permission denied'
-  end
 
   protected
 

@@ -3,12 +3,13 @@ module Admin::Invoice
     extend Create::Contract::DSL
     class Present < Trailblazer::Operation
       step Model(Invoice, :find_by)
+      step Policy::Pundit(Admin::InvoicesPolicy, :can_work_with_invoice?)
       step self::Contract::Build(constant: Admin::Invoice::Contract::Update)
     end
 
     step Nested(Present)
     step self::Contract::Validate(key: :invoice)
-    step Wrap ->(*, &block) { Invoice.transaction { block.call } } {
+    step Wrap ->(*, &block) { Invoice.transaction(&block) } {
       step self::Contract::Persist()
       step :add_additional_amount_to_payed_amount
       step :take_away_additional_amount_from_indebtedness

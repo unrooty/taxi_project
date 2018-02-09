@@ -3,29 +3,45 @@ module Admin
   class InvoicesController < AdminController
 
     def new
-      run Admin::Invoice::Create::Present
+      result = Admin::Invoice::Create::Present.call(params,
+                                                    'current_user' => current_user)
+      handle_successful(result)
     end
 
     def create
-      p params
-      run Admin::Invoice::Create do
-        return redirect_to admin_orders_path, notice: t('invoice_created')
+      result = Admin::Invoice::Create.call(params,
+                                           'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_orders_path, notice: t('order_created')
       end
 
-      render :new
+      handle_invalid(result) do
+        render :new
+      end
     end
 
     def edit
-      run Admin::Invoice::Update::Present
+      result = Admin::Invoice::Update::Present.call(params,
+                                                'current_user' => current_user)
+      handle_successful(result)
     end
 
     def update
-      run Admin::Invoice::Update do
-        return redirect_to admin_orders_path, notice: t('invoice_updated')
+      result = Admin::Invoice::Update.call(params,
+                                           'current_user' => current_user)
+      handle_successful(result) do
+        redirect_to admin_orders_path, notice: t('order_updated')
       end
 
-      render :edit
+      handle_invalid(result) do
+        render :edit
+      end
     end
-    
+
+    protected
+
+    def not_found_redirect_path
+      admin_orders_path
+    end
   end
 end

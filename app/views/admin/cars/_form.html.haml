@@ -26,9 +26,10 @@
         .form-group
           = form.label :style
           = form.text_field :style, class: 'form-control'
-        .form-group
-          = form.label :affiliate
-          = form.collection_select :affiliate_id, Affiliate.all, :id, :name, {prompt: false}, {class: 'form-control'}
+        - if current_user.role == 'admin'
+          .form-group
+            = form.label :affiliate
+            = form.collection_select :affiliate_id, Affiliate.all, :id, :name, {prompt: false}, {class: 'form-control'}
         .form-group
           = form.label :driver
           = form.collection_select :user_id, User.where(role: 'driver'), :id, :full_name, {prompt: false}, {class: 'form-control'}

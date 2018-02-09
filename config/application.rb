@@ -16,5 +16,6 @@ module TaxiStation
                          { expires_in: 90.minutes }
     config.active_job.queue_adapter = :delayed_job
     config.active_record.schema_format = :ruby
+    config.eager_load_paths += %W[#{config.root}/app/lib/result_handler]
   end
 end

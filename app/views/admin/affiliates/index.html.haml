@@ -1,7 +1,7 @@
+
 %h1
   = t('affiliates')
-  - if can? :create, Affiliate
-    = link_to t('create'), new_admin_affiliate_path, class: 'btn btn-outline-info pull-right'
+  = link_to t('create'), new_admin_affiliate_path, class: 'btn btn-outline-info pull-right'
 %p#notice
   =notice
 
@@ -13,7 +13,7 @@
         = t('activerecord.models.affiliate')
       %th
         = t('address')
-      %th 
+      %th
   %tbody
     - @model.each do |affiliate|
       %tr
@@ -21,13 +21,11 @@
           = affiliate.id
         %td
           .affiliate-name= link_to affiliate.name, admin_affiliate_path(affiliate)
-        %td 
+        %td
           = affiliate.address
-        %td 
-          - if can? :edit, Affiliate
-            = link_to t('edit'), edit_admin_affiliate_path(affiliate.id), class: 'btn btn-outline-info btn-sm'
-          - if can? :destroy, Affiliate
-            = link_to t('delete'), admin_affiliate_path(affiliate), method: :delete,
+        %td
+          = link_to t('edit'), edit_admin_affiliate_path(affiliate.id), class: 'btn btn-outline-info btn-sm'
+          = link_to t('delete'), admin_affiliate_path(affiliate), method: :delete,
                                    data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
 
 

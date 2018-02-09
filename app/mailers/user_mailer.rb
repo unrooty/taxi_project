@@ -8,7 +8,7 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: t('welcome_email'))
   end
 
-  def send_orders_mail(user, orders)
+  def send_email_with_orders(user, orders)
     @user = user
     @orders = orders
     mail(to: @user.email, subject: t('orders_report'))

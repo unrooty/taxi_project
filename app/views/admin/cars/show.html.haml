@@ -31,9 +31,7 @@
         %b
           #{t('activerecord.attributes.car.affiliate')}:
         = @model.affiliate.name
-    - if can? :edit, Car
-      = link_to t('edit'), edit_admin_car_path(@model), class: 'btn btn-outline-info btn-sm'
-    - if can? :destroy, Car
-      = link_to t('delete'), admin_car_path(@model), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
+    = link_to t('edit'), edit_admin_car_path(@model), class: 'btn btn-outline-info btn-sm'
+    = link_to t('delete'), admin_car_path(@model), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'
     %div/
     = link_to t('back_to_cars'), admin_cars_path
