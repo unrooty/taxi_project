@@ -9,7 +9,7 @@ class Order::Delete < Trailblazer::Operation
   private
 
   def unassign_car!(_options, model:, **)
-    model.car.update(car_status: 0) unless model.car.nil?
+    model.car.update(car_status: 'Free') if model.car
     true
   end
 

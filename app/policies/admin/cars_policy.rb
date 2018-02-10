@@ -4,6 +4,6 @@ class Admin::CarsPolicy
   end
 
   def can_work_with_car?
-    @user.role.in?(%i[administrator manager])
+    @user.role.in?(%w[Admin Manager])
   end
 end

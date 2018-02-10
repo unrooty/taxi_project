@@ -26,16 +26,16 @@
     .sidenav
       %ul.navbar-nav.navbar-sidenav
         %li.sidenav-item
-          - if current_user.role.in?(%i[administrator driver manager dispatcher])
+          - if current_user.role.in?(%w[Admin Manager Driver Dispatcher])
             = link_to t('orders'), admin_orders_path
             = link_to t('taxes'), admin_taxes_path
-          - if current_user.role.in?(%i[administrator manager])
+          - if current_user.role.in?(%w[Admin Manager])
             = link_to t('users'), admin_users_path
         %li.sidenav-item
-          - if current_user.role.in?(%i[administrator manager dispatcher])
+          - if current_user.role.in?(%w[Admin Manager Dispatcher])
             = link_to t('cars'), admin_cars_path
         %li.sidenav-item
-          - if current_user.role == :administrator
+          - if current_user.role == 'Admin'
             = link_to t('affiliates'), admin_affiliates_path
 
     .content-wrapper

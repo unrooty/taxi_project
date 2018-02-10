@@ -11,12 +11,12 @@ module Admin::User
     private
 
     def remove_from_cars!(_options, model:, **)
-      model.car.update_all(user_id: nil) unless model.car.nil?
+      model.car.update_all(user_id: nil) if model.car
       true
     end
 
     def remove_from_orders!(_options, model:, **)
-      model.orders.update_all(user_id: nil) unless model.orders.nil?
+      model.orders.update_all(user_id: nil) unless model.orders.empty?
       true
     end
 

@@ -10,7 +10,7 @@ class Feedback::Create < Trailblazer::Operation
 
   private
 
-  def send_feedback_mail(options, *)
-    UserMailer.feedback_mail(options[:model]).deliver
+  def send_feedback_mail(options, model:, **)
+    UserMailer.feedback_mail(model).deliver
   end
 end

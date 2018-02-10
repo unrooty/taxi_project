@@ -7,17 +7,17 @@ module Admin::CarAssignment
     step self::Contract::Build()
     step self::Contract::Validate(key: :car_assignment)
     step Wrap ->(*, &block) { Sequel::Model.db.transaction { block.call } } {
-      step :update_car_status_if_car_not_ordered
-      step :update_order_status_if_order_has_no_car
+      step :update_car_status
+      step :update_order_status
       step :assign_car_to_order
       step :send_car_assignment_email_to_user
     }
-    def find_car(options, *)
-      @car = options[:current_user].car
+    def find_car(current_user:, **)
+      @car = current_user.car
     end
 
-    def find_order(options, *)
-      @order = Order.find(options['params']['order_id'])
+    def find_order(_options, params:, **)
+      @order = Order[params['order_id']]
     end
 
     def create_car_assignment_params(_options, params:, **)
@@ -25,12 +25,12 @@ module Admin::CarAssignment
                                   order_id: @order.id }
     end
 
-    def update_car_status_if_car_not_ordered(*)
-      @car.update(car_status: 1)
+    def update_car_status(*)
+      @car.update(car_status: 'Ordered')
     end
 
-    def update_order_status_if_order_has_no_car(*)
-      @order.update(order_status: 1)
+    def update_order_status(*)
+      @order.update(order_status: 'In progress')
     end
 
     def assign_car_to_order(*)

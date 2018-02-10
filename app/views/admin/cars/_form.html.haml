@@ -26,7 +26,7 @@
         .form-group
           = form.label :style
           = form.text_field :style, class: 'form-control'
-        - if current_user.role == 'admin'
+        - if current_user.role == 'Admin'
           .form-group
             = form.label :affiliate
             = form.collection_select :affiliate_id, Affiliate.all, :id, :name, {prompt: false}, {class: 'form-control'}

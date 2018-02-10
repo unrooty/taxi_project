@@ -10,7 +10,7 @@ module Admin::Order
     private
 
     def update_car_status_to_free!(_options, model:, **)
-      model.car.update(car_status: :free) if model.car
+      model.car.update(car_status: 'Free') if model.car
       true
     end
 

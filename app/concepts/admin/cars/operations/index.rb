@@ -7,7 +7,7 @@ module Admin::Car
     private
 
     def admin_model!(options, *)
-      options[:model] = Car.all if options[:current_user].role == :administrator
+      options[:model] = Car.all if options[:current_user].role == 'Admin'
       true
     end
 

@@ -13,9 +13,9 @@ module Admin::User
       step :bind_user_to_manager_affiliate
     }
 
-    def bind_user_to_manager_affiliate(options, *)
-      if options[:current_user].role == 'manager'
-        options[:model].update(affiliate_id: options[:current_user].affiliate_id)
+    def bind_user_to_manager_affiliate(_options, model:, current_user:, **)
+      if current_user.role == 'Manager'
+        model.update(affiliate_id: current_user.affiliate_id)
       end
       true
     end

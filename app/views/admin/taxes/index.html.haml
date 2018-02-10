@@ -1,6 +1,6 @@
 %h1
   = t('taxes')
-  - if current_user.role.in?(%i[administrator manager])
+  - if current_user.role.in?(%w[Admin Manager])
     = link_to t('new_tax'), new_admin_tax_path, class: 'btn btn-outline-success pull-right'
 %p#notice
   =notice
@@ -23,6 +23,6 @@
               #{t('activerecord.attributes.tax.basic_cost')}:
             #{tax.basic_cost}
           %li.list-group
-            - if current_user.role.in?(%i[administrator  manager])
+            - if current_user.role.in?(%w[Admin  Manager])
               = link_to t('edit'), edit_admin_tax_path(tax), class: 'btn btn-outline-info btn-sm'
               = link_to t('delete'), admin_tax_path(tax), method: :delete, data: { confirm: t('confirmation') }, class: 'btn btn-outline-danger btn-sm'

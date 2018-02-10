@@ -66,18 +66,6 @@ ALTER SEQUENCE affiliates_id_seq OWNED BY affiliates.id;
 
 
 --
--- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE ar_internal_metadata (
-    key character varying NOT NULL,
-    value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
 -- Name: cars; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -92,7 +80,7 @@ CREATE TABLE cars (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_id integer,
-    car_status integer DEFAULT 0 NOT NULL
+    car_status text DEFAULT 'Free'::text NOT NULL
 );
 
 
@@ -160,7 +148,7 @@ CREATE TABLE invoices (
     updated_at timestamp without time zone NOT NULL,
     order_id integer,
     payed_amount numeric DEFAULT 0.0 NOT NULL,
-    invoice_status integer DEFAULT 0 NOT NULL,
+    invoice_status text DEFAULT 'Unpaid'::text NOT NULL,
     indebtedness numeric DEFAULT 0.0 NOT NULL
 );
 
@@ -199,7 +187,7 @@ CREATE TABLE orders (
     user_id integer,
     tax_id integer,
     start_point character varying,
-    order_status integer DEFAULT 0 NOT NULL
+    order_status text DEFAULT 'New'::text NOT NULL
 );
 
 
@@ -288,11 +276,11 @@ CREATE TABLE users (
     last_name character varying,
     phone character varying,
     affiliate_id integer,
-    role integer DEFAULT 5 NOT NULL,
+    role text DEFAULT 'Client'::text NOT NULL,
     confirmation_token character varying,
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
-    language integer DEFAULT 0 NOT NULL
+    language text DEFAULT 'Russian'::text NOT NULL
 );
 
 
@@ -370,14 +358,6 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY affiliates
     ADD CONSTRAINT affiliates_pkey PRIMARY KEY (id);
-
-
---
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY ar_internal_metadata
-    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
 
 
 --
@@ -494,3 +474,7 @@ ALTER TABLE ONLY orders
 
 SET search_path TO "$user", public;
 INSERT INTO "schema_migrations" ("filename") VALUES ('20180207091406_null_migration.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150737_remove_enum_from_cars.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150747_remove_enum_from_invoices.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150807_remove_enum_from_orders.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150817_remove_enum_from_users.rb');

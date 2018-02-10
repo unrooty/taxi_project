@@ -6,7 +6,7 @@ module Admin::Affiliate
 
     private
 
-    def model!(options, *)
+    def model!(options, **)
       options[:model] = Affiliate.all
     end
 

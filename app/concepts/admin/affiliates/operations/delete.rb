@@ -9,10 +9,8 @@ module Admin::Affiliate
 
     private
 
-    def remove_from_cars!(options, *)
-      unless options[:model].cars == []
-        options[:model].cars.update_all(affiliate_id: nil)
-      end
+    def remove_from_cars!(_options, model:, **)
+      model.cars.update_all(affiliate_id: nil) unless model.cars.empty?
       true
     end
 

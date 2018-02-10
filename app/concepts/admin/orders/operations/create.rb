@@ -1,6 +1,5 @@
 module Admin::Order
   class Create < Trailblazer::Operation
-
     class Present < Trailblazer::Operation
       step Model(Order, :new)
       step Policy::Pundit(Admin::OrdersPolicy, :can_work_with_order?)
@@ -13,29 +12,22 @@ module Admin::Order
       step :assign_user_id_to_order
       step :set_order_status_to_new
       step :set_default_tax
-      step :debug
       step self::Contract::Persist()
     }
 
     private
 
-    def set_order_status_to_new(options, *)
-      options[:model].order_status = :fresh
+    def set_order_status_to_new(_options, model:, **)
+      model.order_status = 'New'
     end
 
-    def assign_user_id_to_order(options, params, *)
-      options[:model].user_id = unless params[:current_user].nil?
-                                  params[:current_user].id
-                                 end
+    def assign_user_id_to_order(_options, model:, current_user:, **)
+      model.user_id = (current_user.id unless current_user.nil?)
       true
     end
 
-    def set_default_tax(options, *)
-      options[:model].tax_id = 1
-    end
-
-    def debug(options, *)
-      p options
+    def set_default_tax(_options, model:, **)
+      model.tax_id = 1
     end
   end
 end

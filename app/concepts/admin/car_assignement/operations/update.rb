@@ -19,20 +19,20 @@ module Admin::CarAssignment
 
     private
 
-    def find_car(options, *)
-      @car = Car[options[:params]['car_assignment']['car_id']]
+    def find_car(_options, params:, **)
+      @car = Car[params['car_assignment']['car_id']]
     end
 
-    def find_order(options, *)
-      @order = Order[options[:params]['order_id']]
+    def find_order(_options, params:, **)
+      @order = Order[params['order_id']]
     end
 
     def remove_previous_car_from_order(*)
-      @order.car.update(car_status: :free)
+      @order.car.update(car_status: 'Free')
     end
 
     def update_car_status(*)
-      @car.update(car_status: :ordered)
+      @car.update(car_status: 'Ordered')
     end
 
     def assign_car_to_order(*)

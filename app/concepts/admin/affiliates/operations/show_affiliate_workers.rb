@@ -7,7 +7,7 @@ module Admin::Affiliate
     private
 
     def find_workers!(options, *)
-      options['workers'] = options[:model].users.where.not(role: :client)
+      options['workers'] = User.where(affiliate_id: options[:model].id).exclude(role: 'Client')
     end
   end
 end

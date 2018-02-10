@@ -5,20 +5,26 @@ class User < Sequel::Model
   one_to_many :orders
   one_to_one :car
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  #  :lockable, :timeoutable and :omniauthable
   plugin :devise
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  plugin :enum
-  enum :role, %i[administrator manager accountant dispatcher driver client]
-  enum :language, %i[Русский English]
+
+  ROLES = [
+      ADMIN = 'Admin',
+      CLIENT = 'Client',
+      DRIVER = 'Driver',
+      DISPATCHER = 'Dispatcher',
+      MANAGER = 'Manager'
+  ]
+
+  LANGUAGES = %w[Russian English]
 
   def after_confirmation
     welcome_email
   end
 
-  def will_save_change_to_email?
-  end
+  def will_save_change_to_email?; end
 
   private
 

@@ -9,29 +9,29 @@
 Affiliate.create name: 'Taxi-service', address: 'Гродно, ул. Кабяка, д.17'
 Affiliate.create name: 'Taxi-universe', address: 'Гродно, ул. Гоголя, д.1'
 
-User.create first_name: 'Paul', last_name: 'Admin', role: :administrator,
-            phone: '25-755-55-50', email: 'adminexample@gmail.com',
+User.create first_name: 'Paul', last_name: 'Admin', role: 'Admin',
+            phone: '25-755-55-50', email: 'adminexample@gmail.com', affiliate_id: 1,
             password: '123456789', password_confirmation: '123456789', confirmed_at: Time.now
-User.create first_name: 'Alex', last_name: 'Driver', role: :driver,
-            phone: '25-755-55-51', email: 'driverexample1@gmail.com',
+User.create first_name: 'Alex', last_name: 'Driver', role: 'Driver',
+            phone: '25-755-55-51', email: 'driverexample1@gmail.com', affiliate_id: 1,
             password: '12345678', password_confirmation: '12345678', confirmed_at: Time.now
-User.create first_name: 'Alexa', last_name: 'Driver', role: :driver,
-            phone: '25-755-55-52', email: 'driverexample2@gmail.com',
+User.create first_name: 'Alexa', last_name: 'Driver', role: 'Driver',
+            phone: '25-755-55-52', email: 'driverexample2@gmail.com', affiliate_id: 1,
             password: '12345678', password_confirmation: '12345678', confirmed_at: Time.now
-User.create first_name: 'Rick', last_name: 'Driver', role: :driver,
-            phone: '25-755-55-53', email: 'driverexample3@gmail.com',
+User.create first_name: 'Rick', last_name: 'Driver', role: 'Driver',
+            phone: '25-755-55-53', email: 'driverexample3@gmail.com', affiliate_id: 2,
             password: '12345678', password_confirmation: '12345678', confirmed_at: Time.now
-User.create first_name: 'Denis', last_name: 'Client', role: :client,
-            phone: '25-755-55-54', email: 'clientexample@gmail.com',
+User.create first_name: 'Denis', last_name: 'Client', role: 'Client',
+            phone: '25-755-55-54', email: 'clientexample@gmail.com', affiliate_id: 2,
             password: '12345678', password_confirmation: '12345678', confirmed_at: Time.now
-User.create first_name: 'Alexa', last_name: 'Dispatcher', role: :dispatcher,
-            phone: '25-755-55-52', email: 'dispatcherexample@gmail.com',
+User.create first_name: 'Alexa', last_name: 'Dispatcher', role: 'Dispatcher',
+            phone: '25-755-55-52', email: 'dispatcherexample@gmail.com', affiliate_id: 2,
             password: '12345678', password_confirmation: '12345678', confirmed_at: Time.now
-User.create first_name: 'Ann', last_name: 'Accountant', role: :accountant,
-            phone: '25-755-55-53', email: 'accountantexample@gmail.com',
+User.create first_name: 'Ann', last_name: 'Accountant', role: 'Accountant',
+            phone: '25-755-55-53', email: 'accountantexample@gmail.com', affiliate_id: 2,
             password: '12345678', password_confirmation: '12345678', confirmed_at: Time.now
-User.create first_name: 'Din', last_name: 'Manager', role: :manager,
-            phone: '25-755-55-54', email: 'managerexample@gmail.com',
+User.create first_name: 'Din', last_name: 'Manager', role: 'Manager',
+            phone: '25-755-55-54', email: 'managerexample@gmail.com', affiliate_id: 1,
             password: '12345678', password_confirmation: '12345678', confirmed_at: Time.now
 
 Tax.create name: 'Basic', cost_per_km: '0.5', basic_cost: '2', by_default: true

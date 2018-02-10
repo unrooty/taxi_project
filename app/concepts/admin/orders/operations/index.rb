@@ -5,7 +5,7 @@ module Admin::Order
 
     private
 
-    def model!(options, params, *)
+    def model!(options, *)
       options[:model] = Order.all
     end
   end

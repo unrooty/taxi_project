@@ -14,14 +14,14 @@ class Order::Create < Trailblazer::Operation
 
   private
 
-  def set_default_tax_to_order(options, *)
-    options[:model].update(tax_id: Tax.where(by_default: true).last.id)
+  def set_default_tax_to_order(_options, model:, **)
+    model.update(tax_id: Tax.where(by_default: true).last.id)
   end
 
-  def assign_user_to_order(options, params, *)
-    options[:model].user_id = unless params[:current_user].nil?
-                                params[:current_user].id
-                               end
+  def assign_user_to_order(_options, model:, current_user:, **)
+    model.user_id = if current_user
+                      current_user.id
+                    end
     true
   end
 end

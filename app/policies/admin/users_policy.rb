@@ -4,6 +4,6 @@ class Admin::UsersPolicy
   end
 
   def can_manage?
-    @user.role.in?(%i[administrator manager])
+    @user.role.in?(%w[Admin Manager])
   end
 end

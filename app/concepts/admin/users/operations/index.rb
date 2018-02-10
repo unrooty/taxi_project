@@ -6,8 +6,8 @@ module Admin::User
 
     private
 
-    def admin_model!(options, *)
-      options[:model] = User.all if options[:current_user].role == 'admin'
+    def admin_model!(options, current_user:, **)
+      options[:model] = User.all if current_user.role == 'Admin'
       true
     end
 

@@ -4,6 +4,6 @@ class Admin::InvoicesPolicy
   end
 
   def can_work_with_invoice?
-    @user.role.in?(%i[administrator manager driver dispatcher])
+    @user.role.in?(%w[Admin Manager Dispatcher Driver])
   end
 end

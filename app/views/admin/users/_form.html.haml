@@ -39,7 +39,7 @@
         .form-group
           .input-group
             %span.input-group-addon.span-margin= t('language')
-            = f.input :language, as: :select, collection: User.languages.keys, class: 'form-control'
+            = f.select(:language, User::LANGUAGES.each {|l| [t("role.#{l}"), l]}, class: 'form-control')
         .form-group
           = f.label :affiliate
           %br/
@@ -47,7 +47,7 @@
         .form-group
           .input-group.language
             %span.input-group-addon.span-margin= t('activerecord.attributes.user.role')
-            = f.select(:role, User.roles.keys.map {|role| [t("role.#{role}"),role]})
+            = f.select(:role, User::ROLES.each {|role| [t("role.#{role}"),role]})
         .form-group
           = f.submit t('submit'), class: 'btn btn-primary'
           = link_to t('back'), admin_users_path, class: 'btn btn-secondary'

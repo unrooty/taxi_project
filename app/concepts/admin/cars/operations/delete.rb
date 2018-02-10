@@ -9,8 +9,9 @@ module Admin::Car
 
     private
 
-    def remove_from_orders!(options, *)
-      options[:model].orders.update_all(car_id: nil)
+    def remove_from_orders!(_options, model:, **)
+      model.orders.update_all(car_id: nil) unless model.orders.empty?
+      true
     end
 
     def delete!(_options, model:, **)
