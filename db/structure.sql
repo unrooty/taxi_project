@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.10
--- Dumped by pg_dump version 9.5.10
+-- Dumped from database version 9.5.11
+-- Dumped by pg_dump version 9.5.11
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -39,8 +39,8 @@ SET default_with_oids = false;
 
 CREATE TABLE affiliates (
     id integer NOT NULL,
-    name character varying,
-    address character varying,
+    name character varying NOT NULL,
+    address character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -71,16 +71,21 @@ ALTER SEQUENCE affiliates_id_seq OWNED BY affiliates.id;
 
 CREATE TABLE cars (
     id integer NOT NULL,
-    brand character varying,
-    car_model character varying,
-    reg_number character varying,
-    color character varying,
-    style character varying,
-    affiliate_id integer,
+    brand character varying NOT NULL,
+    car_model character varying NOT NULL,
+    reg_number character varying NOT NULL,
+    color character varying NOT NULL,
+    style character varying NOT NULL,
+    affiliate_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    user_id integer,
-    car_status text DEFAULT 'Free'::text NOT NULL
+    user_id integer NOT NULL,
+    car_status text DEFAULT 'Free'::text NOT NULL,
+    CONSTRAINT check_brand_length CHECK ((char_length((brand)::text) <= 25)),
+    CONSTRAINT check_car_model_length CHECK ((char_length((car_model)::text) <= 25)),
+    CONSTRAINT check_color_length CHECK ((char_length((color)::text) <= 25)),
+    CONSTRAINT check_style_length CHECK ((char_length((style)::text) <= 25)),
+    CONSTRAINT reg_number_regex CHECK (((reg_number)::text ~ '[A-Z]{2}-[0-9]{4}-[1-7]'::text))
 );
 
 
@@ -109,11 +114,13 @@ ALTER SEQUENCE cars_id_seq OWNED BY cars.id;
 
 CREATE TABLE feedbacks (
     id integer NOT NULL,
-    name character varying,
-    email character varying,
-    message character varying,
+    name character varying NOT NULL,
+    email character varying NOT NULL,
+    message character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    CONSTRAINT check_message_length CHECK ((char_length((message)::text) >= 10)),
+    CONSTRAINT email_regex CHECK (((email)::text ~ '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'::text))
 );
 
 
@@ -142,14 +149,17 @@ ALTER SEQUENCE feedbacks_id_seq OWNED BY feedbacks.id;
 
 CREATE TABLE invoices (
     id integer NOT NULL,
-    distance numeric,
-    total_price numeric,
+    distance numeric DEFAULT 0 NOT NULL,
+    total_price numeric DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    order_id integer,
+    order_id integer NOT NULL,
     payed_amount numeric DEFAULT 0.0 NOT NULL,
     invoice_status text DEFAULT 'Unpaid'::text NOT NULL,
-    indebtedness numeric DEFAULT 0.0 NOT NULL
+    indebtedness numeric DEFAULT 0.0 NOT NULL,
+    CONSTRAINT check_distance_value CHECK ((distance >= (0)::numeric)),
+    CONSTRAINT check_payed_amount_value CHECK ((payed_amount >= (0)::numeric)),
+    CONSTRAINT check_total_price_value CHECK ((total_price >= (0)::numeric))
 );
 
 
@@ -181,13 +191,14 @@ CREATE TABLE orders (
     car_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    end_point character varying,
-    client_name character varying,
-    client_phone character varying,
+    end_point character varying NOT NULL,
+    client_name character varying NOT NULL,
+    client_phone character varying NOT NULL,
     user_id integer,
-    tax_id integer,
-    start_point character varying,
-    order_status text DEFAULT 'New'::text NOT NULL
+    tax_id integer NOT NULL,
+    start_point character varying NOT NULL,
+    order_status text DEFAULT 'New'::text NOT NULL,
+    CONSTRAINT check_client_phone_length CHECK ((char_length((client_phone)::text) = 9))
 );
 
 
@@ -225,13 +236,15 @@ CREATE TABLE schema_migrations (
 
 CREATE TABLE taxes (
     id integer NOT NULL,
-    cost_per_km numeric,
-    basic_cost numeric,
+    cost_per_km numeric NOT NULL,
+    basic_cost numeric NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
     deleted boolean DEFAULT false NOT NULL,
-    by_default boolean DEFAULT false NOT NULL
+    by_default boolean DEFAULT false NOT NULL,
+    CONSTRAINT check_basic_cost_value CHECK ((basic_cost >= (0)::numeric)),
+    CONSTRAINT check_cast_per_km_value CHECK ((cost_per_km >= (0)::numeric))
 );
 
 
@@ -417,6 +430,20 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: affiliates_lower__name___index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX affiliates_lower__name___index ON affiliates USING btree (lower((name)::text));
+
+
+--
+-- Name: cars_reg_number_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX cars_reg_number_index ON cars USING btree (reg_number);
+
+
+--
 -- Name: index_cars_on_affiliate_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -442,6 +469,13 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: taxes_lower__name___index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX taxes_lower__name___index ON taxes USING btree (lower((name)::text));
 
 
 --
@@ -478,3 +512,9 @@ INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150737_remove_enum
 INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150747_remove_enum_from_invoices.rb');
 INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150807_remove_enum_from_orders.rb');
 INSERT INTO "schema_migrations" ("filename") VALUES ('20180209150817_remove_enum_from_users.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180212072635_affiliates_refactoring.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180213102240_cars_refactoring.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180213113300_invoices_refactoring.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180213124827_orders_refactoring.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180213150546_taxes_refactoring.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180213152314_feedbacks_refactoring.rb');

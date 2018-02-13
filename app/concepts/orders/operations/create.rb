@@ -5,6 +5,7 @@ class Order::Create < Trailblazer::Operation
   end
 
   step Nested(Present)
+  step :bring_number_to_right_format
   step Contract::Validate(key: :order)
   step Wrap ->(*, &block) { Order.db.transaction { block.call } } {
     step :assign_user_to_order
@@ -13,6 +14,10 @@ class Order::Create < Trailblazer::Operation
   }
 
   private
+
+  def bring_number_to_right_format(_options, params:, **)
+    params['order']['client_phone'].gsub!(/[^\d]/, '')
+  end
 
   def set_default_tax_to_order(_options, model:, **)
     model.update(tax_id: Tax.where(by_default: true).last.id)

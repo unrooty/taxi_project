@@ -1,5 +1,3 @@
-require 'matcher'
-
 module ResultHandler
   include Matcher
 

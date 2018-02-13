@@ -7,7 +7,14 @@ module Admin::Order
     end
 
     step Nested(Present)
+    step :bring_number_to_right_format
     step self::Contract::Validate(key: :order)
     step self::Contract::Persist()
+
+    private
+
+    def bring_number_to_right_format(_options, params:, **)
+      params['order']['client_phone'].gsub!(/[^\d]/, '')
+    end
   end
 end

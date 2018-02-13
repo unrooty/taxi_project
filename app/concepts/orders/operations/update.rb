@@ -6,6 +6,13 @@ class Order::Update < Trailblazer::Operation
   end
 
   step Nested(Present)
+  step :bring_number_to_right_format
   step Contract::Validate(key: :order)
   step Contract::Persist()
+
+  private
+
+  def bring_number_to_right_format(_options, params:, **)
+    params['order']['client_phone'].gsub!(/[^\d]/, '')
+  end
 end

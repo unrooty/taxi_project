@@ -10,8 +10,7 @@ module Admin::Order
 
       #:validation
       validates :start_point, :end_point, :client_name, presence: true
-      validates :client_phone, presence: true,
-                format: /\A\d{2}-\d{3}-\d{2}-\d{2}\z/
+      validates :client_phone, presence: true, length: { is: 9 }
       #:validation end
     end
   end

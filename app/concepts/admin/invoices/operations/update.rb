@@ -3,7 +3,7 @@ module Admin::Invoice
     class Present < Trailblazer::Operation
       step Model(Invoice, :[])
       step Policy::Pundit(Admin::InvoicesPolicy, :can_work_with_invoice?)
-      step self::Contract::Build(constant: Admin::Invoice::Contract::Update)
+      step self::Contract::Build(constant: Admin::Invoice::Contract::Create)
     end
 
     step Nested(Present)
