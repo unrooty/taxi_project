@@ -7,11 +7,19 @@ module Admin::User
     end
 
     step Nested(Present)
+    step :bring_number_to_right_format
     step self::Contract::Validate(key: :user)
     step Wrap ->(*, &block) { User.db.transaction { block.call } } {
       step self::Contract::Persist()
       step :bind_user_to_manager_affiliate
     }
+
+    private
+
+    def bring_number_to_right_format(_options, params:, **)
+      params['user']['phone'].gsub!(/[^\d]/, '')
+      true
+    end
 
     def bind_user_to_manager_affiliate(_options, model:, current_user:, **)
       if current_user.role == 'Manager'

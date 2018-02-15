@@ -285,15 +285,17 @@ CREATE TABLE users (
     last_sign_in_ip inet,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    first_name character varying,
-    last_name character varying,
-    phone character varying,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    phone character varying NOT NULL,
     affiliate_id integer,
     role text DEFAULT 'Client'::text NOT NULL,
     confirmation_token character varying,
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
-    language text DEFAULT 'Russian'::text NOT NULL
+    language text DEFAULT 'Russian'::text NOT NULL,
+    unconfirmed_email text,
+    CONSTRAINT check_phone_length CHECK ((char_length((phone)::text) = 9))
 );
 
 
@@ -518,3 +520,4 @@ INSERT INTO "schema_migrations" ("filename") VALUES ('20180213113300_invoices_re
 INSERT INTO "schema_migrations" ("filename") VALUES ('20180213124827_orders_refactoring.rb');
 INSERT INTO "schema_migrations" ("filename") VALUES ('20180213150546_taxes_refactoring.rb');
 INSERT INTO "schema_migrations" ("filename") VALUES ('20180213152314_feedbacks_refactoring.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('20180214080807_users_refactoring.rb');

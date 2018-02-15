@@ -60,9 +60,9 @@ module Admin
       end
     end
 
-    def show_affiliate_workers
-      result = Admin::Affiliate::ShowAffiliateWorkers.call(params: params,
-                                                           current_user:
+    def show_workers
+      result = Admin::Affiliate::ShowWorkers.call(params: params,
+                                                  current_user:
                                                                current_user)
       handle_successful(result) do
         @workers = result['workers']

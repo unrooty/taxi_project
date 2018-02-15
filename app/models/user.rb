@@ -1,30 +1,32 @@
 # User model class
 class User < Sequel::Model
-
+  plugin :devise
+  plugin :timestamps, :update_on_create => true
+  # Include default devise modules. Others available are:
+  #  :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :confirmable, :validatable
   many_to_one :affiliate, optional: true
   one_to_many :orders
   one_to_one :car
-  # Include default devise modules. Others available are:
-  #  :lockable, :timeoutable and :omniauthable
-  plugin :devise
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   ROLES = [
-      ADMIN = 'Admin',
-      CLIENT = 'Client',
-      DRIVER = 'Driver',
-      DISPATCHER = 'Dispatcher',
-      MANAGER = 'Manager'
-  ]
+    ADMIN = 'Admin'.freeze,
+    CLIENT = 'Client'.freeze,
+    DRIVER = 'Driver'.freeze,
+    DISPATCHER = 'Dispatcher'.freeze,
+    MANAGER = 'Manager'.freeze
+  ].freeze
 
-  LANGUAGES = %w[Russian English]
+  LANGUAGES = %w[Russian English].freeze
 
   def after_confirmation
     welcome_email
   end
 
-  def will_save_change_to_email?; end
+  def will_save_change_to_email?
+    false
+  end
 
   private
 

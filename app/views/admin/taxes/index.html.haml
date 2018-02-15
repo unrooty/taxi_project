@@ -1,6 +1,7 @@
 %h1
   = t('taxes')
   - if current_user.role.in?(%w[Admin Manager])
+    = link_to t('set_default_tax'), admin_default_tax_selection_path, class: 'btn btn-outline-primary pull-right'
     = link_to t('new_tax'), new_admin_tax_path, class: 'btn btn-outline-success pull-right'
 %p#notice
   =notice

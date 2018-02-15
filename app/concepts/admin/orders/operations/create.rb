@@ -20,6 +20,7 @@ module Admin::Order
 
     def bring_number_to_right_format(_options, params:, **)
       params['order']['client_phone'].gsub!(/[^\d]/, '')
+      true
     end
 
     def set_order_status_to_new(_options, model:, **)

@@ -7,7 +7,8 @@ module Admin::Tax
     private
 
     def delete!(_options, model:, **)
-      model.update(deleted: true)
+      return model.update(deleted: true) unless model.by_default
+      model.destroy if Order.where(tax_id: model.id) && !model.by_default
     end
   end
 end

@@ -1,0 +1,18 @@
+%h1.text-center #{t('set_default_tax')}
+- if @form.errors.any?
+  .error
+    %h5.text-center
+      = t('error')
+      - @form.errors.full_messages.each do |message|
+        %h6.text-center
+          &#9899; #{message}
+= form_for @model, as: 'tax', url: {action: 'set_default'}, method: :post do |form|
+  .row.justify-content-md-center.text-center
+    .col-md-4
+      .order_form_area
+        .form-group
+          = form.collection_select :id, @model, :id, :name, {prompt: false}, {class: 'form-control'}
+        %p
+          = form.submit t('appoint'), class: 'btn btn-primary'
+
+
