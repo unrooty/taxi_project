@@ -1,8 +1,8 @@
 module Admin::Order
   class Delete < Trailblazer::Operation
-    step Model(Order, :find_by)
+    step Model(Order, :[])
     step Policy::Pundit(Admin::OrdersPolicy, :can_work_with_order?)
-    step Wrap ->(*, &block) { Order.transaction(&block) } {
+    step Wrap ->(*, &block) { Order.db.transaction { block.call } } {
       step :update_car_status_to_free!
       step :delete!
     }
@@ -10,7 +10,7 @@ module Admin::Order
     private
 
     def update_car_status_to_free!(_options, model:, **)
-      model.car.update(car_status: 0) unless model.car.nil?
+      model.car.update(car_status: 'Free') if model.car
       true
     end
 

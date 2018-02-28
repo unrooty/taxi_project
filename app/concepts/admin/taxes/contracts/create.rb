@@ -8,7 +8,7 @@ module Admin::Tax
       #:property end
 
       #:validation
-      validates :cost_per_km, :basic_cost, presence: true
+      validates :name, :cost_per_km, :basic_cost, presence: true
       validates :cost_per_km, :basic_cost,
                 numericality: { greater_than_or_equal_to: 0 }
 

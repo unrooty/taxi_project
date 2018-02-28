@@ -19,20 +19,20 @@
           = form.text_field :car_model, class: 'form-control'
         .form-group
           = form.label :reg_number
-          = form.text_field :reg_number, placeholder: 'AA-0000-0', class: 'form-control'
+          = form.text_field :reg_number, placeholder: 'AA-0000-0', class: 'form-control', style: 'text-transform: uppercase'
         .form-group
           = form.label :color
           = form.text_field :color, class: 'form-control'
         .form-group
           = form.label :style
           = form.text_field :style, class: 'form-control'
-        - if current_user.role == 'admin'
+        - if current_user.role == 'Admin'
           .form-group
             = form.label :affiliate
             = form.collection_select :affiliate_id, Affiliate.all, :id, :name, {prompt: false}, {class: 'form-control'}
         .form-group
           = form.label :driver
-          = form.collection_select :user_id, User.where(role: 'driver'), :id, :full_name, {prompt: false}, {class: 'form-control'}
+          = form.collection_select :user_id, User.where(role: 'Driver'), :id, :full_name, {prompt: false}, {class: 'form-control'}
         .actions
           = form.submit t('submit'), class: 'btn btn-primary'
           = link_to t('back'), admin_cars_path, class: 'btn btn-secondary'

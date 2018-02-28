@@ -5,7 +5,7 @@ class Affiliate::Index < Trailblazer::Operation
   private
 
   def model!(options, *)
-    options['model'] = Affiliate.all
+    options[:model] = Affiliate.all
   end
 
 end

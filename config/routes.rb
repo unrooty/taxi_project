@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
   get 'orders/send_email_with_orders',
       to: 'orders#send_email_with_orders',
       as: :send_orders_mail
@@ -17,12 +18,17 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'dashboard/index'
     get '', to: 'dashboard#index', as: '/'
-    get 'affiliate/:id/show_affiliate_workers',
-        to: 'affiliates#show_affiliate_workers',
-        as: :show_affiliate_workers
     resources :users
-    resources :affiliates
-    resources :taxes
+    resources :affiliates do
+      get 'show_workers',
+          to: 'affiliates#show_workers',
+          as: :show_workers
+    end
+    resources :taxes, except: :show
+    get 'taxes/default_tax_selection', to: 'taxes#default_tax_selection',
+                                       as: :default_tax_selection
+    post 'taxes/set_default', to: 'taxes#set_default',
+                              as: :set_default_tax_post
     resources :cars
     resources :user, controller: 'admin/users'
     resources :order_statuses, only: [:index]

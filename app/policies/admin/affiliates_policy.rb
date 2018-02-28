@@ -4,7 +4,7 @@ class Admin::AffiliatesPolicy
   end
 
   def user_admin?
-    @user.role == 'admin'
+    @user.role == 'Admin'
   end
 end
 

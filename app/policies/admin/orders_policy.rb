@@ -4,6 +4,6 @@ class Admin::OrdersPolicy
   end
 
   def can_work_with_order?
-    @user.role.in?(%w[admin manager driver dispatcher])
+    @user.role.in?(%w[Admin Manager Dispatcher Driver])
   end
 end

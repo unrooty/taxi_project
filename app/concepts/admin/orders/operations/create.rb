@@ -1,7 +1,5 @@
 module Admin::Order
   class Create < Trailblazer::Operation
-    extend Create::Contract::DSL
-
     class Present < Trailblazer::Operation
       step Model(Order, :new)
       step Policy::Pundit(Admin::OrdersPolicy, :can_work_with_order?)
@@ -9,27 +7,33 @@ module Admin::Order
     end
 
     step Nested(Present)
+    step :bring_number_to_right_format
     step self::Contract::Validate(key: :order)
-    step :assign_user_id_to_order
-    step :set_order_status_to_new
-    step :set_default_tax
-    step self::Contract::Persist()
+    step Wrap ->(*, &block) { Order.db.transaction { block.call } } {
+      step :assign_user_id_to_order
+      step :set_order_status_to_new
+      step :set_default_tax
+      step self::Contract::Persist()
+    }
 
     private
 
-    def set_order_status_to_new(options, *)
-      options['model'].order_status = 0
-    end
-
-    def assign_user_id_to_order(options, params, *)
-      options['model'].user_id = unless params[:current_user].nil?
-                                   params[:current_user].id
-                                 end
+    def bring_number_to_right_format(_options, params:, **)
+      params['order']['client_phone'].gsub!(/[^\d]/, '')
       true
     end
 
-    def set_default_tax(options, *)
-      options['model'].tax_id = 1
+    def set_order_status_to_new(_options, model:, **)
+      model.order_status = 'New'
+    end
+
+    def assign_user_id_to_order(_options, model:, current_user:, **)
+      model.user_id = (current_user.id unless current_user.nil?)
+      true
+    end
+
+    def set_default_tax(_options, model:, **)
+      model.tax_id = 1
     end
   end
 end

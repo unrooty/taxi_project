@@ -1,5 +1,5 @@
 # Affiliate model class
-class Affiliate < ApplicationRecord
-  has_many :cars
-  has_many :users
+class Affiliate < Sequel::Model
+  one_to_many :cars
+  one_to_many :users
 end

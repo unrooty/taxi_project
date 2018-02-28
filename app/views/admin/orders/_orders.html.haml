@@ -25,17 +25,17 @@
         %th
           = t("order_status.#{order.order_status}")
         %th
-          - if order.car.nil? && current_user.role == 'driver'
+          - if order.car.nil? && current_user.role == :driver
             = link_to 'Взять заказ', driver_admin_order_car_assignment_path(order.id), method: :post, class: 'btn btn-primary btn-sm'
             %th
           - elsif order.car.nil?
             = link_to t('assign_car'), new_admin_order_car_assignment_path(order.id), class: 'btn btn-primary btn-sm'
             %th
           - else
-            - unless current_user.role == 'driver'
+            - if current_user.role != :driver && order.invoice.nil?
               =link_to "#{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}", edit_admin_order_car_assignment_path(order.id)
               - unless order.invoice.nil?
-                - if order.invoice.invoice_status == 'paid'
+                - if order.invoice.invoice_status == :paid
                   %th
                     #{order.invoice.total_price}
                     %div/

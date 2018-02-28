@@ -5,8 +5,8 @@ module Admin::Order
 
     private
 
-    def model!(options, params, *)
-      options['model'] = Order.search_by_client_phone(params['desired_phone'])
+    def model!(options, *)
+      options[:model] = Order.all
     end
   end
 end
