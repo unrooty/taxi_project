@@ -6,7 +6,7 @@ module Admin::Tax
     private
 
     def model!(options, *)
-      options['model'] = Tax.where(deleted: false)
+      options[:model] = Tax.where(deleted: false)
     end
   end
 end

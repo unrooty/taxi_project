@@ -231,3 +231,7 @@ en:
   no_driver: "No driver."
   reassign_car: "Reassign car"
   car_reassigned: "Car reassigned"
+  appoint: "Appoint"
+  already_default: 'already default!'
+  set_default_tax: "Set default tax"
+  default_tax_changed: "Default tax changed"

@@ -33,6 +33,5 @@
       .form-group
         = form.text_field :end_point, placeholder: "#{t('end_point_new')}", class: 'form-control'
       .actions
-        = form.hidden_field :tax_id, value: @tax
         = form.submit t('submit'), class: 'btn btn-primary'
         = link_to t('back'), root_path, class: 'btn btn-secondary'

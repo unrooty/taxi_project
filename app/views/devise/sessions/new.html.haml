@@ -13,8 +13,8 @@
               = f.password_field :password,placeholder: t('activerecord.attributes.user.password') ,autocomplete: 'off', class: 'form-control'
             - if devise_mapping.rememberable?
               .form-group
-                = f.check_box :remember_me
-                = f.label :remember_me
+                = f.check_box :remember_me, class: 'form-check-input'
+                = f.label :remember_me, 'Запоминть меня', class: 'form-check-label'
             .form-group
               = f.submit t('log_in'), class: 'btn btn-success'
     = link_to t('forgot_password'), new_password_path(resource_name), style: 'color: white'

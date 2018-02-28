@@ -1,10 +1,18 @@
 # Car model class
-class Car < ApplicationRecord
-  belongs_to :affiliate
-  belongs_to :user, -> { where role: 'driver' }
-  has_many :orders
+class Car < Sequel::Model
+  many_to_one :affiliate
+  one_to_one :user, key: :id
+  one_to_many :orders
+  STATUSES = [
+    FREE = 'Free'.freeze,
+    ORDERED = 'Ordered'.freeze
+  ].freeze
 
-  enum car_status: %w[free ordered]
+  STATUSES.each do |status|
+    define_method status.downcase do
+      where(status: status)
+    end
+  end
 
   def car_info
     "#{brand} #{car_model}, #{I18n.t('activerecord.attributes.car.reg_number')}:

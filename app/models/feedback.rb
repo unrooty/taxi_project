@@ -1,2 +1,2 @@
 # Feedback model class
-class Feedback < ApplicationRecord; end
+class Feedback < Sequel::Model; end

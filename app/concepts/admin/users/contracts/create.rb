@@ -1,7 +1,7 @@
-require "reform/form/validation/unique_validator"
 module Admin::User
   module Contract
     class Create < Reform::Form
+      include ActiveModel::Validations
       #:property
       property :first_name
       property :last_name
@@ -15,9 +15,11 @@ module Admin::User
       #:property end
 
       #:validation
-      validates :email, unique: true
-      validates :phone, presence: true, format: /\A\d{2}-\d{3}-\d{2}-\d{2}/, 
-                        unique: true
+      validates :phone, presence: true, length: { is: 9 }
+      validates :first_name, :last_name, :role, :language, presence: true
+      validates :password, presence: true, confirmation: true
+      validates :password_confirmation, presence: true
+      validates :email, uniqueness: true, presence: true
       #:validation end
     end
   end

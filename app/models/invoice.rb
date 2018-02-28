@@ -1,6 +1,10 @@
 # Invoice model class.
-class Invoice < ApplicationRecord
-  belongs_to :order, optional: true
+class Invoice < Sequel::Model
+  one_to_one :order, key: :id
 
-  enum invoice_status: %w[paid unpaid partially_paid]
+  STATUSES = [
+    PAID = 'Paid'.freeze,
+    UNPAID = 'Unpaid'.freeze,
+    PARTIALLY_PAID = 'Partially paid'.freeze
+  ].freeze
 end
