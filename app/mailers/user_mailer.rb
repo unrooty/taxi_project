@@ -16,7 +16,7 @@ class UserMailer < ApplicationMailer
 
   def feedback_mail(feedback)
     @feedback = feedback
-    @feedback_mail = 'exapmleemail@gmail.com'
+    @feedback_mail = 'exapmle_email_for_diploma@mail.ru'
     mail(to: @feedback_mail,
          subject: "#{t('feedback_from')} #{@feedback.name}
                    (#{@feedback.email})")

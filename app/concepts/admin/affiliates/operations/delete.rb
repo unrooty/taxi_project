@@ -2,7 +2,7 @@ module Admin::Affiliate
   class Delete < Trailblazer::Operation
     step Model(Affiliate, :[])
     step Policy::Pundit(Admin::AffiliatesPolicy, :user_admin?)
-    step Wrap ->(*, &block) { Affiliate.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :remove_from_cars!
       step :delete!
     }

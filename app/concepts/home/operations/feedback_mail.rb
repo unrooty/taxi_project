@@ -1,6 +1,6 @@
 class Feedback::Create < Trailblazer::Operation
 
-  step Wrap ->(*, &block) { Feedback.db.transaction { block.call } } {
+  step Wrap(SequelTransaction) {
     step Model(Feedback, :new)
     step Contract::Build()
     step Contract::Validate(key: :feedback)

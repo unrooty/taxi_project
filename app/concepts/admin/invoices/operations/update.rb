@@ -8,7 +8,7 @@ module Admin::Invoice
 
     step Nested(Present)
     step self::Contract::Validate(key: :invoice)
-    step Wrap ->(*, &block) { Invoice.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step self::Contract::Persist()
       step :add_additional_amount_to_payed_amount
       step :take_away_additional_amount_from_indebtedness

@@ -66,13 +66,15 @@ Rails.application.configure do
   config.action_mailer.perform_caching = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 587,
-    domain: 'gmail.com',
-    authentication: 'plain',
-    user_name: 'exapmleemail@gmail.com',
-    password: '12344321ab',
-    enable_starttls_auto: true
+      address: 'smtp.mail.ru',
+      port: 465,
+      domain: 'mail.ru',
+      authentication: :login,
+      tls: true,
+      user_name: 'example.email.for.diploma@mail.ru',
+      password: '1234554321ab',
+      enable_starttls_auto: true,
+      content_type: 'text/html'
   }
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server

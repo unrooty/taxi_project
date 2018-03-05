@@ -9,7 +9,7 @@ module Admin::Order
     step Nested(Present)
     step :bring_number_to_right_format
     step self::Contract::Validate(key: :order)
-    step Wrap ->(*, &block) { Order.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :assign_user_id_to_order
       step :set_order_status_to_new
       step :set_default_tax
