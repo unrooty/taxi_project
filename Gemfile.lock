@@ -412,7 +412,7 @@ DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
   bootsnap
-  bootstrap (~> 4.0.0.beta)
+  bootstrap (~> 4)
   byebug
   capybara
   coffee-rails
