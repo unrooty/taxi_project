@@ -29,5 +29,7 @@ module TaxiStation
     # config.active_job.queue_adapter = :delayed_job
     # config.active_record.schema_format = :sql
     config.eager_load_paths += %W[#{config.root}/lib]
+    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
+    config.eager_load_paths += Dir[Rails.root.join('app', 'api', '*')]
   end
 end

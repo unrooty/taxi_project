@@ -2,7 +2,7 @@ module Admin::User
   class Delete < Trailblazer::Operation
     step Model(User, :[])
     step Policy::Pundit(Admin::UsersPolicy, :can_manage?)
-    step Wrap ->(*, &block) { User.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :remove_from_orders!
       step :remove_from_cars!
       step :delete!

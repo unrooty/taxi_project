@@ -10,7 +10,7 @@ module Admin::CarAssignment
     step Nested(Present)
     step :add_order_id_to_car_assignment_params
     step self::Contract::Validate(key: :car_assignment)
-    step Wrap ->(*, &block) { Sequel::Model.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :find_car
       step :find_order
       step :update_order_status

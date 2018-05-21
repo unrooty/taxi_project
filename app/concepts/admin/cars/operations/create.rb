@@ -8,7 +8,7 @@ module Admin::Car
 
     step Nested(Present)
     step self::Contract::Validate(key: :car)
-    step Wrap ->(*, &block) { Car.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step self::Contract::Persist()
       step :bind_car_to_manager_affiliate
     }

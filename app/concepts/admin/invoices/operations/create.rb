@@ -9,7 +9,7 @@ module Admin::Invoice
 
     step Nested(Present)
     step self::Contract::Validate(key: :invoice)
-    step Wrap ->(*, &block) { Invoice.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step self::Contract::Persist()
       step :set_order_id_to_invoice
       step :find_order

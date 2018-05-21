@@ -9,7 +9,7 @@ module Admin::User
     step Nested(Present)
     step :bring_number_to_right_format
     step self::Contract::Validate(key: :user)
-    step Wrap ->(*, &block) { User.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step self::Contract::Persist()
       step :bind_user_to_manager_affiliate
     }

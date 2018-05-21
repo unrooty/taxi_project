@@ -1,7 +1,7 @@
 class Order::Delete < Trailblazer::Operation
   step Model(Order, :[])
   step Policy::Pundit(OrdersPolicy, :access_granted?)
-  step Wrap ->(*, &block) { Order.db.transaction { block.call } } {
+  step Wrap(SequelTransaction) {
     step :unassign_car!
     step :delete!
   }

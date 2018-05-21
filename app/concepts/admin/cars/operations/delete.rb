@@ -2,7 +2,7 @@ module Admin::Car
   class Delete < Trailblazer::Operation
     step Model(Car, :[])
     step Policy::Pundit(Admin::CarsPolicy, :can_work_with_car?)
-    step Wrap ->(*, &block) { Car.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :remove_from_orders!
       step :delete!
     }

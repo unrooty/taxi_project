@@ -6,7 +6,7 @@ module Admin::CarAssignment
     step :create_car_assignment_params
     step self::Contract::Build()
     step self::Contract::Validate(key: :car_assignment)
-    step Wrap ->(*, &block) { Sequel::Model.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :update_car_status
       step :update_order_status
       step :assign_car_to_order

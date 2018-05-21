@@ -14,7 +14,7 @@ module Admin::Tax
 
     step Nested(Present)
     step self::Contract::Validate(key: :tax)
-    step Wrap ->(*, &block) { Sequel::Model.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :set_previous_default_tax_as_not_default
       step :set_chosen_tax_as_default
     }

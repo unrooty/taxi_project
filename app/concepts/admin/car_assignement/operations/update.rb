@@ -8,7 +8,7 @@ module Admin::CarAssignment
 
     step Nested(Present)
     step self::Contract::Validate(key: :car_assignment)
-    step Wrap ->(*, &block) { Sequel::Model.db.transaction { block.call } } {
+    step Wrap(SequelTransaction) {
       step :find_car
       step :find_order
       step :remove_previous_car_from_order
