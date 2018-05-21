@@ -19,13 +19,13 @@
       -if user_signed_in?
         .form-group
           .input-group
-            %span.input-group-addon +375
+            %span.input-group-text +375
             = form.text_field :client_phone, placeholder: '25-123-45-67',
                               class: 'input-group form-control', value: current_user.phone
       -else
         .form-group
           .input-group
-            %span.input-group-addon +375
+            %span.input-group-text +375
             = form.text_field :client_phone, placeholder: '25-123-45-67',
                               class: 'input-group form-control'
       .form-group
