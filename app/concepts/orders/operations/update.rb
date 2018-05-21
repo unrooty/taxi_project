@@ -6,7 +6,7 @@ class Order::Update < Trailblazer::Operation
   end
 
   step Nested(Present)
-  step :bring_number_to_right_format
+  success :bring_number_to_right_format
   step Contract::Validate(key: :order)
   step Contract::Persist()
 
