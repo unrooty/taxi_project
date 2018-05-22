@@ -39,7 +39,7 @@
         .form-group
           = f.label :affiliate, 'Филиал'
           %br/
-          = f.hidden_field :language, value: 'Русский'
+          = f.hidden_field :language, value: 'Russian'
           = f.collection_select :affiliate_id, Affiliate.all, :id, :name, {:prompt=>true}, {:class=>'form-control'}
         .form-group
           .input-group.language
