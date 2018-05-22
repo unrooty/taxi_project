@@ -38,7 +38,7 @@
           = f.password_field :password_confirmation, class: 'form-control'
         .form-group
           .input-group
-            = f.hidden_field(:language, User::LANGUAGES[1], class: 'form-control')
+            = f.hidden_field :language, User::LANGUAGES[1]
         .form-group
           = f.label :affiliate, 'Филиал'
           %br/
