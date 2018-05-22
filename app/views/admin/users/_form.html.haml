@@ -11,37 +11,36 @@
     .order_form_area
       = form_for [:admin, @model] do |f|
         .form-group
-          = f.label :first_name
+          = f.label :first_name, 'Имя'
           %br/
           = f.text_field :first_name, autofocus: true, class: 'form-control'
         .form-group
-          = f.label :last_name
+          = f.label :last_name, 'Фамилия'
           %br/
           = f.text_field :last_name, class: 'form-control'
         .form-group
-          = f.label :phone
+          = f.label :phone, 'Телефон'
           %br/
           .input-group
-            %span.input-group-addon +375
+            %span.input-group-text +375
             = f.text_field :phone, placeholder: '25-123-45-67', class: 'form-control'
         .form-group
-          = f.label :email
+          = f.label :email, 'Email'
           %br/
           = f.email_field :email, class: 'form-control'
         .form-group
-          = f.label :password
+          = f.label :password, 'Пароль'
           %br/
           = f.password_field :password, class: 'form-control'
         .form-group
-          = f.label :password_confirmation
+          = f.label :password_confirmation, 'Подтверждение пароля'
           %br/
           = f.password_field :password_confirmation, class: 'form-control'
         .form-group
           .input-group
-            %span.input-group-addon.span-margin= t('language')
-            = f.select(:language, User::LANGUAGES.each {|l| [t("role.#{l}"), l]}, class: 'form-control')
+            = f.hidden_field(:language, User::LANGUAGES[1], class: 'form-control')
         .form-group
-          = f.label :affiliate
+          = f.label :affiliate, 'Филиал'
           %br/
           = f.collection_select :affiliate_id, Affiliate.all, :id, :name, {:prompt=>true}, {:class=>'form-control'}
         .form-group
