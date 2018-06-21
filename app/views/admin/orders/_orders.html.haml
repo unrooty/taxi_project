@@ -51,7 +51,7 @@
             - else
               #{order.car.brand} #{order.car.car_model}, #{order.car.reg_number}
               - unless order.invoice.nil?
-                - if order.invoice.invoice_status == 'paid'
+                - if order.invoice.invoice_status == 'Paid'
                   %th
                     #{order.invoice.total_price}
                     %div/

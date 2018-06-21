@@ -2,7 +2,7 @@ development:
   url: 'http://localhost:3000'
   from_email: 'example.email.for.diploma@mail.ru'
 production:
-  url: 'http://taxistation.herokuapp.com'
+  url: 'http://taxi-station.tk/'
   from_email: 'example.email.for.diploma@mail.ru'
 test:
   url: 'http://localhost:3000'

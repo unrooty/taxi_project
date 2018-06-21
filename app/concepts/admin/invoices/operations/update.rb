@@ -31,14 +31,15 @@ module Admin::Invoice
         model.update(invoice_status: 'Paid')
       elsif model.payed_amount.zero? && model.indebtedness != 0
         model.update(invoice_status: 'Unpaid')
-      else
+      elsif model.indebtedness >= 0
         model.update(invoice_status: 'Partially paid')
       end
     end
 
     def send_email_with_invoice_to_user(_options, model:, **)
-      if model.order.user_id
-        user = User[model.order.user_id]
+      user_id = Order[model.order_id].user_id
+      if user_id
+        user = User[user_id]
         UserMailer.invoice_report_mail(user, model)
       end
 

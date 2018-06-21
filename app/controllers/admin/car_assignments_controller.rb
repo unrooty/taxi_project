@@ -10,7 +10,6 @@ module Admin
     def create
       result = Admin::CarAssignment::Create.call(params: params,
                                                  current_user: current_user)
-      p result
       handle_successful(result) do
         redirect_to admin_orders_path, notice: t('car_assigned')
       end

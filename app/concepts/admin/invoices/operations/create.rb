@@ -10,8 +10,8 @@ module Admin::Invoice
     step Nested(Present)
     step self::Contract::Validate(key: :invoice)
     step Wrap(SequelTransaction) {
-      step self::Contract::Persist()
       step :set_order_id_to_invoice
+      step self::Contract::Persist()
       step :find_order
       step :count_total_price
       step :update_order_status_to_completed
@@ -27,8 +27,8 @@ module Admin::Invoice
       model.order_id = params['order_id']
     end
 
-    def find_order(_options, model:, **)
-      @order = Order[model.order_id]
+    def find_order(_options, params:, **)
+      @order = Order[params[:order_id]]
     end
 
     def count_total_price(_options, model:, **)
@@ -56,7 +56,7 @@ module Admin::Invoice
         model.update(invoice_status: 'Paid')
       elsif model.payed_amount.zero? && model.indebtedness != 0
         model.update(invoice_status: 'Unpaid')
-      else
+      elsif model.indebtedness >= 0
         model.update(invoice_status: 'Partially paid')
       end
     end

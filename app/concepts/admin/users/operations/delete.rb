@@ -11,7 +11,7 @@ module Admin::User
     private
 
     def remove_from_cars!(_options, model:, **)
-      model.car.update_all(user_id: nil) if model.car
+      model.car.update(user_id: User.first.id) if model.car
       true
     end
 

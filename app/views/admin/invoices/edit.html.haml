@@ -1,3 +1,10 @@
+- if @form.errors.any?
+  .error
+    %h5.text-center
+      = t('error')
+      - @form.errors.full_messages.each do |message|
+        %h6.text-center
+          &#9899; #{message}
 %h2.text-center
   = t('edit_invoice')
   %h4#notice.text-center.error= notice
@@ -26,8 +33,8 @@
       = form_for @model, url: {action: 'update'} do |form|
         .form-group
           .input-group
-            %span.input-group-addon #{form.label t('surcharge')}
-            = form.number_field :additional_amount, value: @model.indebtedness, class: 'form-control', step: :any, onfocus: "this.value = ''"
+            %span.input-group-text #{form.label t('surcharge')}
+            = form.number_field :additional_amount, class: 'form-control', value: @model.indebtedness, step: :any
         .form-group
           %p
             = form.submit t('submit'), class: 'btn btn-primary'

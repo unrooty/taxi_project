@@ -5,7 +5,6 @@
       - @form.errors.full_messages.each do |message|
         %h6.text-center
           &#9899; #{message}
-
 .row.justify-content-md-center.text-center
   .col-md-3
     .order_form_area
@@ -43,8 +42,8 @@
           = f.collection_select :affiliate_id, Affiliate.all, :id, :name, {:prompt=>true}, {:class=>'form-control'}
         .form-group
           .input-group.language
-            %span.input-group-addon.span-margin= t('activerecord.attributes.user.role')
-            = f.select(:role, User::ROLES.each {|role| [t("role.#{role}"),role]})
+            %span.input-group-text.span-margin= t('activerecord.attributes.user.role')
+            = f.select(:role, User::ROLES.each {|role| [t("role.#{role}"),role]}, {}, {:class=>'form-control'})
         .form-group
           = f.submit t('submit'), class: 'btn btn-primary'
           = link_to t('back'), admin_users_path, class: 'btn btn-secondary'

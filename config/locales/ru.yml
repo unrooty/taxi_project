@@ -16,8 +16,8 @@ ru:
     unpaid: 'Не оплачен'
     partially_paid: 'Частично оплачен'
   car_status:
-    free: 'Свободен'
-    ordered: 'Заказан'
+    Free: 'Свободен'
+    Ordered: 'Заказан'
   activerecord:
     models:
       affiliate: 'Филиал'

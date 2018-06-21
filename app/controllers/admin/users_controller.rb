@@ -44,7 +44,9 @@ module Admin
                            notice: t('user_updated')
       end
 
-      render :edit
+      handle_invalid(result) do
+        render :edit
+      end
     end
 
     def destroy

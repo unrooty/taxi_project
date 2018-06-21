@@ -2,7 +2,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those
   # in config/application.rb.
   config.action_mailer.default_url_options = {
-    host: 'https://taxistation.herokuapp.com'
+    host: 'http://taxi-station.tk/'
   }
   # Code is not reloaded between requests.
   config.cache_classes = true

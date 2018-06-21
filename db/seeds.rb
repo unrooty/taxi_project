@@ -39,10 +39,10 @@ Tax.create name: 'Out-of-town', cost_per_km: '1.2', basic_cost: '2'
 
 Car.create brand: 'Audi', car_model: 'A8',
            reg_number: 'AA-4444-4', color: 'Black', style: 'Sedan',
-           affiliate_id: 1, user_id: 2
+           affiliate_id: 1, user_id: 2, car_status: 'Free'
 Car.create brand: 'Lada', car_model: '2108',
            reg_number: 'AA-6666-4', color: 'Baklazhan', style: 'Sedan',
-           affiliate_id: 1, user_id: 3
+           affiliate_id: 1, user_id: 3, car_status: 'Free'
 Car.create brand: 'Mazda', car_model: '3',
            reg_number: 'AA-7777-4', color: 'White', style: 'Universal',
-           affiliate_id: 2, user_id: 4
+           affiliate_id: 2, user_id: 4, car_status: 'Free'
